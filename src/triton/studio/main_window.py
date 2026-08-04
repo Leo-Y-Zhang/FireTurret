@@ -472,9 +472,20 @@ class MainWindow(QMainWindow):
         worker.failed.connect(self._on_failed)
         worker.finished.connect(thread.quit)
         worker.failed.connect(thread.quit)
-        # documented safe teardown: delete both objects once the thread's loop ends;
-        # never null the Python refs inside a finished slot (that crashes PySide).
-        thread.finished.connect(worker.deleteLater)
+        # Qt's documented moveToThread idiom: the worker deletes itself off its
+        # OWN finished/failed signal, while its thread's event loop is still
+        # running to process the deferred-delete event. The earlier code instead
+        # scheduled worker.deleteLater() off thread.finished, which fires only
+        # after that event loop has already stopped -- posting a deferred delete
+        # into a queue nothing may ever pump again. That is an undefined-timing
+        # window at thread teardown, not a leak: which Qt/PySide point release is
+        # resolved decides whether it is silently swallowed or corrupts memory,
+        # which is consistent with the intermittent, offscreen/Linux-only SIGBUS
+        # this test caught. Never null the Python refs inside a finished slot
+        # (that crashes PySide via a different path); deleteLater is still the
+        # only safe teardown call here.
+        worker.finished.connect(worker.deleteLater)
+        worker.failed.connect(worker.deleteLater)
         thread.finished.connect(thread.deleteLater)
 
         self._worker = worker
