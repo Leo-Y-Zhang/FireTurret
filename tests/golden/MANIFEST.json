@@ -1,0 +1,111 @@
+{
+  "canonical_platform": "Fixtures are produced on the maintainer's development machine. Tier-3 floats are the product of OpenCV kernels and long float accumulation and will NOT reproduce bit-for-bit on a differently-compiled OpenCV or on arm64. That is why tier 2 carries tolerances and only tier 3 is exact.",
+  "fixtures": {
+    "commands_default.json": {
+      "engine_sha": "a640795aa99333844d6508139d2d8a9502cb6a28",
+      "reason": "SP3-adopt: wire SpeedRangeTable into the elevation search. FOURTH regeneration, beyond the three-regeneration budget; the written re-argument is retained in the development log kept with the project's private history. Necessary because exact integration cost 67.3 ms against a 33.3 ms tick budget, i.e. the shipped planner already overran its deadline. Adoption takes it to 0.606 ms. Measured cost over the 120 frozen frames: pan 0.000000, pump 0.000000, valve/laser/warn decisions 0 changed; tilt max delta 0.036093 deg on 112 frames, which is 7.5 mm of range at 7.2 m and 1.8 pct of one tick of tilt slew. predicted_range_m remains exactly integrated, so no downstream consumer inherits interpolation error.",
+      "regenerated": "2026-07-29T10:23:11Z",
+      "sha256": "3561981658ff11a81ead8422c0339053add58040a0f470de149012e39705e7c5",
+      "tier": 3
+    },
+    "frames_default.npz": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "5319a100a95cfc3b1293638a906bfc94a4d0a02871eccc0f2e0d181bbc6667ee",
+      "tier": 3
+    },
+    "report_default_seed7.json": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "66581d80381d8b92014e54e2846fbd8bb660449277176faf6f9557b13bdc799d",
+      "tier": 2
+    },
+    "report_multi_seed7.json": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "0fb31e4294f27285343b0f771f23c51bb94333be0fcb825eae6cd41c65151da0",
+      "tier": 2
+    },
+    "report_unreachable_seed7.json": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "8f15d93fc68b737dce3959e947f20f8435620fde4aaf23f2b4fb8958b03301d5",
+      "tier": 2
+    },
+    "report_windy_seed3.json": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "79617bc527bfc65beaa2b53c79c4ec3957de35e054f89fe87339ec0d285131d4",
+      "tier": 2
+    },
+    "stdout_close.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "31b27c40b0f2e1fcf6c2ecbaf4436e956580cb98e33ae0cbba202dd471c78e00",
+      "tier": 2
+    },
+    "stdout_decoy.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "55d2e8dbff9386ecc550266c3b17be603cb530ec89e922f0c839768db07cc44d",
+      "tier": 2
+    },
+    "stdout_default.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "b918f51e5f82d34716d645408e7d9ad5f603dd13056a48b6c7369d6771f1cd8a",
+      "tier": 2
+    },
+    "stdout_far.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "7a6460b2720a35beacdac029255c1a5a17428057e938a77d8f073cbaac93e790",
+      "tier": 2
+    },
+    "stdout_moving.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "01185c2023071f5c934d6d30da4a825f65b6266a8b91860b3d3584fa2dca5724",
+      "tier": 2
+    },
+    "stdout_multi.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "e45eeb60a916d8f820300cf4d468e1f3e28cdac8f7c84b521731c01b9113643d",
+      "tier": 2
+    },
+    "stdout_offset.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "0c971f3c4eca05227fe8e5058ee28614c472c37a6ed0da10633f48a0ee019b21",
+      "tier": 2
+    },
+    "stdout_unreachable.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "f79e526440bcc5128142c6d303db975fe129c0899cc3b8bef16a848bd80a6f78",
+      "tier": 2
+    },
+    "stdout_windy.txt": {
+      "engine_sha": "b77715b719b162c5b0344520ece319fcf8b78d54",
+      "reason": "SP6 frames and ego-motion. The tracker's motion compensation now uses the EXACT yaw warp instead of the small-angle scalar shift. The pinhole map is u = cx + fpx*tan(az), so the displacement depends on where in the frame a track sits; the single scalar was the tangent line at u = cx and under-corrected by a measured 11.7 pct at 20 deg off-axis, 24.5 pct at 30 deg and 28.8 pct at the image edge. That error was being absorbed by the tracker's 80px association radius, which works until the platform moves and the same slack has to absorb real ego-motion too. Effect on the fixtures is small - pan differs by 0.018 deg at the first divergence. Planned golden regeneration 3 of 3.",
+      "regenerated": "2026-07-29T05:25:42Z",
+      "sha256": "e15b67ae6b030203860a5cbd699e794da66dbca9d36531118f2f2c604c76cbc0",
+      "tier": 2
+    }
+  },
+  "note": "Tier 1 (tests/test_invariants.py) is NEVER regenerated and has no entry here. Tier 2 fixtures are compared with the tolerances declared in tests/test_golden_behavior.py; their categorical fields are compared exactly. Tier 3 pins a byte-exact command sequence over frozen frames. Every entry below was written by scripts/goldens.py, which refuses to run while tier 1 is red."
+}

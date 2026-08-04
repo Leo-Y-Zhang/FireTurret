@@ -1,0 +1,3 @@
+extinguished=False sim_s=200.0 water_l=10.88 acquire=0.9s
+  aim: mean_miss=1.75m peak_miss=2.57m states=['ACQUIRE', 'ALIGN', 'HOLD', 'RANGE', 'SEARCH', 'SUPPRESS']
+  operator advisories: ['TOO_FAR']

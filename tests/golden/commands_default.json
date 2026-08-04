@@ -1,0 +1,962 @@
+[
+  {
+    "pan_deg": 0.8333333333333334,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 1.6666666666666667,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 1.6666666666666667,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 1.6666666666666667,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 1.6666666666666667,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 1.6666666666666667,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 1.6666666666666667,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 1.6666666666666667,
+    "tilt_deg": 20.0,
+    "pump_pct": 0.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": false,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.987063294156474,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 33.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 23.37863563154334,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 36.5,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  },
+  {
+    "pan_deg": 22.718008456325094,
+    "tilt_deg": 8.418764630226992,
+    "pump_pct": 40.0,
+    "valve": true,
+    "laser": false,
+    "warn": false
+  }
+]

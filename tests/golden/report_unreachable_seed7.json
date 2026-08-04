@@ -1,0 +1,29 @@
+{
+  "advisories_raised": [
+    "TOO_FAR"
+  ],
+  "extinguished": false,
+  "final_intensity": 1.0,
+  "frames": 6000,
+  "mean_miss_m": 1.7542066217073975,
+  "peak_miss_m": 2.5729642929133965,
+  "per_fire": [
+    {
+      "extinguish_time_s": null,
+      "extinguished": false,
+      "residual_intensity": 1.0
+    }
+  ],
+  "sim_seconds": 199.99999999999122,
+  "states_visited": [
+    "ACQUIRE",
+    "ALIGN",
+    "HOLD",
+    "RANGE",
+    "SEARCH",
+    "SUPPRESS"
+  ],
+  "telemetry_len": 6000,
+  "time_to_first_suppress_s": 0.8666666666666666,
+  "water_used_l": 10.87945833333372
+}

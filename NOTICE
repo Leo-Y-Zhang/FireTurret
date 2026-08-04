@@ -1,0 +1,77 @@
+FireTurret — camera-guided fire-suppression turret
+Copyright 2026 Leo Y. Zhang
+
+This product includes software developed by Leo Y. Zhang.
+
+Proprietary and source-available for evaluation only. No reuse rights are
+granted. See LICENSE for the full terms.
+
+The third-party section below is retained deliberately: those dependencies keep
+their own licences, which are unaffected by the terms covering this work itself.
+
+--------------------------------------------------------------------------------
+THIRD-PARTY DEPENDENCIES
+--------------------------------------------------------------------------------
+
+This project does not bundle or redistribute any third-party code.
+Dependencies are installed from PyPI by the user. Their licences are audited in
+docs/LICENCE_AUDIT.md and summarised here.
+
+Core (required):
+  numpy            BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0
+  opencv-python    Apache-2.0
+  pyserial         BSD-3-Clause
+
+Optional extras:
+  [analysis] matplotlib          PSF-style (matplotlib licence)
+  [ml]       onnxruntime         MIT
+  [desktop]  pyqtgraph           MIT
+  [desktop]  PySide6-Essentials  LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
+  [ros]      rclpy               Apache-2.0 (supplied by a ROS 2 distribution)
+
+--------------------------------------------------------------------------------
+NOTE ON PySide6 (the [desktop] extra)
+--------------------------------------------------------------------------------
+
+PySide6 is copyleft. Of the licences it is offered under, GPL-2.0-only was
+INCOMPATIBLE with the Apache-2.0 licence this project formerly carried;
+LGPL-3.0 is compatible for dynamic linking. This project takes the LGPL-3.0
+option.
+
+This project does not ship PySide6, imports it lazily, and a core install
+does not require it. Its own source is proprietary (see LICENSE).
+
+If you distribute a BUNDLED artefact that includes PySide6 — a frozen
+executable, a container image, an appliance — the LGPL-3.0 obligations for the
+PySide6 portion are yours: ship its licence text and enable the recipient to
+replace the library.
+
+--------------------------------------------------------------------------------
+NOTE ON MODEL WEIGHTS
+--------------------------------------------------------------------------------
+
+No machine-learning model weights are included in this repository, and no
+default model is downloaded. `triton run --detector onnx --model PATH` loads
+whatever the operator supplies.
+
+This matters because many popular detection weights (several YOLO families in
+particular) are AGPL-3.0, whose copyleft obligations would conflict with this
+project's proprietary licence if shipped or implied. The licence of any weights
+you supply is yours to satisfy; this project makes no claim about them.
+
+--------------------------------------------------------------------------------
+NOTE ON FIRMWARE
+--------------------------------------------------------------------------------
+
+firmware/turret_firmware/turret_firmware.ino includes <Servo.h> from the Arduino
+core (LGPL-2.1). The sketch is source that you compile yourself against your own
+Arduino installation; nothing is redistributed by this project.
+
+--------------------------------------------------------------------------------
+SAFETY
+--------------------------------------------------------------------------------
+
+FireTurret is a SUPERVISED DEMONSTRATOR. It is not a life-safety
+device and is not certified for any purpose. It has never been run on real hardware. See
+docs/SAFETY.md for the failsafe design and, more importantly, for the gaps that
+are recorded rather than closed.

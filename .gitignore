@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+recordings/
+*.local
+
+# Transient verification output: long pytest / goldens runs are redirected to a
+# file so they survive a dropped terminal. Never worth committing.
+*.log
+
+# Local-only notes (never committed; used for owner records)
+*.local.md

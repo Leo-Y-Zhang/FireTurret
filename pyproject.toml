@@ -1,0 +1,55 @@
+[project]
+name = "triton"
+version = "0.1.0"
+description = "Camera-guided fire-suppression turret: fire detection, ballistic aiming, and closed-loop visual servoing for a pan/tilt water cannon. Supervised demonstrator."
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "opencv-python>=4.9",
+  "pyserial>=3.5",
+]
+
+[project.optional-dependencies]
+# PySide6-Essentials is a TEST dependency here, not only a desktop one: pytest-qt
+# refuses to collect ANY test without a Qt binding, so `pip install -e .[dev]` followed
+# by pytest fails outright without it -- which is exactly how CI failed every run it
+# ever attempted. It appears in [desktop] as well because the studio needs it at
+# runtime; the two are independent reasons to have it.
+dev = ["pytest>=8.0", "ruff>=0.6", "pytest-qt>=4", "PySide6-Essentials>=6.8"]
+analysis = ["matplotlib>=3.7"]
+# Learned ONNX fire detector. On an NVIDIA GPU install `onnxruntime-gpu` instead
+# (or NVIDIA's Jetson build) to use the TensorRT/CUDA execution providers.
+ml = ["onnxruntime>=1.17"]
+# Desktop engineering workbench (Triton Studio). pyqtgraph OpenGL is disabled at
+# runtime (raster only) so it works on machines without OpenGL; see docs/STUDIO.md.
+desktop = ["PySide6-Essentials>=6.8", "pyqtgraph>=0.13"]
+# ROS 2 bridge. rclpy is NOT installable from PyPI in the normal way — it comes
+# from a ROS 2 distribution — so this extra is declared for completeness and the
+# tests skip when it is absent, exactly as the [ml] extra's do. SAFETY: a pure-ROS
+# rig has no independent hardware watchdog; pair it with the firmware E-stop or
+# run dry-aim only. See docs/SAFETY.md.
+ros = []
+
+[project.scripts]
+triton = "triton.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not slow'"
+markers = ["slow: long end-to-end runs (deselect with -m 'not slow')"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]  # long lines are fine in this codebase
+

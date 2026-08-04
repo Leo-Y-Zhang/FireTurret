@@ -1,0 +1,2 @@
+extinguished=True sim_s=22.2 water_l=0.79 acquire=0.7s
+  aim: mean_miss=1.55m peak_miss=2.46m states=['ACQUIRE', 'ALIGN', 'CONFIRM', 'RANGE', 'SEARCH', 'SUPPRESS']
