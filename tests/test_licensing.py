@@ -17,6 +17,10 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 NOREPLY = "@users.noreply.github.com"
+# GitHub authors the throwaway merge commit that Actions checks out for a
+# pull_request event as "GitHub <noreply@github.com>" — its own machine
+# identity, not a person's, and never part of the repository itself.
+GITHUB_MERGE_IDENTITY = "noreply@github.com"
 
 
 # ------------------------------------------------------------------- licence
@@ -164,7 +168,9 @@ def test_every_commit_is_authored_under_an_anonymous_noreply_identity() -> None:
     )
     offenders = sorted({
         line.strip() for line in proc.stdout.splitlines()
-        if line.strip() and NOREPLY not in line
+        if line.strip()
+        and NOREPLY not in line
+        and GITHUB_MERGE_IDENTITY not in line
     })
     assert not offenders, f"non-noreply identities in history: {offenders}"
 

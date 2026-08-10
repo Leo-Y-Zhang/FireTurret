@@ -1,7 +1,13 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 import pytest
 
-from fireturret.config import DEFAULT_CONFIG, CameraConfig, JetConfig, FireTurretConfig, TurretConfig
+from fireturret.config import (
+    DEFAULT_CONFIG,
+    CameraConfig,
+    FireTurretConfig,
+    JetConfig,
+    TurretConfig,
+)
 
 
 def test_default_config_is_valid() -> None:
