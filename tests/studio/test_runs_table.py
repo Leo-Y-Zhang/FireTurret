@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from PySide6.QtCore import Qt
 
-from triton.config import DEFAULT_CONFIG
-from triton.simcore import drive
-from triton.studio.models.runs_table import RunRow, RunsTableModel
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.simcore import drive
+from fireturret.studio.models.runs_table import RunRow, RunsTableModel
 
 
 def _row(name="run", seed=7, extinguished=True):
@@ -53,8 +53,8 @@ def test_mark_all_stale(qapp):
 
 
 def test_multi_fire_status(qapp):
-    from triton.__main__ import SCENARIOS
-    from triton.simcore import drive
+    from fireturret.__main__ import SCENARIOS
+    from fireturret.simcore import drive
 
     rep = drive(DEFAULT_CONFIG, SCENARIOS["multi"], seed=7, max_frames=3000)
     row = RunRow.from_report("m", rep, 7, "multi", "t")

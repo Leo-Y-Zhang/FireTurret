@@ -5,11 +5,11 @@ import tempfile
 
 import pytest
 
-from triton import ballistics
-from triton.analysis import TelemetrySample, read_csv, write_csv, write_report
-from triton.app import run_sim
-from triton.config import DEFAULT_CONFIG
-from triton.rig.sim_rig import SimScenario
+from fireturret import ballistics
+from fireturret.analysis import TelemetrySample, read_csv, write_csv, write_report
+from fireturret.app import run_sim
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.rig.sim_rig import SimScenario
 
 
 def _samples(n: int = 5) -> list[TelemetrySample]:

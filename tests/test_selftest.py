@@ -2,9 +2,9 @@
 """Hardware self-test logic, exercised against the echo NullRig (no hardware)."""
 from __future__ import annotations
 
-from triton.config import DEFAULT_CONFIG
-from triton.rig.interface import NullRig, RigTelemetry
-from triton.selftest import run_selftest
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.rig.interface import NullRig, RigTelemetry
+from fireturret.selftest import run_selftest
 
 _NOSLEEP = lambda _s: None  # noqa: E731 - trivial test stub
 

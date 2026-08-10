@@ -3,16 +3,16 @@ import math
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.control.mission import (
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.mission import (
     SUPP_NO_FEEDBACK_CYCLES,
     MissionController,
 )
-from triton.geometry import CameraModel
-from triton.rig.interface import RigTelemetry
-from triton.vision.firedetect import FireBlob
-from triton.vision.impact import ImpactObservation
-from triton.vision.tracker import Track
+from fireturret.geometry import CameraModel
+from fireturret.rig.interface import RigTelemetry
+from fireturret.vision.firedetect import FireBlob
+from fireturret.vision.impact import ImpactObservation
+from fireturret.vision.tracker import Track
 
 CFG = DEFAULT_CONFIG
 DT = 1 / 30
@@ -301,8 +301,8 @@ def test_a_rejected_track_that_later_confirms_is_engaged_not_swept_past() -> Non
     confirmed fire with the valve shut, for as long as it stayed in frame.
     _do_acquire has always handled `target`; _do_search did not.
     """
-    from triton.rig.interface import RigTelemetry
-    from triton.vision.tracker import Track
+    from fireturret.rig.interface import RigTelemetry
+    from fireturret.vision.tracker import Track
 
     mc = MissionController(CFG, CameraModel(CFG.camera))
     dt = 1 / 30

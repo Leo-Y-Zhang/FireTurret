@@ -6,9 +6,9 @@ import json
 import threading
 import urllib.request
 
-from triton.control.advisories import CRITICAL, Advisory
-from triton.rig.interface import RigCommand, RigTelemetry
-from triton.ui.webserver import (
+from fireturret.control.advisories import CRITICAL, Advisory
+from fireturret.rig.interface import RigCommand, RigTelemetry
+from fireturret.ui.webserver import (
     WebState,
     apply_estop,
     encode_jpeg,
@@ -32,7 +32,7 @@ def test_status_dict_shapes_payload() -> None:
 
 def test_hardware_command_is_dry_by_default() -> None:
     """On the real-hardware path, water is OFF unless explicitly armed — the
-    web console must match `triton run`'s dry-aim-first safety default."""
+    web console must match `fireturret run`'s dry-aim-first safety default."""
     cmd = RigCommand(10.0, 25.0, 55.0, True, warn=True)
     # not armed: pump/valve forced off, but aim + warn still pass through
     dry = rig_command_for_hardware(cmd, estop=False, water_enabled=False)
@@ -66,7 +66,7 @@ def test_server_serves_page_and_status() -> None:
         base = f"http://127.0.0.1:{port}"
         with urllib.request.urlopen(base + "/", timeout=3) as r:
             assert r.status == 200
-            assert b"TRITON" in r.read()
+            assert b"FIRETURRET" in r.read()
         with urllib.request.urlopen(base + "/status", timeout=3) as r:
             payload = json.loads(r.read())
             assert payload["state"] == "SEARCH"

@@ -163,20 +163,20 @@ target. See [`docs/GPU_DETECTOR.md`](docs/GPU_DETECTOR.md).
 python -m venv .venv && . .venv/Scripts/activate   # Windows; use bin/activate on *nix
 pip install -e .
 
-python -m triton sim                 # full mission in the simulator (a window opens)
-python -m triton sim --headless      # same, no window; prints the outcome
-python -m triton sim --scenario multi # default, close, offset, far, unreachable, multi, windy, decoy, moving
-python -m triton run --source 0      # your webcam: fire detection + aim preview (no hardware)
-python -m triton run --source clip.mp4
-python -m triton run --source 0 --port COM3   # hardware: dry-aim (no water) unless --arm-water
-python -m triton selftest --port COM3         # exercise the actuators + verify the link (dry)
-python -m triton web --source 0      # browser console on loopback; --host 0.0.0.0 --expose to reach it from a phone
+python -m fireturret sim                 # full mission in the simulator (a window opens)
+python -m fireturret sim --headless      # same, no window; prints the outcome
+python -m fireturret sim --scenario multi # default, close, offset, far, unreachable, multi, windy, decoy, moving
+python -m fireturret run --source 0      # your webcam: fire detection + aim preview (no hardware)
+python -m fireturret run --source clip.mp4
+python -m fireturret run --source 0 --port COM3   # hardware: dry-aim (no water) unless --arm-water
+python -m fireturret selftest --port COM3         # exercise the actuators + verify the link (dry)
+python -m fireturret web --source 0      # browser console on loopback; --host 0.0.0.0 --expose to reach it from a phone
 
 pip install -e .[desktop]            # PySide6 + pyqtgraph, for the desktop workbench
-python -m triton studio              # Studio — the desktop engineering workbench
+python -m fireturret studio              # Studio — the desktop engineering workbench
 ```
 
-**Browser interface.** `triton web` serves a live annotated stream, the operator
+**Browser interface.** `fireturret web` serves a live annotated stream, the operator
 warnings, and a remote E-stop over HTTP. Use `--source sim` to try it with no
 hardware. Deploying on a Raspberry Pi is a plug-in-the-camera, one-command
 affair — see [`docs/RASPBERRY_PI.md`](docs/RASPBERRY_PI.md).
@@ -190,10 +190,10 @@ behind a VPN or an authenticating reverse proxy rather than a flat LAN.
 
 Nothing is actuated unless you pass `--port` — and even on hardware the pump/valve
 stay **off** unless you add `--arm-water` and confirm, so first bring-up is always
-dry-aim. That same gate covers the self-test's pump pulse: `triton selftest` is
+dry-aim. That same gate covers the self-test's pump pulse: `fireturret selftest` is
 dry unless you pass `--arm-water` and type ARM. It exercises each actuator and
 checks the link first;
-`triton fit shots.csv` calibrates the ballistic model; `--config turret.json`
+`fireturret fit shots.csv` calibrates the ballistic model; `--config turret.json`
 loads a saved calibration (Studio can export one). The safe, gated
 bring-up procedure is in [`docs/COMMISSIONING.md`](docs/COMMISSIONING.md).
 
@@ -252,7 +252,7 @@ Every simulated mission can record a per-frame telemetry trace and turn it into
 an engineering report:
 
 ```bash
-python -m triton sim --headless --log run.csv --report mission.png
+python -m fireturret sim --headless --log run.csv --report mission.png
 pip install -e .[analysis]   # matplotlib, for --report
 ```
 
@@ -278,7 +278,7 @@ telemetry plots and the model-vs-true ballistic arc.*
 
 ```bash
 pip install -e .[desktop]
-python -m triton studio
+python -m fireturret studio
 ```
 
 ![Studio — full mission with the crosshair readout](docs/studio.png)
@@ -308,8 +308,8 @@ Panels:
 Docks are rearrangeable and the layout persists between sessions (View ▸ Reset
 layout restores the default).
 
-Sessions save to `*.triton.json`; runs export as CSV + a JSON sidecar. The
-existing `triton web` viewer remains the lightweight live/Pi operator console.
+Sessions save to `*.fireturret.json`; runs export as CSV + a JSON sidecar. The
+existing `fireturret web` viewer remains the lightweight live/Pi operator console.
 Design rationale is in [`docs/STUDIO.md`](docs/STUDIO.md) and
 [`docs/THEORY_OF_OPERATION.md`](docs/THEORY_OF_OPERATION.md).
 
@@ -365,13 +365,13 @@ from this README, and each is explicit about where the system falls short:
 
 ## Layout
 
-- `src/triton/vision/` — fire detection, tracking, splash detection, scene renderer
-- `src/triton/ballistics.py`, `geometry.py` — projectile model and camera geometry
-- `src/triton/control/` — the mission state machine and the visual servo
-- `src/triton/rig/` — the hardware abstraction: serial driver, simulator, protocol
-- `src/triton/simcore.py` — the Qt-free simulation core (`simulate` + `drive`), shared by the CLI and Studio
-- `src/triton/studio/` — Studio, the desktop workbench (optional `[desktop]` extra)
-- `src/triton/ui/` — the operator overlay
+- `src/fireturret/vision/` — fire detection, tracking, splash detection, scene renderer
+- `src/fireturret/ballistics.py`, `geometry.py` — projectile model and camera geometry
+- `src/fireturret/control/` — the mission state machine and the visual servo
+- `src/fireturret/rig/` — the hardware abstraction: serial driver, simulator, protocol
+- `src/fireturret/simcore.py` — the Qt-free simulation core (`simulate` + `drive`), shared by the CLI and Studio
+- `src/fireturret/studio/` — Studio, the desktop workbench (optional `[desktop]` extra)
+- `src/fireturret/ui/` — the operator overlay
 - `firmware/turret_firmware/` — the Arduino/ESP32 sketch
 - `docs/BUILD_GUIDE.md` — how to build the physical turret
 
@@ -389,15 +389,15 @@ refuses to construct without an explicit data-flow acknowledgement.)
 
 ## A note on the name
 
-This repository was called **Triton** until August 2026 and is now
+This repository was called **FireTurret** until August 2026 and is now
 **FireTurret**, which says what it is rather than what it was named
 after. The rename stopped at the documentation on purpose. Still carrying the old
 name, and staying that way:
 
-- the Python package and CLI — `src/triton/`, `python -m triton`, `triton[desktop]`
-- the config dataclass `TritonConfig` and the saved-session extension `*.triton.json`
-- the ROS 2 frame ids (`triton/world`, `triton/pan`, …) and joint names
-- the desktop workbench's application name and window title, "Triton Studio"
+- the Python package and CLI — `src/fireturret/`, `python -m fireturret`, `fireturret[desktop]`
+- the config dataclass `FireTurretConfig` and the saved-session extension `*.fireturret.json`
+- the ROS 2 frame ids (`fireturret/world`, `fireturret/pan`, …) and joint names
+- the desktop workbench's application name and window title, "FireTurret Studio"
   (the docs call it simply *Studio*)
 
 Each of those is an interface, not a label. Renaming the package breaks every
@@ -410,19 +410,19 @@ only decoration.
 ### The cost of keeping it: a name collision on PyPI
 
 That decision has a price, and it is not paid by this repository — it is paid by
-whoever installs it. **`triton` is also the name of a widely-installed package on
+whoever installs it. **`fireturret` is also the name of a widely-installed package on
 PyPI**: the GPU kernel compiler, which PyTorch declares as a dependency and which
 therefore turns up in a very large number of Python environments without anyone
 choosing it.
 
-This project's `pyproject.toml` declares `name = "triton"` and ships a top-level
-`triton` package, so the two are not merely similar — they are the same
+This project's `pyproject.toml` declares `name = "fireturret"` and ships a top-level
+`fireturret` package, so the two are not merely similar — they are the same
 distribution name and the same import name. In one environment:
 
 - pip treats them as the same distribution. Installing either one **uninstalls
   the other**; there is no error and no warning, because from pip's point of view
-  this is an ordinary upgrade or downgrade of `triton`.
-- `import triton` afterwards resolves to whichever survived. Code expecting the
+  this is an ordinary upgrade or downgrade of `fireturret`.
+- `import fireturret` afterwards resolves to whichever survived. Code expecting the
   other gets an `ImportError` on a submodule, or worse, an attribute that exists
   in both and means different things.
 - `pip install torch` can therefore quietly replace this package, and
@@ -441,7 +441,7 @@ Two mitigating facts, offered because overstating a problem is as unhelpful as
 hiding one. The collision only bites in a *shared* environment — the per-repo
 `.venv` workflow this project already documents never meets it. And it is a
 **Linux problem specifically**: checked against the PyPI JSON API on 2026-08-03,
-`triton` is at 3.7.1 across 21 releases and has never published a single Windows
+`fireturret` is at 3.7.1 across 21 releases and has never published a single Windows
 or macOS wheel — the current release is manylinux `x86_64` and `aarch64` only.
 So a Windows or macOS PyTorch install does not drag it in, and the development
 machine this repo is built on cannot hit the collision at all. A Linux

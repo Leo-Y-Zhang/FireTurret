@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 import numpy as np
 
-from triton.config import CameraConfig, DetectorConfig
-from triton.rng import RngBundle
-from triton.vision.firedetect import FireDetector, fire_colour_mask
-from triton.vision.synthetic import FireState, SceneCamera, WorldPoint, render_scene
+from fireturret.config import CameraConfig, DetectorConfig
+from fireturret.rng import RngBundle
+from fireturret.vision.firedetect import FireDetector, fire_colour_mask
+from fireturret.vision.synthetic import FireState, SceneCamera, WorldPoint, render_scene
 
 CFG = DetectorConfig()
 

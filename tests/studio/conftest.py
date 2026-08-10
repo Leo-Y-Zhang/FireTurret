@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
-"""Headless Qt test setup for the Triton Studio suite.
+"""Headless Qt test setup for the FireTurret Studio suite.
 
 Force the offscreen platform BEFORE any QApplication is created, and disable
 pyqtgraph OpenGL (raster only) — matching the raster-only runtime story.

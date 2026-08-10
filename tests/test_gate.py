@@ -19,8 +19,8 @@ from dataclasses import replace
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.control.gate import (
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.gate import (
     SPRAY_BACKSTOP_FACTOR,
     ArmedVeto,
     GateContext,
@@ -31,7 +31,7 @@ from triton.control.gate import (
     WaterGate,
     standard_gate,
 )
-from triton.rig.interface import RigCommand, RigTelemetry
+from fireturret.rig.interface import RigCommand, RigTelemetry
 
 WET = RigCommand(pan_deg=30.0, tilt_deg=22.0, pump_pct=55.0, valve=True)
 HEALTHY = RigTelemetry(30.0, 22.0, 55.0, True, estop=False, ok=True, homed=True)

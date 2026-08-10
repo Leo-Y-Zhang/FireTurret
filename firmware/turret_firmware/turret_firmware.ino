@@ -1,7 +1,7 @@
 /*
  * FireTurret firmware — Arduino Uno / Nano / ESP32.
  *
- * Speaks the line protocol in src/triton/rig/protocol.py (keep in lockstep):
+ * Speaks the line protocol in src/fireturret/rig/protocol.py (keep in lockstep):
  *   Host -> board:  C p=<pan> t=<tilt> w=<pump%> v=<0|1> l=<0|1> x=<0|1>\n  (also heartbeat)
  *   board -> host:  S p=<pan> t=<tilt> w=<pump%> v=<0|1> e=<0|1> h=<0|1>\n  (10 Hz)
  * (l = laser accessory, x = operator-warning indicator, e = E-stop engaged,

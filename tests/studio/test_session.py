@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from triton.studio.session import Session
+from fireturret.studio.session import Session
 
 
 def test_set_field_updates_config_and_sets_dirty(qapp):

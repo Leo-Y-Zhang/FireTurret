@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from triton.studio.session import Session
-from triton.studio.views.model_editor import ModelEditor
+from fireturret.studio.session import Session
+from fireturret.studio.views.model_editor import ModelEditor
 
 
 def test_editing_a_jet_field_updates_session(qapp):

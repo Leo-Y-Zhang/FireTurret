@@ -7,11 +7,11 @@ import threading
 import numpy as np
 from PySide6.QtCore import QThread
 
-from triton.analysis import TelemetrySample
-from triton.app import SimReport
-from triton.config import DEFAULT_CONFIG
-from triton.simcore import SimStep
-from triton.studio.worker import SimWorker
+from fireturret.analysis import TelemetrySample
+from fireturret.app import SimReport
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.simcore import SimStep
+from fireturret.studio.worker import SimWorker
 
 
 def _make_step(i: int, state: str = "SEARCH", extinguished: bool = False) -> SimStep:
@@ -63,7 +63,7 @@ def test_overlay_passthrough_when_no_result(qapp):
 
 
 def test_overlay_draws_for_real_step(qapp):
-    from triton.simcore import simulate
+    from fireturret.simcore import simulate
 
     w = SimWorker(DEFAULT_CONFIG)
     step = next(simulate(DEFAULT_CONFIG, seed=7, max_frames=1))

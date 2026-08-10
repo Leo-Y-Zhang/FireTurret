@@ -16,7 +16,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from triton.safety.detectors import (
+from fireturret.safety.detectors import (
     Detection,
     HogPersonDetector,
     LatencyMeasurement,
@@ -26,7 +26,7 @@ from triton.safety.detectors import (
     may_arm_water_on_hardware,
     measure_latency,
 )
-from triton.safety.keepout import (
+from fireturret.safety.keepout import (
     GUST_WIDENING_DEG_PER_MS,
     MIN_HALF_WIDTH_DEG,
     UNKNOWN_RANGE_HALF_WIDTH_DEG,
@@ -184,7 +184,7 @@ def test_the_measurement_summary_is_human_readable() -> None:
 
 def test_the_derived_staleness_threshold_uses_the_measured_p99() -> None:
     """SP9 and SP10 meeting: the measurement feeds the threshold directly."""
-    from triton.safety.veto import derive_max_age_s
+    from fireturret.safety.veto import derive_max_age_s
 
     m = LatencyMeasurement(samples=[0.12, 0.18, 0.30])
     assert derive_max_age_s(m.p99_s, submit_period_s=0.2) > 0.2 + m.p99_s

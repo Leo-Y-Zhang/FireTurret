@@ -106,7 +106,7 @@ Firmware pin map (edit at the top of `firmware/turret_firmware/turret_firmware.i
 1. Open `firmware/turret_firmware/turret_firmware.ino` in the Arduino IDE.
 2. Set the pin map and the mechanical limits (`PAN_MIN/MAX`, `TILT_MIN/MAX`,
    `PAN_STEPS_PER_DEG`) to match your build.
-3. Flash the board. It speaks the protocol in `src/triton/rig/protocol.py` at
+3. Flash the board. It speaks the protocol in `src/fireturret/rig/protocol.py` at
    115200 baud, reports telemetry at 10 Hz, and independently enforces the
    E-stop and a 500 ms heartbeat watchdog (pump/valve cut if commands stop).
 
@@ -114,7 +114,7 @@ Firmware pin map (edit at the top of `firmware/turret_firmware/turret_firmware.i
 
 ## 5. Calibration
 
-Values live in `src/triton/config.py`. Calibrate in this order:
+Values live in `src/fireturret/config.py`. Calibrate in this order:
 
 1. **Camera FOV** (`CameraConfig.hfov_deg`): point at two marks a known distance
    apart at a known range; compute the horizontal field of view. Set `width`/
@@ -127,15 +127,15 @@ Values live in `src/triton/config.py`. Calibrate in this order:
    point at a person.
 4. **Jet model** (`JetConfig`): fire a dozen test shots at known pump % and tilt,
    measure where each lands, put them in a CSV (`pump_pct,elevation_deg,measured_range_m`),
-   and run `python -m triton fit shots.csv`. Paste the printed `velocity_coeff`
+   and run `python -m fireturret fit shots.csv`. Paste the printed `velocity_coeff`
    and `drag_k` back into `JetConfig`. Also set `max_pressure_psi`, `nozzle_height_m`,
    and `min_pump_pct` (the lowest pump that still throws a coherent stream).
 5. **Boresight** (`boresight_offset_deg`): optional. The suppression loop learns
    and cancels the camera-to-nozzle offset from the splash, so a rough value is
    fine; set it only to speed up the first shot.
 
-Verify end to end in the simulator first (`python -m triton sim`), then dry-run on
-your webcam (`python -m triton run --source 0`, no `--port`) to confirm detection
+Verify end to end in the simulator first (`python -m fireturret sim`), then dry-run on
+your webcam (`python -m fireturret run --source 0`, no `--port`) to confirm detection
 and the aim solution before connecting hardware.
 
 ---

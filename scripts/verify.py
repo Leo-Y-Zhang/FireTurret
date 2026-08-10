@@ -74,7 +74,7 @@ CAUSE_MARKERS = (
 # hoisting -- but only out of a crash, because an ordinary traceback is already
 # reported properly and hoisting its frames would just duplicate it.
 FATAL_MARKERS = ("Fatal Python error", "Windows fatal exception", "Segmentation fault")
-OWN_CODE = ("tests/", "tests\\", "src/triton", "src\\triton")
+OWN_CODE = ("tests/", "tests\\", "src/fireturret", "src\\fireturret")
 MAX_CAUSE_LINES = 12
 
 
@@ -169,7 +169,7 @@ def main() -> int:
             "pytest (slow)",
             [PY, "-m", "pytest", "-m", "slow", "-q", "-p", "no:cacheprovider"],
         ))
-    results.append(run("build metadata", [PY, "-c", "import triton; print(triton.__name__)"]))
+    results.append(run("build metadata", [PY, "-c", "import fireturret; print(fireturret.__name__)"]))
 
     print()
     for r in results:

@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 import pytest
 
-from triton import ballistics
-from triton.config import DEFAULT_CONFIG
-from triton.rig.interface import RigCommand
-from triton.rig.sim_rig import SimRig, SimScenario
+from fireturret import ballistics
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.rig.interface import RigCommand
+from fireturret.rig.sim_rig import SimRig, SimScenario
 
 CFG = DEFAULT_CONFIG
 DT = 1 / 30

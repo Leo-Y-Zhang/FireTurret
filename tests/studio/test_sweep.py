@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from triton.config import TritonConfig
-from triton.rig.sim_rig import SimScenario
-from triton.studio.sweep import (
+from fireturret.config import FireTurretConfig
+from fireturret.rig.sim_rig import SimScenario
+from fireturret.studio.sweep import (
     SweepAxis,
     SweepRunner,
     SweepSpec,
@@ -17,7 +17,7 @@ from triton.studio.sweep import (
 
 
 def test_with_field_config_and_scenario():
-    cfg, scn = TritonConfig(), SimScenario()
+    cfg, scn = FireTurretConfig(), SimScenario()
     cfg2, scn2 = with_field(cfg, scn, "jet", "drag_k", 0.25)
     assert cfg2.jet.drag_k == 0.25
     assert scn2 is scn  # scenario untouched
@@ -27,9 +27,9 @@ def test_with_field_config_and_scenario():
 
 def test_with_field_validates():
     with pytest.raises(ValueError):
-        with_field(TritonConfig(), SimScenario(), "jet", "max_pressure_psi", -1.0)
+        with_field(FireTurretConfig(), SimScenario(), "jet", "max_pressure_psi", -1.0)
     with pytest.raises(ValueError):
-        with_field(TritonConfig(), SimScenario(), "bogus", "x", 1.0)
+        with_field(FireTurretConfig(), SimScenario(), "bogus", "x", 1.0)
 
 
 def test_sweep_grid_cardinality_and_coords():
@@ -38,7 +38,7 @@ def test_sweep_grid_cardinality_and_coords():
         seeds=[7, 8],
         max_frames=120,
     )
-    cells = sweep_grid(TritonConfig(), SimScenario(), spec)
+    cells = sweep_grid(FireTurretConfig(), SimScenario(), spec)
     assert len(cells) == 3 * 2  # 3 values x 2 seeds
     # each cell's config reflects its axis value
     for c in cells:
@@ -54,13 +54,13 @@ def test_sweep_grid_two_axes():
         seeds=[7],
         max_frames=120,
     )
-    cells = sweep_grid(TritonConfig(), SimScenario(), spec)
+    cells = sweep_grid(FireTurretConfig(), SimScenario(), spec)
     assert len(cells) == 2 * 3 * 1
 
 
 def test_run_cell_returns_metrics():
     spec = SweepSpec(axes=[SweepAxis("jet", "drag_k", [0.16])], seeds=[7], max_frames=120)
-    cell = sweep_grid(TritonConfig(), SimScenario(), spec)[0]
+    cell = sweep_grid(FireTurretConfig(), SimScenario(), spec)[0]
     result = run_cell(cell)
     assert result.index == 0
     assert isinstance(result.water_l, float)
@@ -69,7 +69,7 @@ def test_run_cell_returns_metrics():
 
 def test_run_cell_cancelled_shortcut():
     spec = SweepSpec(axes=[SweepAxis("jet", "drag_k", [0.16])], seeds=[7], max_frames=6000)
-    cell = sweep_grid(TritonConfig(), SimScenario(), spec)[0]
+    cell = sweep_grid(FireTurretConfig(), SimScenario(), spec)[0]
     result = run_cell(cell, should_stop=lambda: True)  # cancel at entry
     assert result.cancelled is True
 
@@ -77,7 +77,7 @@ def test_run_cell_cancelled_shortcut():
 def test_sweep_runner_completes(qapp, qtbot):
     spec = SweepSpec(axes=[SweepAxis("jet", "drag_k", [0.14, 0.16, 0.18])],
                      seeds=[7], max_frames=120)
-    cells = sweep_grid(TritonConfig(), SimScenario(), spec)
+    cells = sweep_grid(FireTurretConfig(), SimScenario(), spec)
     runner = SweepRunner(cells)
     with qtbot.waitSignal(runner.finished, timeout=60000) as blocker:
         runner.start()
@@ -91,7 +91,7 @@ def test_sweep_runner_isolates_a_failing_cell(qapp, qtbot):
     is caught and reported as a failed result so `finished` still fires. A
     negative seed reaches np.random.default_rng and raises on the pool thread."""
     spec = SweepSpec(axes=[SweepAxis("jet", "drag_k", [0.16])], seeds=[7, -1], max_frames=120)
-    cells = sweep_grid(TritonConfig(), SimScenario(), spec)
+    cells = sweep_grid(FireTurretConfig(), SimScenario(), spec)
     runner = SweepRunner(cells)
     with qtbot.waitSignal(runner.finished, timeout=60000) as blocker:
         runner.start()
@@ -105,7 +105,7 @@ def test_sweep_runner_isolates_a_failing_cell(qapp, qtbot):
 def test_sweep_runner_cancel_before_start(qapp, qtbot):
     spec = SweepSpec(axes=[SweepAxis("jet", "drag_k", [0.14, 0.16])],
                      seeds=[7], max_frames=6000)
-    cells = sweep_grid(TritonConfig(), SimScenario(), spec)
+    cells = sweep_grid(FireTurretConfig(), SimScenario(), spec)
     runner = SweepRunner(cells)
     runner.cancel()  # every cell shortcuts to cancelled -> finished still fires
     with qtbot.waitSignal(runner.finished, timeout=30000) as blocker:

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import pytest
 
-from triton.ballistics import exit_velocity, reach_bounds, simulate_arc
-from triton.config import DEFAULT_CONFIG
-from triton.studio.views.ballistics_view import BallisticsView
+from fireturret.ballistics import exit_velocity, reach_bounds, simulate_arc
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.studio.views.ballistics_view import BallisticsView
 
 
 def test_set_elevation_updates_arc(qapp):

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from triton.studio.sweep import SweepAxis, SweepResult, SweepSpec
-from triton.studio.views.sweep_view import SweepResultsView
+from fireturret.studio.sweep import SweepAxis, SweepResult, SweepSpec
+from fireturret.studio.views.sweep_view import SweepResultsView
 
 
 def test_one_axis_scatter(qapp):

@@ -16,9 +16,9 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.vision.firedetect import FireDetector
-from triton.vision.registration import StabilisedFlicker, stabilise_mask
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.vision.firedetect import FireDetector
+from fireturret.vision.registration import StabilisedFlicker, stabilise_mask
 
 CFG = DEFAULT_CONFIG.detector
 H, W = 120, 200

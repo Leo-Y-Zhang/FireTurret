@@ -1,11 +1,11 @@
-# Triton — Camera-Guided Fire-Suppression Turret: Design
+# FireTurret — Camera-Guided Fire-Suppression Turret: Design
 
 **Date:** 2026-07-17
 **Status:** Approved (supersedes an earlier, since-deleted grid-world simulator prototype)
 
 ## Purpose
 
-Triton is the complete software for a fixed, fire-truck-style water turret that takes
+FireTurret is the complete software for a fixed, fire-truck-style water turret that takes
 **real camera footage as input**, detects fire in the frames, and drives pan/tilt motors,
 a pump, and a valve to arc water onto the fire — correcting its own aim by watching where
 the water actually lands (**closed-loop visual servoing**). It runs identically against
@@ -91,7 +91,7 @@ Raspberry Pi 5 + ESP32 (or Uno) over USB serial; NEMA 17 + TMC2209 pan on a slew
 DS3218 tilt for the nozzle; 12 V diaphragm pump on a MOSFET (PWM) + solenoid valve;
 camera on the pan stage; normally-closed E-stop cutting motor/pump power in hardware.
 The BUILD_GUIDE covers BOM, wiring, assembly, firmware flashing, calibration (boresight,
-level/zero, camera FOV, pressure→range fitting via `triton fit`), and a safety checklist.
+level/zero, camera FOV, pressure→range fitting via `fireturret fit`), and a safety checklist.
 
 ## Testing
 

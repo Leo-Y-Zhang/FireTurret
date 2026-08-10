@@ -40,9 +40,9 @@ from pathlib import Path
 
 import pytest
 
-from triton.__main__ import SCENARIOS
-from triton.app import Pipeline, run_sim
-from triton.config import DEFAULT_CONFIG
+from fireturret.__main__ import SCENARIOS
+from fireturret.app import Pipeline, run_sim
+from fireturret.config import DEFAULT_CONFIG
 
 GOLDEN = Path(__file__).parent / "golden"
 CASES = [("default", 7), ("unreachable", 7), ("multi", 7), ("windy", 3)]
@@ -163,7 +163,7 @@ def test_cli_stdout_matches_golden(name):
     (a missing field or a flipped `extinguished` is a real change); the numbers
     it prints are the same measurements tier 2 already tolerances."""
     out = subprocess.run(
-        [sys.executable, "-m", "triton", "sim", "--scenario", name, "--headless"],
+        [sys.executable, "-m", "fireturret", "sim", "--scenario", name, "--headless"],
         capture_output=True, text=True,
     ).stdout
     got = _parse_stdout(out)
@@ -190,7 +190,7 @@ def test_cli_stdout_matches_golden(name):
 def _load_frozen():
     import numpy as np
 
-    from triton.rig.interface import RigTelemetry
+    from fireturret.rig.interface import RigTelemetry
 
     with np.load(GOLDEN / "frames_default.npz") as data:
         frames = data["frames"]

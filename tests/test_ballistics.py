@@ -3,8 +3,8 @@ from dataclasses import replace
 
 import pytest
 
-from triton import ballistics
-from triton.config import JetConfig
+from fireturret import ballistics
+from fireturret.config import JetConfig
 
 JET = JetConfig()
 

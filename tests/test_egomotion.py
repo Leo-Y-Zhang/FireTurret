@@ -16,8 +16,8 @@ import math
 import numpy as np
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.frames import (
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.frames import (
     CAMERA,
     CHAIN,
     NOZZLE,
@@ -30,8 +30,8 @@ from triton.frames import (
     camera_parent,
     chain_to,
 )
-from triton.geometry import CameraModel
-from triton.vision.egomotion import (
+from fireturret.geometry import CameraModel
+from fireturret.vision.egomotion import (
     camera_matrix,
     pan_shift_px,
     pan_warp,

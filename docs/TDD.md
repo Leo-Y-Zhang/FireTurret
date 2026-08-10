@@ -127,7 +127,7 @@ overwrites an existing field.
 `plugins.discover()` reads `importlib.metadata` **metadata only** and never
 imports a plugin module. Enumerating what is installed must not execute
 third-party code, so merely having a package installed cannot get its code run.
-The module docstring names a `triton --list-plugins` flag; **no such flag exists
+The module docstring names a `fireturret --list-plugins` flag; **no such flag exists
 in `build_parser`** — the property is real, the command it cites is not.
 
 `simcore.simulate()` is a pure per-tick generator and `simcore.drive()` is the
@@ -142,7 +142,7 @@ thread and communicates **only** via Qt signals: a `SimStep` holds a mutable
 What would be a schema in a web service is here a frozen configuration dataclass
 tree plus the on-disk formats derived from it.
 
-`TritonConfig` (`src/triton/config.py`) is a frozen dataclass of six frozen
+`FireTurretConfig` (`src/fireturret/config.py`) is a frozen dataclass of six frozen
 sub-configs. Frozen matters: every edit goes through `dataclasses.replace`, which
 re-runs `__post_init__` validation, so an invalid value raises instead of being
 stored.
@@ -151,7 +151,7 @@ stored.
 |---|---|---|
 | `camera` | `width`, `height`, `hfov_deg`, `mount_height_m`, `mount_pitch_deg`, `boresight_offset_deg` | positive dimensions; `0 < hfov_deg < 180`; positive mount height |
 | `turret` | pan/tilt limits, slew rates, `pan_keepout_deg: tuple \| None` | `pan_min < pan_max`; `0 <= tilt_min < tilt_max <= 90`; positive rates; **keep-out must be an ascending sub-range of the pan limits** |
-| `jet` | `max_pressure_psi`, `velocity_coeff`, `drag_k`, `nozzle_height_m`, `min_pump_pct` | — (the first three are what `triton fit` refines) |
+| `jet` | `max_pressure_psi`, `velocity_coeff`, `drag_k`, `nozzle_height_m`, `min_pump_pct` | — (the first three are what `fireturret fit` refines) |
 | `detector` | colour/flicker thresholds, tracker association distance | — |
 | `servo` | `suppress_tilt_deg`, pan gain/deadband, `range_gain_pct_per_px`, `range_deadband_px`, `pump_step_pct`, `settle_frames` | — |
 | `mission` | timeouts, `max_spray_s`, `soak_s`, `heartbeat_timeout_s`, `default_range_m`, `unreachable_cycles`, `hold_retry_s` | — |
@@ -178,7 +178,7 @@ them. That is a safety property rather than tidiness: a plugin able to redefine
 | Format | Written by | Shape | Compatibility rule |
 |---|---|---|---|
 | Config JSON (`turret.json`) | `config.save_config`, Studio export | `{schema_version, camera:{…}, turret:{…}, …}` | interchangeable with a session file, which nests the same object under `"config"` |
-| Session (`*.triton.json`) | Studio `File ▸ Save As` | `{config:{…}, scenario:{…}}` | the config half loads directly into the CLI via `--config` |
+| Session (`*.fireturret.json`) | Studio `File ▸ Save As` | `{config:{…}, scenario:{…}}` | the config half loads directly into the CLI via `--config` |
 | Telemetry CSV (`--log`) | `analysis.TelemetrySample` | 14 columns, one row per tick | append-only record; no imagery |
 | Run export | Studio runs table | `<name>.csv` + `<name>.json` sidecar | sidecar carries the metadata the CSV cannot |
 
@@ -227,7 +227,7 @@ it are specified above.
 | Nozzle slews across the keep-out sector | mission | `swept_intersects_keepout` on the commanded transit | water withheld for the transit **plus** worst-case flight time + `KEEPOUT_HOLD_MARGIN_S` |
 | Person detector unavailable (OpenCV 5 removed `HOGDescriptor`) | construction time | `HogPersonDetector` **raises** rather than constructing | use the ONNX detector (`[ml]` extra); a detector that silently found nothing would be indistinguishable from a clear scene |
 | Config file from a newer version | loader | `schema_version` comparison | warns and loads the fields it understands; unknown groups preserved |
-| Qt import fails (no `[desktop]` extra) | CLI | guarded import in `__main__` | `triton studio --help` still works; the core CLI never imports Qt |
+| Qt import fails (no `[desktop]` extra) | CLI | guarded import in `__main__` | `fireturret studio --help` still works; the core CLI never imports Qt |
 
 ## Backing a change out
 
@@ -315,7 +315,7 @@ between what `SAFETY.md` describes and what executes.
 **Whether the HOG person detector should be removed outright** now that OpenCV 5
 has deleted `cv2.HOGDescriptor`, leaving ONNX as the only path.
 
-**Whether `[project] name = "triton"` in `pyproject.toml` should change.** It
+**Whether `[project] name = "fireturret"` in `pyproject.toml` should change.** It
 collides with a widely-installed PyPI distribution of the same name, so a user
 who installs both into one environment gets whichever was installed last.
 
@@ -332,7 +332,7 @@ bare `Fatal Python error: Aborted`. Commit
 nested; that removed one exposure and nothing else.
 
 **The cause.** The CI dump, once the frame hoisting in `verify.py` surfaced it,
-named `src/triton/studio/main_window.py` line 447 inside `run` — the
+named `src/fireturret/studio/main_window.py` line 447 inside `run` — the
 `self._thread = thread` rebinding, reached from
 `tests/studio/test_main_window.py::test_replay_and_compare_runs`, the only test
 that calls `run()` twice on one window. That assignment drops the last Python

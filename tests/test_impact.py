@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 import numpy as np
 
-from triton.vision.impact import SplashDetector
+from fireturret.vision.impact import SplashDetector
 
 
 def scene() -> np.ndarray:

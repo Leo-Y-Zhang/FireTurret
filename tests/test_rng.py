@@ -24,10 +24,10 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from triton.config import DEFAULT_CONFIG, CameraConfig
-from triton.rig.sim_rig import SimRig, SimScenario
-from triton.rng import RngBundle, stream_spawn_key
-from triton.vision.synthetic import (
+from fireturret.config import DEFAULT_CONFIG, CameraConfig
+from fireturret.rig.sim_rig import SimRig, SimScenario
+from fireturret.rng import RngBundle, stream_spawn_key
+from fireturret.vision.synthetic import (
     FIRE_DRAWS,
     SPLASH_DRAWS,
     Draws,

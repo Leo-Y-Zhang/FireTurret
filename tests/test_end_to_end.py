@@ -7,9 +7,9 @@ from the controller's model. Passing proves the closed loop corrects model error
 
 import pytest
 
-from triton.app import Pipeline, run_sim
-from triton.config import DEFAULT_CONFIG
-from triton.rig.sim_rig import SimRig, SimScenario
+from fireturret.app import Pipeline, run_sim
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.rig.sim_rig import SimRig, SimScenario
 
 # Full-length closed-loop runs (~145 s total). Deselected by default
 # (addopts = -m 'not slow'); run explicitly with `pytest -m slow`.

@@ -6,8 +6,8 @@ from dataclasses import replace
 
 import pytest
 
-from triton.ballistics import exit_velocity, fit_jet, range_of
-from triton.config import DEFAULT_CONFIG
+from fireturret.ballistics import exit_velocity, fit_jet, range_of
+from fireturret.config import DEFAULT_CONFIG
 
 
 def test_fit_jet_recovers_known_params():

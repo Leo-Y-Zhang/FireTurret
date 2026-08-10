@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from triton.studio.views.camera_view import CameraView
+from fireturret.studio.views.camera_view import CameraView
 
 
 def test_set_frame_produces_pixmap(qapp):

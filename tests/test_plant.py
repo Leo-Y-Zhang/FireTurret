@@ -24,21 +24,21 @@ from __future__ import annotations
 
 import pytest
 
-from triton.ballistics import arc_with_time, exit_velocity, range_of, simulate_arc
-from triton.config import DEFAULT_CONFIG
-from triton.control.plant import (
+from fireturret.ballistics import arc_with_time, exit_velocity, range_of, simulate_arc
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.plant import (
     MIN_PLANT_PX_PER_PCT,
     TARGET_LOOP_GAIN,
     plant_gain,
     schedule_cycle,
 )
-from triton.control.suppress import (
+from fireturret.control.suppress import (
     FPS,
     OBSERVE_FRAMES,
     SETTLE_MARGIN_FRAMES,
     SuppressionCycle,
 )
-from triton.geometry import CameraModel
+from fireturret.geometry import CameraModel
 
 CFG = DEFAULT_CONFIG
 JET = CFG.jet
@@ -205,7 +205,7 @@ def test_every_observation_post_dates_the_correction_that_caused_it(pump) -> Non
 def test_the_old_fixed_window_violated_that_contract() -> None:
     """Guards the claim, not just the fix. If this ever passes, the premise of
     SP4 was wrong and the numbers above need re-measuring."""
-    from triton.control.suppress import SUPP_SETTLE_FRAMES
+    from fireturret.control.suppress import SUPP_SETTLE_FRAMES
 
     old_settle_s = SUPP_SETTLE_FRAMES / FPS
     flight_s = arc_with_time(exit_velocity(55.0, JET), SUPPRESS_TILT, JET).flight_time_s
@@ -221,7 +221,7 @@ def test_reachability_is_judged_on_a_tighter_threshold_than_control() -> None:
     pixels. Judging reach on the control deadband therefore reads "out of reach"
     as "on target", and HOLD only ever fired when noise happened to cross 12 px.
     """
-    from triton.control.suppress import REACH_SHORTFALL_PX
+    from fireturret.control.suppress import REACH_SHORTFALL_PX
 
     assert REACH_SHORTFALL_PX < CFG.servo.range_deadband_px
 
@@ -239,7 +239,7 @@ def test_reachability_is_judged_on_a_tighter_threshold_than_control() -> None:
 def test_the_cycle_retimes_itself_from_the_current_solution() -> None:
     """Flight time varies with pump across the band, so one computed window is no
     better than one constant — it has to be recomputed per cycle."""
-    from triton.control.servo import VisualServo
+    from fireturret.control.servo import VisualServo
 
     cycle = SuppressionCycle(CFG, CAM, VisualServo(CFG.servo, CFG.turret, CAM), 30.0)
     cycle.retime(25.0, SUPPRESS_TILT)

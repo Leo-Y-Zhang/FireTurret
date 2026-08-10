@@ -5,14 +5,14 @@ turret — built to the calibre of tools like OpenRocket or ParaView. You edit a
 model, run a simulation, and inspect the result deeply, all in one application.
 
 It is an optional component: `pip install -e .[desktop]` (PySide6 + pyqtgraph),
-then `python -m triton studio`. The core package and CLI never depend on Qt.
+then `python -m fireturret studio`. The core package and CLI never depend on Qt.
 
 ![Studio](studio.png)
 
 ## Design principles
 
 - **The GUI never computes physics.** All perception, ballistics, and control stay
-  in the Qt-free engine (`triton.simcore`, `triton.ballistics`, …). Studio only
+  in the Qt-free engine (`fireturret.simcore`, `fireturret.ballistics`, …). Studio only
   orchestrates and renders. This keeps the tested engine authoritative.
 - **One engine, one behaviour.** The CLI and Studio both drive the simulation
   through `simcore.drive()`. Its exact behaviour (metric accumulation order, the
@@ -29,10 +29,10 @@ then `python -m triton studio`. The core package and CLI never depend on Qt.
 ## Architecture
 
 ```
-src/triton/
+src/fireturret/
   simcore.py            # Qt-free: simulate() generator + drive() shared loop
   studio/
-    app.py              # QApplication bootstrap, dark theme, `triton studio` entry
+    app.py              # QApplication bootstrap, dark theme, `fireturret studio` entry
     main_window.py      # QMainWindow: docks, menus, status bar, run/sweep orchestration
     session.py          # Session document (config + scenario) + dirty + QUndoStack
     worker.py           # SimWorker (moveToThread) streaming telemetry/frames
@@ -43,7 +43,7 @@ src/triton/
     views/              # plots, camera, top-down, ballistics, sweep, calibration, model editor
 ```
 
-- **Session** is the single shared document (a `TritonConfig` + a `SimScenario`).
+- **Session** is the single shared document (a `FireTurretConfig` + a `SimScenario`).
   Views read from it; the model editor writes to it via `set_field`.
 - **Persistence** uses an explicit `from_dict`/`to_dict` (not bare `asdict` + the
   top constructor, which would leave nested sub-configs as dicts and skip
@@ -74,7 +74,7 @@ so an aborted sweep finishes promptly while keeping completed results.
 
 ## Files
 
-- **Session**: `File ▸ Save As…` writes `*.triton.json` (config + scenario);
+- **Session**: `File ▸ Save As…` writes `*.fireturret.json` (config + scenario);
   `File ▸ Open…` loads one. Recent files are remembered.
 - **Run**: `File ▸ Save last run…` writes the telemetry as CSV plus a JSON sidecar
   (config snapshot, scenario, seed, metrics).
@@ -91,5 +91,5 @@ pixels. Run the desktop tests with `pytest tests/studio`.
 ## Platform notes
 
 pyqtgraph OpenGL is disabled (raster rendering only) for portability on managed
-machines. Launch via `python -m triton studio` (or the `triton studio` subcommand)
+machines. Launch via `python -m fireturret studio` (or the `fireturret studio` subcommand)
 — no separately-installed executable is required.

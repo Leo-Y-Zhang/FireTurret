@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 import pytest
 
-from triton.config import CameraConfig, ServoConfig, TurretConfig
-from triton.control.servo import VisualServo
-from triton.geometry import CameraModel
+from fireturret.config import CameraConfig, ServoConfig, TurretConfig
+from fireturret.control.servo import VisualServo
+from fireturret.geometry import CameraModel
 
 SCFG = ServoConfig()
 TCFG = TurretConfig()

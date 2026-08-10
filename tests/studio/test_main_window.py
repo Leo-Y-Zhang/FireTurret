@@ -7,9 +7,9 @@ from pathlib import Path
 import pytest
 from PySide6.QtCore import QSettings, QThread
 
-from triton.config import TritonConfig
-from triton.studio.main_window import MainWindow
-from triton.studio.sweep import SweepAxis, SweepSpec
+from fireturret.config import FireTurretConfig
+from fireturret.studio.main_window import MainWindow
+from fireturret.studio.sweep import SweepAxis, SweepSpec
 
 
 def _temp_settings(tmp_path) -> QSettings:
@@ -20,7 +20,7 @@ def _temp_settings(tmp_path) -> QSettings:
 def test_initial_empty_state_and_clean_title(qapp):
     win = MainWindow(max_frames=120)
     assert win.plots._stack.currentWidget() is win.plots._empty
-    assert win.windowTitle() == "Triton Studio"
+    assert win.windowTitle() == "FireTurret Studio"
 
 
 def test_edit_marks_dirty_updates_title_and_ballistics(qapp):
@@ -163,7 +163,7 @@ def test_reset_layout_is_safe(qapp, tmp_path):
 def test_about_text_has_versions(qapp):
     win = MainWindow(max_frames=120)
     txt = win._about_text()
-    assert "Triton Studio" in txt
+    assert "FireTurret Studio" in txt
     assert "PySide6" in txt
     assert "pyqtgraph" in txt
 
@@ -173,7 +173,7 @@ def test_session_save_and_open_roundtrip(qapp, tmp_path):
     win = MainWindow(max_frames=120, settings=settings)
     win.set_param("jet", "drag_k", 0.33)
     assert win.session.dirty is True
-    path = tmp_path / "s.triton.json"
+    path = tmp_path / "s.fireturret.json"
     win.save_session_path(path)
     assert win.session.dirty is False  # mark_saved cleared it
     assert path.exists()
@@ -189,7 +189,7 @@ def test_new_session_resets_to_defaults(qapp, tmp_path):
     win = MainWindow(max_frames=120, settings=_temp_settings(tmp_path))
     win.set_param("jet", "drag_k", 0.4)
     win.new_session()
-    assert win.session.config.jet.drag_k == TritonConfig().jet.drag_k
+    assert win.session.config.jet.drag_k == FireTurretConfig().jet.drag_k
     assert win.session.dirty is False
 
 
@@ -207,7 +207,7 @@ def test_new_session_clears_prior_runs(qapp, qtbot, tmp_path):
 
 def test_recent_files_tracked_on_save(qapp, tmp_path):
     win = MainWindow(max_frames=120, settings=_temp_settings(tmp_path))
-    path = tmp_path / "s.triton.json"
+    path = tmp_path / "s.fireturret.json"
     win.save_session_path(path)
     assert str(path) in win._recent_paths()
 

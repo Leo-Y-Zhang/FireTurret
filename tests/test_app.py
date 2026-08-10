@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 import numpy as np
 
-from triton.app import Pipeline, TickResult, run_sim
-from triton.config import DEFAULT_CONFIG
-from triton.rig.interface import RigTelemetry
-from triton.rig.sim_rig import SimScenario
+from fireturret.app import Pipeline, TickResult, run_sim
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.rig.interface import RigTelemetry
+from fireturret.rig.sim_rig import SimScenario
 
 
 def idle_telemetry() -> RigTelemetry:
@@ -34,7 +34,7 @@ def test_pipeline_tick_returns_valid_ranges() -> None:
 def test_detector_is_injectable() -> None:
     # any object with .detect(frame, camera_moving) -> list[FireBlob] drops in;
     # here a stub that reports one fixed fire blob every frame
-    from triton.vision.firedetect import FireBlob
+    from fireturret.vision.firedetect import FireBlob
 
     class StubDetector:
         def __init__(self) -> None:

@@ -15,13 +15,13 @@ from __future__ import annotations
 
 import pytest
 
-from triton.triage.score import (
+from fireturret.triage.score import (
     TriageWeights,
     choose,
     rank,
     score_target,
 )
-from triton.vision.tracker import Track
+from fireturret.vision.tracker import Track
 
 
 def _track(track_id: int, area: float) -> Track:
@@ -122,8 +122,8 @@ def test_triage_is_not_wired_into_the_mission() -> None:
     against the incumbent yet."""
     import inspect
 
-    from triton.control import mission
-    from triton.vision import tracker
+    from fireturret.control import mission
+    from fireturret.vision import tracker
 
     for module in (mission, tracker):
         assert "triage" not in inspect.getsource(module), (
@@ -135,7 +135,7 @@ def test_no_optimality_is_claimed_anywhere() -> None:
     """The scheduling theorem an earlier design leaned on does not transfer.
     Dropping the bad justification is not the same as dropping the feature — but
     the docs must not carry the claim."""
-    from triton.triage import score
+    from fireturret.triage import score
 
     text = (score.__doc__ or "").lower()
     assert "optimal" in text, "the module should address optimality explicitly"

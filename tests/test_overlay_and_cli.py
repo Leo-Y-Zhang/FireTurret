@@ -2,11 +2,11 @@
 import numpy as np
 import pytest
 
-from triton.__main__ import SCENARIOS, main
-from triton.config import DEFAULT_CONFIG
-from triton.control.mission import MissionDebug
-from triton.rig.interface import RigCommand, RigTelemetry
-from triton.ui.overlay import draw_overlay
+from fireturret.__main__ import SCENARIOS, main
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.mission import MissionDebug
+from fireturret.rig.interface import RigCommand, RigTelemetry
+from fireturret.ui.overlay import draw_overlay
 
 
 def _frame() -> np.ndarray:

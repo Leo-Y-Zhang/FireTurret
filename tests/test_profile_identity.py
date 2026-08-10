@@ -16,18 +16,18 @@ import dataclasses
 
 import pytest
 
-from triton.__main__ import SCENARIOS
-from triton.config import DEFAULT_CONFIG
-from triton.profiles import FireProfile
-from triton.rig.sim_rig import SimRig
-from triton.simcore import drive, simulate
+from fireturret.__main__ import SCENARIOS
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.profiles import FireProfile
+from fireturret.rig.sim_rig import SimRig
+from fireturret.simcore import drive, simulate
 
 pytestmark = pytest.mark.slow
 
 
 def _report(profile, scenario, seed: int):
     """Run the engine with and without a profile through the same code path."""
-    from triton.app import Pipeline
+    from fireturret.app import Pipeline
 
     rig = SimRig(DEFAULT_CONFIG, scenario, seed=seed)
     pipeline = Pipeline(DEFAULT_CONFIG, profile=profile)
@@ -72,8 +72,8 @@ def test_a_different_profile_does_change_the_run() -> None:
     """Guards against the identity test passing vacuously. If swapping in a
     profile with a wide fan changed nothing, the wiring would not be connected
     and the identity above would prove nothing."""
-    from triton.app import Pipeline
-    from triton.profiles import WashdownProfile
+    from fireturret.app import Pipeline
+    from fireturret.profiles import WashdownProfile
 
     fire = Pipeline(DEFAULT_CONFIG, profile=FireProfile())
     wash = Pipeline(DEFAULT_CONFIG, profile=WashdownProfile())

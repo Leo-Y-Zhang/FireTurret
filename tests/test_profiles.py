@@ -17,9 +17,9 @@ from __future__ import annotations
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.geometry import CameraModel
-from triton.plugins import (
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.geometry import CameraModel
+from fireturret.plugins import (
     GROUP_DETECTOR,
     GROUP_PROFILE,
     GROUP_RIG,
@@ -29,9 +29,9 @@ from triton.plugins import (
     discover,
     load,
 )
-from triton.profiles import FireProfile, MissionProfile, SafetyConstraints, WashdownProfile
-from triton.profiles.washdown import SweepEngagement
-from triton.testing import (
+from fireturret.profiles import FireProfile, MissionProfile, SafetyConstraints, WashdownProfile
+from fireturret.profiles.washdown import SweepEngagement
+from fireturret.testing import (
     ConformanceFailure,
     check_impact_observer,
     check_profile,
@@ -100,7 +100,7 @@ def test_the_fire_profile_aims_at_the_target() -> None:
 def test_a_zero_setpoint_offset_leaves_the_servo_unchanged() -> None:
     """The identity property, at the level it actually matters: the generalised
     servo with a zero offset must produce exactly the old numbers."""
-    from triton.control.servo import VisualServo
+    from fireturret.control.servo import VisualServo
 
     servo = VisualServo(DEFAULT_CONFIG.servo, DEFAULT_CONFIG.turret, CAM)
     fire_px, splash_px = (480.0, 300.0), (500.0, 340.0)
@@ -112,7 +112,7 @@ def test_a_zero_setpoint_offset_leaves_the_servo_unchanged() -> None:
 
 def test_a_nonzero_setpoint_offset_moves_the_target_row() -> None:
     """And that it is a real generalisation, not a no-op parameter."""
-    from triton.control.servo import VisualServo
+    from fireturret.control.servo import VisualServo
 
     servo = VisualServo(DEFAULT_CONFIG.servo, DEFAULT_CONFIG.turret, CAM)
     fire_px, splash_px = (480.0, 300.0), (480.0, 340.0)
@@ -206,7 +206,7 @@ def test_the_dogfood_rule_every_builtin_loads_through_the_api() -> None:
 def test_loading_a_rig_does_not_open_a_serial_port() -> None:
     """Discovery and loading must never actuate anything. The serial rig is
     returned as a CLASS for exactly this reason."""
-    from triton.rig.serial_rig import SerialRig
+    from fireturret.rig.serial_rig import SerialRig
 
     assert load(GROUP_RIG, "serial") is SerialRig
 
@@ -287,7 +287,7 @@ def test_every_group_has_at_least_one_builtin(group) -> None:
 
 def test_an_unknown_group_is_rejected() -> None:
     with pytest.raises(ValueError, match="unknown plugin group"):
-        discover("triton.nonsense.v0")
+        discover("fireturret.nonsense.v0")
 
 
 # --------------------------------------------------- the conformance suite
@@ -296,7 +296,7 @@ def test_the_shipped_splash_detector_passes_its_own_conformance_suite() -> None:
     """The suite is used BY the built-in tests, not just published. A conformance
     suite the maintainers do not run against their own implementation is
     documentation, and it drifts the first time an interface changes."""
-    from triton.vision.impact import SplashDetector
+    from fireturret.vision.impact import SplashDetector
 
     check_impact_observer(SplashDetector(min_area_px=10))
 
@@ -305,7 +305,7 @@ def test_the_overlap_case_catches_a_bbox_excluding_observer() -> None:
     """**Invariant 4, executable.** An observer that excluded the target's bbox
     would pass every obvious test and fail here — going blind exactly when the
     water is on target. This project has had that bug."""
-    from triton.vision.impact import SplashDetector
+    from fireturret.vision.impact import SplashDetector
 
     class BboxExcludingObserver(SplashDetector):
         def observe(self, frame_bgr, target_px, exclude_bbox=None):
@@ -320,6 +320,6 @@ def test_the_overlap_case_catches_a_bbox_excluding_observer() -> None:
 
 
 def test_the_shipped_rigs_pass_the_rig_conformance_suite() -> None:
-    from triton.rig.interface import NullRig
+    from fireturret.rig.interface import NullRig
 
     check_rig(NullRig())

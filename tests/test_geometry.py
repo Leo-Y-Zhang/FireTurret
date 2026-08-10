@@ -3,8 +3,8 @@ import math
 
 import pytest
 
-from triton.config import CameraConfig
-from triton.geometry import CameraModel, clamp, wrap_deg
+from fireturret.config import CameraConfig
+from fireturret.geometry import CameraModel, clamp, wrap_deg
 
 
 @pytest.fixture

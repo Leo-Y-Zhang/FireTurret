@@ -51,7 +51,7 @@ NOTE ON MODEL WEIGHTS
 --------------------------------------------------------------------------------
 
 No machine-learning model weights are included in this repository, and no
-default model is downloaded. `triton run --detector onnx --model PATH` loads
+default model is downloaded. `fireturret run --detector onnx --model PATH` loads
 whatever the operator supplies.
 
 This matters because many popular detection weights (several YOLO families in

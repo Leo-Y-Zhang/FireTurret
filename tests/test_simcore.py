@@ -7,11 +7,11 @@ import dataclasses
 import numpy as np
 import pytest
 
-from triton.__main__ import SCENARIOS
-from triton.analysis import TelemetrySample
-from triton.app import run_sim
-from triton.config import DEFAULT_CONFIG
-from triton.simcore import SimStep, drive, simulate
+from fireturret.__main__ import SCENARIOS
+from fireturret.analysis import TelemetrySample
+from fireturret.app import run_sim
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.simcore import SimStep, drive, simulate
 
 _DT = 1.0 / 30.0
 

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
-from triton.control.advisories import (
+from fireturret.control.advisories import (
     CRITICAL,
     WARN,
     Advisory,

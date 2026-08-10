@@ -17,8 +17,8 @@ from dataclasses import dataclass
 
 import pytest
 
-from triton import configschema
-from triton.config import (
+from fireturret import configschema
+from fireturret.config import (
     DEFAULT_CONFIG,
     config_from_dict,
     config_to_dict,

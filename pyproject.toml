@@ -1,5 +1,5 @@
 [project]
-name = "triton"
+name = "fireturret"
 version = "0.1.0"
 description = "Camera-guided fire-suppression turret: fire detection, ballistic aiming, and closed-loop visual servoing for a pan/tilt water cannon. Supervised demonstrator."
 requires-python = ">=3.11"
@@ -20,7 +20,7 @@ analysis = ["matplotlib>=3.7"]
 # Learned ONNX fire detector. On an NVIDIA GPU install `onnxruntime-gpu` instead
 # (or NVIDIA's Jetson build) to use the TensorRT/CUDA execution providers.
 ml = ["onnxruntime>=1.17"]
-# Desktop engineering workbench (Triton Studio). pyqtgraph OpenGL is disabled at
+# Desktop engineering workbench (FireTurret Studio). pyqtgraph OpenGL is disabled at
 # runtime (raster only) so it works on machines without OpenGL; see docs/STUDIO.md.
 desktop = ["PySide6-Essentials>=6.8", "pyqtgraph>=0.13"]
 # ROS 2 bridge. rclpy is NOT installable from PyPI in the normal way — it comes
@@ -31,7 +31,7 @@ desktop = ["PySide6-Essentials>=6.8", "pyqtgraph>=0.13"]
 ros = []
 
 [project.scripts]
-triton = "triton.__main__:main"
+fireturret = "fireturret.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68"]
