@@ -4,7 +4,7 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 This file starts at the August 2026 rename. Everything before that point was
-built under the name **Triton**, and that history is kept with the project's private development record rather than
+built under the name **FireTurret**, and that history is kept with the project's private development record rather than
 here; back-filling release notes for work that shipped without them would be
 writing history after the fact, which is the thing this project's documents are
 supposed not to do. The one exception is the summary under *Before this file*
@@ -57,21 +57,21 @@ one.
   the clone command and the systemd unit in `RASPBERRY_PI.md`), the firmware
   header, and two module docstrings. Nothing executable changed.
 
-  The dated design records under `docs/specs/` still say Triton and stay that
+  The dated design records under `docs/specs/` still say FireTurret and stay that
   way. They are records of what was decided on a given day under the name it
   had; editing them would be back-dating, which is the thing the note at the
   top of this file exists to refuse.
 
   One thing a rename does break, and it was found broken here: an editable
   install records an **absolute** path, so
-  `.venv/Lib/site-packages/__editable__.triton-0.1.0.pth` still recorded the
+  `.venv/Lib/site-packages/__editable__.fireturret-0.1.0.pth` still recorded the
   old `FireSuppressionTurret\src` checkout path after the directory moved, and
-  `python -m triton --help` failed with `No module named triton`. The tracked
+  `python -m fireturret --help` failed with `No module named fireturret`. The tracked
   tree was correct; the environment was stale. **Renaming or moving a checkout
   requires `pip install -e .` again** - there is no src-path fallback in
   `pyproject.toml` or a root `conftest.py`, so nothing masks it.
 
-- **Renamed the repository from Triton to FireSuppressionTurret** (2026-08-03,
+- **Renamed the repository from FireTurret to FireSuppressionTurret** (2026-08-03,
   `dcc1215`). The new name says what the thing is instead of what it was named
   after. The rename was carried through the README,
   `CONTRIBUTING.md`, `NOTICE`, `SECURITY.md`, every file under `docs/`, the
@@ -79,11 +79,11 @@ one.
 
 ### Unchanged (deliberately)
 
-- **The Python package and CLI are still `triton`**: `src/triton/`,
-  `python -m triton`, the `triton[desktop]` extra. Also unchanged: the
-  `TritonConfig` dataclass, the `*.triton.json` saved-session extension, the
-  ROS 2 frame ids (`triton/world`, `triton/pan`, ...) and joint names, and the
-  workbench's application name and window title, "Triton Studio".
+- **The Python package and CLI are still `fireturret`**: `src/fireturret/`,
+  `python -m fireturret`, the `fireturret[desktop]` extra. Also unchanged: the
+  `FireTurretConfig` dataclass, the `*.fireturret.json` saved-session extension, the
+  ROS 2 frame ids (`fireturret/world`, `fireturret/pan`, ...) and joint names, and the
+  workbench's application name and window title, "FireTurret Studio".
 
   Each of those is an interface rather than a label. Renaming the package
   breaks every import in the tree and every third-party plugin entry point;
@@ -94,17 +94,17 @@ one.
 
 ### Known issue
 
-- **The distribution name `triton` collides with the `triton` package on
+- **The distribution name `fireturret` collides with the `fireturret` package on
   PyPI** - "a language and compiler for custom Deep Learning operations", which
   PyTorch declares as a dependency. Same distribution name, same top-level
   import name, so pip treats the two as one package: installing either
-  uninstalls the other, with no warning, and `import triton` then resolves to
+  uninstalls the other, with no warning, and `import fireturret` then resolves to
   whichever survived. `pip install torch` can silently replace this package and
   `pip install -e .` can silently break a working PyTorch install.
 
   The fix is a per-project virtual environment, which is what this repo's own
   instructions already use. Checked on 2026-08-03 against the PyPI JSON API:
-  `triton` is at 3.7.1 over 21 releases, all manylinux `x86_64`/`aarch64`, with
+  `fireturret` is at 3.7.1 over 21 releases, all manylinux `x86_64`/`aarch64`, with
   no Windows or macOS wheel ever published - so the collision is a Linux
   concern (a Jetson or Pi deployment running a PyTorch detector), not a
   Windows-workstation one.

@@ -83,7 +83,7 @@ described below should be read as compensating for them.
 - [x] A target beyond the jet's reach is recognised and *held*, not hosed
       indefinitely, and raises an operator advisory naming the fix (`unreachable`
       scenario, `control/advisories.py`).
-- [x] The entire stack runs with no hardware: `python -m triton sim`.
+- [x] The entire stack runs with no hardware: `python -m fireturret sim`.
 - [x] Exact engine behaviour is pinned by golden regression fixtures, so the CLI,
       the web console and the desktop workbench cannot drift apart.
 - [x] Water cannot be commanded on hardware without an explicit `--arm-water`
@@ -161,7 +161,7 @@ call is optional scene understanding, which is off by default and refuses to
 construct without an explicit data-flow acknowledgement.
 
 On the default configuration only the person at the machine can see any of it.
-`triton web` binds to `127.0.0.1`; binding anywhere else requires
+`fireturret web` binds to `127.0.0.1`; binding anywhere else requires
 `--host <addr> --expose`, and `--expose` exists purely so that exposure is a
 typed act rather than a default.
 
@@ -194,7 +194,7 @@ against the two gaps at the top of this document.
 | **A safety veto that re-aims** | A layer that commands motion acquires its own failure surface, and would have to project a bounding box through the same monocular range model the architecture distrusts. Vetoes may only subtract water; the gate cannot express the opposite, and `tests/test_gate.py` proves it over the full boolean product. |
 | **Borrowing the firmware's 500 ms heartbeat as the veto staleness threshold** | At 5 Hz submission with 120–300 ms inference, a result is already ~500 ms old on arrival, so a 500 ms threshold marks every result stale as it lands and chatters the valve. An unusable safety layer gets switched off, which is worse than a slower one. The threshold is derived from measured latency instead. |
 | **Authentication on the web console** | Not built, and not papered over: a half-built auth system on a device that latches E-stop would invite exposure by making it *feel* safe. What ships instead is loopback-by-default, an explicit `--expose` acknowledgement, and a README and SAFETY.md paragraph saying plainly what an exposed console lets a stranger do. |
-| **Renaming the Python package during the 2026-08 repo rename** | The package, the CLI, `*.triton.json` session files and the ROS frame ids are interfaces, not labels. A cosmetic rename is not worth breaking every import, saved calibration and TF subscriber. See "A note on the name" in the README. |
+| **Renaming the Python package during the 2026-08 repo rename** | The package, the CLI, `*.fireturret.json` session files and the ROS frame ids are interfaces, not labels. A cosmetic rename is not worth breaking every import, saved calibration and TF subscriber. See "A note on the name" in the README. |
 
 Since this document is retrospective, the provenance is worth separating. The
 *open-loop range*, *ROS-as-spine*, *re-aiming veto*,

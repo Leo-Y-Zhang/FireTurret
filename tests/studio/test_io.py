@@ -7,9 +7,9 @@ from dataclasses import replace
 
 import pytest
 
-from triton.config import TritonConfig
-from triton.rig.sim_rig import SimScenario
-from triton.studio.io import (
+from fireturret.config import FireTurretConfig
+from fireturret.rig.sim_rig import SimScenario
+from fireturret.studio.io import (
     config_from_dict,
     config_to_dict,
     load_run_meta,
@@ -26,13 +26,13 @@ def _json_roundtrip(d):
 
 
 def test_config_roundtrip_equal():
-    cfg = TritonConfig()
+    cfg = FireTurretConfig()
     cfg2 = config_from_dict(_json_roundtrip(config_to_dict(cfg)))
     assert cfg2 == cfg
 
 
 def test_config_from_dict_runs_validation():
-    d = config_to_dict(TritonConfig())
+    d = config_to_dict(FireTurretConfig())
     d["jet"]["max_pressure_psi"] = -5.0
     with pytest.raises(ValueError):
         config_from_dict(d)
@@ -48,9 +48,9 @@ def test_scenario_roundtrip_preserves_tuples():
 
 
 def test_session_save_load(tmp_path):
-    cfg = replace(TritonConfig(), jet=replace(TritonConfig().jet, drag_k=0.2))
+    cfg = replace(FireTurretConfig(), jet=replace(FireTurretConfig().jet, drag_k=0.2))
     sc = SimScenario(fire_range_m=8.0, decoy=(5.0, 4.0))
-    path = tmp_path / "s.triton.json"
+    path = tmp_path / "s.fireturret.json"
     save_session(path, cfg, sc)
     cfg2, sc2 = load_session(path)
     assert cfg2 == cfg
@@ -58,8 +58,8 @@ def test_session_save_load(tmp_path):
 
 
 def test_save_run_and_load_meta(tmp_path):
-    from triton.config import DEFAULT_CONFIG
-    from triton.simcore import drive
+    from fireturret.config import DEFAULT_CONFIG
+    from fireturret.simcore import drive
 
     report = drive(DEFAULT_CONFIG, seed=7, max_frames=120, record_telemetry=True)
     json_path = save_run(tmp_path, "run1", DEFAULT_CONFIG, SimScenario(), 7, report)

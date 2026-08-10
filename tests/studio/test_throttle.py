@@ -2,7 +2,7 @@
 """P1a Task 7: the emission throttle is lossless (telemetry) and latest-wins (frames)."""
 from __future__ import annotations
 
-from triton.studio.throttle import EmissionThrottle
+from fireturret.studio.throttle import EmissionThrottle
 
 
 def test_telemetry_is_lossless_and_bounded():

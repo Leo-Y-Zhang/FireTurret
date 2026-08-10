@@ -1,7 +1,7 @@
 # App Flow — FireTurret
 
 There are three interactive surfaces over one engine: a **CLI**, a **browser
-console** (`triton web`), and a **desktop workbench** (`triton studio`). They are
+console** (`fireturret web`), and a **desktop workbench** (`fireturret studio`). They are
 documented together because the safety-critical transition — *dry to wet* — is the
 same in all three, and the only interesting question about this application's flow
 is where that transition can happen and what stops it happening by accident.
@@ -12,35 +12,35 @@ is where that transition can happen and what stops it happening by accident.
 
 | Surface | Command | Reached by |
 |---|---|---|
-| Simulator | `python -m triton sim [--scenario NAME]` | anyone, no hardware |
-| Live / hardware | `python -m triton run --source 0 [--port COM3]` | a shell on the host |
-| Browser console | `python -m triton web --source 0\|sim` | a URL, loopback by default |
-| Hardware self-test | `python -m triton selftest --port COM3` | commissioning step 2 |
-| Calibration fit | `python -m triton fit shots.csv` | commissioning step 4 |
-| Desktop workbench | `python -m triton studio` | needs the `[desktop]` extra |
+| Simulator | `python -m fireturret sim [--scenario NAME]` | anyone, no hardware |
+| Live / hardware | `python -m fireturret run --source 0 [--port COM3]` | a shell on the host |
+| Browser console | `python -m fireturret web --source 0\|sim` | a URL, loopback by default |
+| Hardware self-test | `python -m fireturret selftest --port COM3` | commissioning step 2 |
+| Calibration fit | `python -m fireturret fit shots.csv` | commissioning step 4 |
+| Desktop workbench | `python -m fireturret studio` | needs the `[desktop]` extra |
 
 There is no login, no onboarding and no first-run wizard. `sim` is the front door:
 it needs no hardware, no configuration and no arguments.
 
 ## First run to first water
 
-1. **`python -m triton sim`** — a window opens on a rendered scene. The turret
+1. **`python -m fireturret sim`** — a window opens on a rendered scene. The turret
    sweeps in SEARCH, latches a fire, ranges, aligns, sprays, and confirms. The
    header band names the state; the process exits `0` if the fire went out and
    `1` if it did not. `--headless` does the same with no window and prints the
    outcome. *Nothing here can actuate anything.*
-2. **`python -m triton run --source 0`** — the same pipeline on a real webcam,
+2. **`python -m fireturret run --source 0`** — the same pipeline on a real webcam,
    with **no `--port`**. Detection and an aim preview only; the rig is a
    `NullRig` that echoes commands back as instantly-achieved telemetry.
-3. **`python -m triton selftest --port COM3`** — the first command that talks to
+3. **`python -m fireturret selftest --port COM3`** — the first command that talks to
    hardware. It verifies the link, then exercises each actuator. Water stays off:
    the pump pulse is exactly as wet as a mission's, so it is behind the same gate.
    Pass condition, printed: `telemetry link: PASS`.
-4. **`python -m triton fit shots.csv`** — enter measured shots
+4. **`python -m fireturret fit shots.csv`** — enter measured shots
    (`pump_pct,elevation_deg,measured_range_m`), get fitted `velocity_coeff`,
    `drag_k` and `max_pressure_psi`. Save them into a config file rather than into
    source.
-5. **`python -m triton run --source 0 --config turret.json --port COM3`** —
+5. **`python -m fireturret run --source 0 --config turret.json --port COM3`** —
    dry-aim on real hardware. Pan and tilt track the fire; the pump and valve stay
    off.
 6. **`… --arm-water`** — the only path to water. The process asks:
@@ -93,7 +93,7 @@ drives a hardware **warning LED/buzzer** (`x=` in the protocol,
 screen. **Colour is never the only signal** — every banner carries the severity
 word and the action text.
 
-### Browser console — `triton web`
+### Browser console — `fireturret web`
 
 | Screen | Loading | Empty | Populated | Error | Unauthorised | Offline / slow |
 |---|---|---|---|---|---|---|
@@ -110,12 +110,12 @@ Two honest defects in this table, both recorded rather than hidden:
   device. It binds to loopback, and `--host <addr> --expose` is required to leave
   it precisely so that exposure is a typed act.
 
-### Desktop workbench — `triton studio`
+### Desktop workbench — `fireturret studio`
 
 | Screen | Loading | Empty | Populated | Error | Slow |
 |---|---|---|---|---|---|
-| Main window | window title is `Triton Studio`, prefixed `*` when the session is dirty; docks restore from the last layout | **first run: no runs, empty plots** — the Model dock is populated and Run (F5) is the obvious next act | five X-linked plots, camera view, top-down scene, runs table, advisories, ballistics explorer | uncaught exceptions are routed by `install_excepthook` to a **non-modal dialog plus a log**, not a crash | the simulation runs on a worker thread; the UI stays live, the status bar shows progress and an enabled **Cancel** |
-| Model editor | — | defaults from `TritonConfig()` | grouped fields with undo/redo | an invalid value **raises in `__post_init__` and is not committed** — the edit is rejected, the model stays valid | — |
+| Main window | window title is `FireTurret Studio`, prefixed `*` when the session is dirty; docks restore from the last layout | **first run: no runs, empty plots** — the Model dock is populated and Run (F5) is the obvious next act | five X-linked plots, camera view, top-down scene, runs table, advisories, ballistics explorer | uncaught exceptions are routed by `install_excepthook` to a **non-modal dialog plus a log**, not a crash | the simulation runs on a worker thread; the UI stays live, the status bar shows progress and an enabled **Cancel** |
+| Model editor | — | defaults from `FireTurretConfig()` | grouped fields with undo/redo | an invalid value **raises in `__post_init__` and is not committed** — the edit is rejected, the model stays valid | — |
 | Runs table | — | an empty table with its column headers — no placeholder text, which is the weakest empty state in the app | one row per run (outcome, water, acquisition, miss, seed) | — | edits mark earlier runs **stale** rather than silently comparing incomparable data |
 | Sweep | progress bar | grid not yet run | heatmap / scatter over the outcome surface | a failed cell is reported, not dropped | runs cells on a thread pool; cancellable |
 

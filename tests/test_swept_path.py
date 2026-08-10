@@ -15,10 +15,10 @@ from __future__ import annotations
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG, TurretConfig
-from triton.control.mission import MissionController, swept_intersects_keepout
-from triton.geometry import CameraModel
-from triton.rig.interface import RigCommand, RigTelemetry
+from fireturret.config import DEFAULT_CONFIG, TurretConfig
+from fireturret.control.mission import MissionController, swept_intersects_keepout
+from fireturret.geometry import CameraModel
+from fireturret.rig.interface import RigCommand, RigTelemetry
 
 KEEPOUT = (-10.0, 10.0)
 
@@ -131,7 +131,7 @@ def test_water_stays_closed_for_the_hold_after_the_transit_ends() -> None:
 def test_hold_is_at_least_the_worst_case_flight_time() -> None:
     """The hold exists so water launched during a transit has landed. Anything
     shorter re-opens the valve while that water is still airborne."""
-    from triton import ballistics
+    from fireturret import ballistics
 
     m = _mission()
     worst = ballistics.flight_time_of(

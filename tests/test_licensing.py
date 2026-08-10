@@ -17,12 +17,16 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 NOREPLY = "@users.noreply.github.com"
+# GitHub authors the throwaway merge commit that Actions checks out for a
+# pull_request event as "GitHub <noreply@github.com>" — its own machine
+# identity, not a person's, and never part of the repository itself.
+GITHUB_MERGE_IDENTITY = "noreply@github.com"
 
 
 # ------------------------------------------------------------------- licence
 
 def test_the_licence_grants_no_reuse_rights() -> None:
-    """Triton is proprietary and source-available: readable for evaluation, not
+    """FireTurret is proprietary and source-available: readable for evaluation, not
     reusable.
 
     This replaces a test that asserted Apache-2.0 and its patent grant. That
@@ -76,19 +80,19 @@ def test_a_notice_file_exists_and_names_the_copyleft_dependency() -> None:
     because that is the obligation a downstream bundler inherits without being
     told otherwise.
 
-    This used to assert "Apache License" appeared here, back when Triton itself
+    This used to assert "Apache License" appeared here, back when FireTurret itself
     shipped under Apache-2.0. It no longer does -- the project is proprietary and
     source-available -- so that assertion was checking a fact that had changed
     rather than a rule that still held. The obligations below are the part that
-    was always the point: they come from DEPENDENCIES, not from Triton's own
-    licence, so relicensing Triton does not discharge them."""
+    was always the point: they come from DEPENDENCIES, not from FireTurret's own
+    licence, so relicensing FireTurret does not discharge them."""
     notice = (ROOT / "NOTICE").read_text(encoding="utf-8")
     # Derived from LICENSE, not restated: NOTICE and LICENSE must agree on who
     # holds the copyright, and neither this file nor any other source file needs
     # to know the answer.
     assert copyright_holder() in notice, "NOTICE must name the same holder as LICENSE"
     assert "Apache License" not in notice, (
-        "stale self-licence claim: Triton is no longer Apache-2.0"
+        "stale self-licence claim: FireTurret is no longer Apache-2.0"
     )
     assert "PySide6" in notice
     assert "LGPL" in notice
@@ -164,7 +168,9 @@ def test_every_commit_is_authored_under_an_anonymous_noreply_identity() -> None:
     )
     offenders = sorted({
         line.strip() for line in proc.stdout.splitlines()
-        if line.strip() and NOREPLY not in line
+        if line.strip()
+        and NOREPLY not in line
+        and GITHUB_MERGE_IDENTITY not in line
     })
     assert not offenders, f"non-noreply identities in history: {offenders}"
 
@@ -296,7 +302,7 @@ def test_a_crash_dump_names_the_frame_in_this_repo() -> None:
     output = "\n".join(
         ["Fatal Python error: Segmentation fault", "", "Current thread 0x1 (most recent call first):"]
         + noise[:100]
-        + ['  File "/home/runner/work/Triton/Triton/tests/studio/test_plots.py", line 42 in test_it']
+        + ['  File "/home/runner/work/FireTurret/FireTurret/tests/studio/test_plots.py", line 42 in test_it']
         + noise[100:]
     )
 

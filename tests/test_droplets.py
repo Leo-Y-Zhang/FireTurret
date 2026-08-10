@@ -21,16 +21,16 @@ import time
 
 import pytest
 
-from triton.spray.arcs import integrate_ensemble
-from triton.spray.dropletdist import (
+from fireturret.spray.arcs import integrate_ensemble
+from fireturret.spray.dropletdist import (
     DropletClass,
     equal_volume_classes,
     rosin_rammler_cdf,
     rosin_rammler_inverse,
     sauter_mean_diameter,
 )
-from triton.spray.envelope import LEGACY_ENVELOPE, envelope_from_ensemble
-from triton.spray.fluid import (
+from fireturret.spray.envelope import LEGACY_ENVELOPE, envelope_from_ensemble
+from fireturret.spray.fluid import (
     air_viscosity,
     drag_coefficient,
     ohnesorge_number,
@@ -39,7 +39,7 @@ from triton.spray.fluid import (
     water_viscosity,
     weber_number,
 )
-from triton.spray.nozzle import Nozzle, SprayPattern
+from fireturret.spray.nozzle import Nozzle, SprayPattern
 
 SPEED = 19.2  # m/s, roughly pump 55% on the default jet
 TILT = 22.0
@@ -163,9 +163,9 @@ def test_the_legacy_envelope_remains_the_shipped_default_regardless() -> None:
     `MissionController` keeps `LEGACY_ENVELOPE`, and this is the test that says
     so on purpose rather than by omission.
     """
-    from triton.config import DEFAULT_CONFIG
-    from triton.control.mission import MissionController
-    from triton.geometry import CameraModel
+    from fireturret.config import DEFAULT_CONFIG
+    from fireturret.control.mission import MissionController
+    from fireturret.geometry import CameraModel
 
     mission = MissionController(DEFAULT_CONFIG, CameraModel(DEFAULT_CONFIG.camera))
     assert mission.spray_envelope == LEGACY_ENVELOPE
@@ -343,7 +343,7 @@ def test_the_ensemble_is_not_reachable_from_control() -> None:
     import ast
     from pathlib import Path
 
-    control = Path(__file__).resolve().parents[1] / "src" / "triton" / "control"
+    control = Path(__file__).resolve().parents[1] / "src" / "fireturret" / "control"
     forbidden = {"dropletdist", "nozzle", "arcs", "fluid"}
     for path in control.glob("*.py"):
         tree = ast.parse(path.read_text(encoding="utf-8"))

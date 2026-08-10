@@ -6,8 +6,8 @@ replace the classical HSV+flicker detector without touching the tracker, control
 ballistics, or rig layers.
 
 ```python
-from triton.app import Pipeline
-from triton.vision.onnx_detector import OnnxFireDetector
+from fireturret.app import Pipeline
+from fireturret.vision.onnx_detector import OnnxFireDetector
 
 pipeline = Pipeline(cfg, detector=OnnxFireDetector("fire.onnx", cfg.detector))
 ```
@@ -16,7 +16,7 @@ or from the CLI:
 
 ```bash
 pip install -e .[ml]                 # onnxruntime
-python -m triton run --source 0 --detector onnx --model fire.onnx
+python -m fireturret run --source 0 --detector onnx --model fire.onnx
 ```
 
 ## The ONNX detector

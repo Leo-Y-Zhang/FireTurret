@@ -25,12 +25,12 @@ from dataclasses import replace
 
 import pytest
 
-from triton.app import Pipeline, run_sim
-from triton.config import DEFAULT_CONFIG, TurretConfig
-from triton.control.mission import MissionController, pan_in_keepout
-from triton.geometry import CameraModel
-from triton.rig.interface import RigTelemetry
-from triton.rig.sim_rig import SimRig, SimScenario
+from fireturret.app import Pipeline, run_sim
+from fireturret.config import DEFAULT_CONFIG, TurretConfig
+from fireturret.control.mission import MissionController, pan_in_keepout
+from fireturret.geometry import CameraModel
+from fireturret.rig.interface import RigTelemetry
+from fireturret.rig.sim_rig import SimRig, SimScenario
 
 DT = 1 / 30
 
@@ -319,7 +319,7 @@ def test_water_is_never_open_while_the_nozzle_crosses_a_keepout() -> None:
     cfg = replace(DEFAULT_CONFIG, turret=TurretConfig(pan_keepout_deg=keepout))
     rig = SimRig(cfg, SimScenario(fire_azimuth_deg=25.0, fire_range_m=6.5), seed=7)
     pipe = Pipeline(cfg)
-    from triton.control.mission import swept_intersects_keepout
+    from fireturret.control.mission import swept_intersects_keepout
 
     for _ in range(1800):
         rig.step(DT)

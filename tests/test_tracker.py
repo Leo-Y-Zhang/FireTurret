@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
-from triton.config import DetectorConfig
-from triton.vision.firedetect import FireBlob
-from triton.vision.tracker import FireTracker
+from fireturret.config import DetectorConfig
+from fireturret.vision.firedetect import FireBlob
+from fireturret.vision.tracker import FireTracker
 
 CFG = DetectorConfig()
 
@@ -117,7 +117,7 @@ def test_a_learned_detector_can_still_confirm_without_flicker_evidence() -> None
     """
     import numpy as np
 
-    from triton.vision.firedetect import blobs_from_mask
+    from fireturret.vision.firedetect import blobs_from_mask
 
     mask = np.zeros((240, 320), np.uint8)
     mask[100:140, 140:180] = 255

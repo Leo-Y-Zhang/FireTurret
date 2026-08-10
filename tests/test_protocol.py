@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
-from triton.rig.interface import RigCommand
-from triton.rig.protocol import encode_command, parse_telemetry
+from fireturret.rig.interface import RigCommand
+from fireturret.rig.protocol import encode_command, parse_telemetry
 
 
 def test_command_encoding_format() -> None:

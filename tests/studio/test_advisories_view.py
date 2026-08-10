@@ -2,10 +2,10 @@
 """P4: the advisories panel surfaces the operator warnings a run raised."""
 from __future__ import annotations
 
-from triton.__main__ import SCENARIOS
-from triton.config import DEFAULT_CONFIG
-from triton.simcore import drive
-from triton.studio.views.advisories_view import AdvisoriesView
+from fireturret.__main__ import SCENARIOS
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.simcore import drive
+from fireturret.studio.views.advisories_view import AdvisoriesView
 
 
 def test_lists_raised_advisories(qapp):

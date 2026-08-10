@@ -1,11 +1,17 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 import pytest
 
-from triton.config import DEFAULT_CONFIG, CameraConfig, JetConfig, TritonConfig, TurretConfig
+from fireturret.config import (
+    DEFAULT_CONFIG,
+    CameraConfig,
+    FireTurretConfig,
+    JetConfig,
+    TurretConfig,
+)
 
 
 def test_default_config_is_valid() -> None:
-    assert isinstance(DEFAULT_CONFIG, TritonConfig)  # constructs without error
+    assert isinstance(DEFAULT_CONFIG, FireTurretConfig)  # constructs without error
 
 
 def test_turret_rejects_bad_limits() -> None:

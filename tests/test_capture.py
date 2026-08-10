@@ -10,10 +10,10 @@ import tempfile
 import cv2
 import pytest
 
-from triton.app import run_capture
-from triton.config import DEFAULT_CONFIG
-from triton.rig.interface import NullRig
-from triton.rig.sim_rig import SimRig, SimScenario
+from fireturret.app import run_capture
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.rig.interface import NullRig
+from fireturret.rig.sim_rig import SimRig, SimScenario
 
 
 def _write_fire_video(path: str, frames: int = 90) -> bool:

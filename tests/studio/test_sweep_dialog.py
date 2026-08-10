@@ -2,8 +2,8 @@
 """P3: the batch-sweep configuration dialog builds a SweepSpec."""
 from __future__ import annotations
 
-from triton.studio.views.sweep_dialog import SweepDialog
-from triton.studio.views.sweep_view import METRIC_NAMES
+from fireturret.studio.views.sweep_dialog import SweepDialog
+from fireturret.studio.views.sweep_view import METRIC_NAMES
 
 
 def test_dialog_builds_1axis_spec(qapp):

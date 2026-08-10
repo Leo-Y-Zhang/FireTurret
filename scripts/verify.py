@@ -44,6 +44,12 @@ PY = sys.executable
 # This is the anonymity gate AND the relicensing precondition — the same audit
 # proves the right to relicense and that no personal identity has leaked.
 ALLOWED_EMAIL_SUFFIX = "@users.noreply.github.com"
+# GitHub authors the throwaway merge commit that Actions checks out for a
+# pull_request event as "GitHub <noreply@github.com>". It is GitHub's own
+# machine identity, not a person's, and it never lands in the repository — but
+# it is present in the history the checkout hands us, so without this the gate
+# could never pass on a pull request even though main is clean.
+GITHUB_MERGE_IDENTITY = "noreply@github.com"
 
 
 # A failing check's output has to be clipped -- a full pytest log is thousands of
@@ -74,7 +80,7 @@ CAUSE_MARKERS = (
 # hoisting -- but only out of a crash, because an ordinary traceback is already
 # reported properly and hoisting its frames would just duplicate it.
 FATAL_MARKERS = ("Fatal Python error", "Windows fatal exception", "Segmentation fault")
-OWN_CODE = ("tests/", "tests\\", "src/triton", "src\\triton")
+OWN_CODE = ("tests/", "tests\\", "src/fireturret", "src\\fireturret")
 MAX_CAUSE_LINES = 12
 
 
@@ -142,7 +148,9 @@ def check_identity() -> Result:
 
     offenders = sorted({
         line.strip() for line in proc.stdout.splitlines()
-        if line.strip() and ALLOWED_EMAIL_SUFFIX not in line
+        if line.strip()
+        and ALLOWED_EMAIL_SUFFIX not in line
+        and GITHUB_MERGE_IDENTITY not in line
     })
     elapsed = time.perf_counter() - start
     if offenders:
@@ -169,7 +177,7 @@ def main() -> int:
             "pytest (slow)",
             [PY, "-m", "pytest", "-m", "slow", "-q", "-p", "no:cacheprovider"],
         ))
-    results.append(run("build metadata", [PY, "-c", "import triton; print(triton.__name__)"]))
+    results.append(run("build metadata", [PY, "-c", "import fireturret; print(fireturret.__name__)"]))
 
     print()
     for r in results:

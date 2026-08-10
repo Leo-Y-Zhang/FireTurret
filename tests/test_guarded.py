@@ -2,7 +2,7 @@
 """SP9 — the gate at the last possible point.
 
 `MissionController` gates every command it issues. That covers the mission and
-nothing else: Triton Studio drives the rig directly, a manual jog would, and any
+nothing else: FireTurret Studio drives the rig directly, a manual jog would, and any
 future profile or plugin might. Each is a path that never constructs a `Pipeline`
 and therefore never meets the gate.
 
@@ -15,10 +15,10 @@ import inspect
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.control.gate import standard_gate
-from triton.rig.guarded import GuardedRig
-from triton.rig.interface import NullRig, RigCommand
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.gate import standard_gate
+from fireturret.rig.guarded import GuardedRig
+from fireturret.rig.interface import NullRig, RigCommand
 
 
 class RecordingRig(NullRig):
@@ -89,7 +89,7 @@ def test_the_guard_delegates_telemetry_and_close() -> None:
 def test_a_veto_added_later_applies_to_the_guarded_rig() -> None:
     """The gate is shared, so registering a safety veto protects every path at
     once rather than only the ones someone remembered to update."""
-    from triton.safety.veto import AsyncVeto, NeverStaleClock, VetoAnswer
+    from fireturret.safety.veto import AsyncVeto, NeverStaleClock, VetoAnswer
 
     gate = standard_gate(DEFAULT_CONFIG)
     inner = RecordingRig()
@@ -119,7 +119,7 @@ def test_every_cli_hardware_path_returns_a_guarded_rig() -> None:
     """SP1 made `_open_serial_rig` the single factory. SP9 makes that factory the
     thing that applies the gate, so "the CLI cannot bypass it" is structural
     rather than a habit."""
-    import triton.__main__ as cli
+    import fireturret.__main__ as cli
 
     source = inspect.getsource(cli._open_serial_rig)
     assert "GuardedRig" in source, "the rig factory no longer guards its rig"
@@ -132,7 +132,7 @@ def test_every_cli_hardware_path_returns_a_guarded_rig() -> None:
 def test_the_factory_hands_back_a_disarmed_rig() -> None:
     """Dry-aim by default has to survive the wrapper: a guarded rig that arrived
     armed would quietly undo the CLI's safe default."""
-    import triton.__main__ as cli
+    import fireturret.__main__ as cli
 
     assert inspect.signature(GuardedRig.__init__).parameters["armed"].default is False
     assert "arm()" in inspect.getsource(cli._cmd_run) or "rig.arm" in inspect.getsource(cli._cmd_run)
@@ -142,7 +142,7 @@ def test_the_factory_hands_back_a_disarmed_rig() -> None:
 def test_selftest_water_still_works_through_the_guard(water_armed: bool) -> None:
     """The guard must not break the legitimate armed path — an over-eager safety
     layer that blocks the self-test's pump pulse would just get removed."""
-    from triton.selftest import run_selftest
+    from fireturret.selftest import run_selftest
 
     inner = RecordingRig()
     rig = GuardedRig(inner, standard_gate(DEFAULT_CONFIG), armed=water_armed)

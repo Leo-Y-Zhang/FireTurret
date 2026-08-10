@@ -2,8 +2,8 @@
 """P1a Task 8: telemetry plots verified at the DATA layer (not offscreen pixels)."""
 from __future__ import annotations
 
-from triton.analysis import TelemetrySample
-from triton.studio.views.plots import TelemetryPlots
+from fireturret.analysis import TelemetrySample
+from fireturret.studio.views.plots import TelemetryPlots
 
 
 def _sample(i: int) -> TelemetrySample:

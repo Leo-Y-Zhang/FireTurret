@@ -14,8 +14,8 @@ import math
 
 import pytest
 
-from triton.rig.interface import RigCommand, RigTelemetry
-from triton.ros.translate import (
+from fireturret.rig.interface import RigCommand, RigTelemetry
+from fireturret.ros.translate import (
     FRAME_CAMERA,
     RosImage,
     RosImu,
@@ -92,7 +92,7 @@ def test_linear_acceleration_is_already_in_si_and_is_not_converted() -> None:
 def test_joint_state_positions_are_radians() -> None:
     telemetry = RigTelemetry(90.0, 45.0, 55.0, True, estop=False, ok=True, homed=True)
     js = telemetry_to_joint_state(telemetry)
-    assert js.name == ["triton_pan", "triton_tilt"]
+    assert js.name == ["fireturret_pan", "fireturret_tilt"]
     assert js.position[0] == pytest.approx(math.pi / 2)
     assert js.position[1] == pytest.approx(math.pi / 4)
 
@@ -120,7 +120,7 @@ def test_the_core_never_imports_rclpy() -> None:
     import sys
 
     code = (
-        "import sys, triton.simcore; "
+        "import sys, fireturret.simcore; "
         "print('rclpy' in sys.modules)"
     )
     out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True,
@@ -137,4 +137,4 @@ def test_translation_needs_no_ros_installed() -> None:
 
 @pytest.mark.skipif(not has_rclpy(), reason="rclpy not installed (optional [ros] extra)")
 def test_the_node_layer_imports_when_ros_is_present() -> None:  # pragma: no cover
-    from triton.ros import node  # noqa: F401
+    from fireturret.ros import node  # noqa: F401

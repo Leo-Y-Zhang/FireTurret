@@ -15,7 +15,7 @@ import math
 import numpy as np
 import pytest
 
-from triton.adapt.ballistics_learner import (
+from fireturret.adapt.ballistics_learner import (
     HOLDOUT_EVERY,
     MAX_LENGTHEN_PCT,
     MAX_SHORTEN_PCT,
@@ -23,7 +23,7 @@ from triton.adapt.ballistics_learner import (
     apply_to_opening,
     basis,
 )
-from triton.adapt.rls import DEFAULT_TRACE_BOUND, RecursiveLeastSquares
+from fireturret.adapt.rls import DEFAULT_TRACE_BOUND, RecursiveLeastSquares
 
 # ------------------------------------------------------------------- the RLS
 
@@ -295,7 +295,7 @@ def test_the_learner_is_not_reachable_from_the_suppression_law() -> None:
     converges confidently to the wrong place."""
     import inspect
 
-    from triton.control import suppress
+    from fireturret.control import suppress
 
     source = inspect.getsource(suppress)
     for forbidden in ("learner", "BallisticsLearner", "adapt"):

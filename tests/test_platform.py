@@ -18,13 +18,13 @@ import math
 
 import pytest
 
-from triton.control.stabiliser import (
+from fireturret.control.stabiliser import (
     StabiliserRung,
     derotate_image_offset,
     oscillation_peak_rate_dps,
     stabilise,
 )
-from triton.platform import (
+from fireturret.platform import (
     DisturbanceKind,
     DisturbanceMonitor,
     MahonyFilter,
@@ -32,8 +32,8 @@ from triton.platform import (
     PoseQuality,
     StaticPlatformSensor,
 )
-from triton.platform.sensor import ImuPlatformSensor, ImuSample
-from triton.rig.sim_platform import (
+from fireturret.platform.sensor import ImuPlatformSensor, ImuSample
+from fireturret.rig.sim_platform import (
     BumpTrajectory,
     DriveTrajectory,
     StaticTrajectory,

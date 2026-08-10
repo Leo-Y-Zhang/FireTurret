@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pytest
 
-SRC = Path(__file__).resolve().parents[1] / "src" / "triton"
+SRC = Path(__file__).resolve().parents[1] / "src" / "fireturret"
 
 
 def _imports(path: Path) -> set[str]:
@@ -160,9 +160,9 @@ def test_control_imports_only_the_spray_envelope_and_its_keepout(path: Path) -> 
     for imp in _imports(path):
         if "spray" not in imp:
             continue
-        parts = imp.replace("triton.", "").split(".")
+        parts = imp.replace("fireturret.", "").split(".")
         for part in parts:
-            if part in {"spray", "triton", ""}:
+            if part in {"spray", "fireturret", ""}:
                 continue
             if part in SPRAY_ALLOWED_FROM_CONTROL:
                 break
@@ -233,7 +233,7 @@ def test_importing_the_engine_does_not_pull_in_optional_heavyweights() -> None:
     else. Qt, ONNX, ROS and matplotlib live behind extras; if any of them creeps
     into the core import graph, that install silently grows by hundreds of MB."""
     code = (
-        "import sys; import triton.simcore; "
+        "import sys; import fireturret.simcore; "
         "bad=[m for m in ('PySide6','onnxruntime','rclpy','matplotlib') "
         "if any(k==m or k.startswith(m+'.') for k in sys.modules)]; "
         "print(','.join(bad))"
@@ -241,4 +241,4 @@ def test_importing_the_engine_does_not_pull_in_optional_heavyweights() -> None:
     out = subprocess.run(
         [sys.executable, "-c", code], capture_output=True, text=True, check=True,
     ).stdout.strip()
-    assert out == "", f"triton.simcore pulled in optional dependencies: {out}"
+    assert out == "", f"fireturret.simcore pulled in optional dependencies: {out}"

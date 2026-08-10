@@ -50,11 +50,11 @@ MANIFEST = GOLDEN / "MANIFEST.json"
 
 sys.path.insert(0, str(ROOT / "src"))
 
-from triton.__main__ import SCENARIOS  # noqa: E402
-from triton.app import Pipeline, run_sim  # noqa: E402
-from triton.config import DEFAULT_CONFIG  # noqa: E402
-from triton.rig.interface import RigTelemetry  # noqa: E402
-from triton.rig.sim_rig import SimRig  # noqa: E402
+from fireturret.__main__ import SCENARIOS  # noqa: E402
+from fireturret.app import Pipeline, run_sim  # noqa: E402
+from fireturret.config import DEFAULT_CONFIG  # noqa: E402
+from fireturret.rig.interface import RigTelemetry  # noqa: E402
+from fireturret.rig.sim_rig import SimRig  # noqa: E402
 
 CASES = [("default", 7), ("unreachable", 7), ("multi", 7), ("windy", 3)]
 
@@ -120,10 +120,10 @@ def gen_reports() -> list[str]:
 def gen_stdout() -> list[str]:
     written = []
     for name in sorted(SCENARIOS):
-        # `triton sim` exits 1 when the fire is not extinguished (e.g. the
+        # `fireturret sim` exits 1 when the fire is not extinguished (e.g. the
         # `unreachable` scenario) — correct behaviour, so do NOT check=True.
         out = subprocess.run(
-            [sys.executable, "-m", "triton", "sim", "--scenario", name, "--headless"],
+            [sys.executable, "-m", "fireturret", "sim", "--scenario", name, "--headless"],
             capture_output=True, text=True, cwd=ROOT,
         ).stdout
         path = GOLDEN / f"stdout_{name}.txt"

@@ -6,8 +6,8 @@ import time
 
 import pytest
 
-import triton.rig.serial_rig as sr_mod
-from triton.rig.interface import RigCommand
+import fireturret.rig.serial_rig as sr_mod
+from fireturret.rig.interface import RigCommand
 
 
 class FakeSerial:

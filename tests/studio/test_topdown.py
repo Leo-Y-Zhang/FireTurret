@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import numpy as np
 
-from triton.ballistics import reach_bounds
-from triton.config import DEFAULT_CONFIG
-from triton.rig.sim_rig import SimScenario
-from triton.studio.views.topdown import TopDownView
+from fireturret.ballistics import reach_bounds
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.rig.sim_rig import SimScenario
+from fireturret.studio.views.topdown import TopDownView
 
 
 def test_fire_placed_straight_ahead(qapp):

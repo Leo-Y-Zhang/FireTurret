@@ -17,10 +17,10 @@ from dataclasses import replace
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.control.gate import GateContext, WaterGate, standard_gate
-from triton.rig.interface import RigCommand, RigTelemetry
-from triton.safety.veto import (
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.gate import GateContext, WaterGate, standard_gate
+from fireturret.rig.interface import RigCommand, RigTelemetry
+from fireturret.safety.veto import (
     STALENESS_MARGIN,
     AlwaysAllowVeto,
     AsyncVeto,
@@ -227,8 +227,8 @@ def test_the_simulator_can_now_reach_safe() -> None:
     """Before SP9 `SimRig.telemetry()` hardcoded estop=False, ok=True — so no
     golden and no end-to-end run had EVER visited SAFE. The latching failsafe was
     exercised only by unit tests driving the controller directly."""
-    from triton.app import Pipeline
-    from triton.rig.sim_rig import SimRig, SimScenario
+    from fireturret.app import Pipeline
+    from fireturret.rig.sim_rig import SimRig, SimScenario
 
     scenario = SimScenario(estop_window_s=(1.0, 2.0))
     rig = SimRig(DEFAULT_CONFIG, scenario, seed=7)
@@ -245,7 +245,7 @@ def test_the_simulator_can_now_reach_safe() -> None:
 def test_fault_injection_is_inert_by_default() -> None:
     """Every existing fixture depends on this: no window configured means no
     fault, ever."""
-    from triton.rig.sim_rig import SimRig, SimScenario
+    from fireturret.rig.sim_rig import SimRig, SimScenario
 
     rig = SimRig(DEFAULT_CONFIG, SimScenario(), seed=7)
     for _ in range(60):
@@ -260,7 +260,7 @@ def test_fault_injection_is_inert_by_default() -> None:
     ("unhomed_window_s", lambda t: t.homed is False),
 ])
 def test_each_injected_fault_appears_only_inside_its_window(field, check) -> None:
-    from triton.rig.sim_rig import SimRig, SimScenario
+    from fireturret.rig.sim_rig import SimRig, SimScenario
 
     scenario = replace(SimScenario(), **{field: (1.0, 2.0)})
     rig = SimRig(DEFAULT_CONFIG, scenario, seed=7)

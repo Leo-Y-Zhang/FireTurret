@@ -14,8 +14,8 @@ from __future__ import annotations
 
 import pytest
 
-from triton.rig.interface import RigCommand
-from triton.runner import (
+from fireturret.rig.interface import RigCommand
+from fireturret.runner import (
     DEFAULT_DEADLINE_S,
     TickWatchdog,
 )

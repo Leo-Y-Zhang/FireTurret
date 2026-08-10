@@ -14,7 +14,7 @@ import json
 
 import pytest
 
-from triton.adapt.environment import (
+from fireturret.adapt.environment import (
     RHO_REF,
     Environment,
     FileEnvironment,
@@ -22,13 +22,13 @@ from triton.adapt.environment import (
     SerialEnvironment,
     saturation_vapour_pressure_pa,
 )
-from triton.adapt.wind import (
+from fireturret.adapt.wind import (
     PlantGainValidator,
     WindFilter,
     crosswind_drift_m,
 )
-from triton.ballistics import arc_with_time, exit_velocity, simulate_arc
-from triton.config import DEFAULT_CONFIG
+from fireturret.ballistics import arc_with_time, exit_velocity, simulate_arc
+from fireturret.config import DEFAULT_CONFIG
 
 JET = DEFAULT_CONFIG.jet
 TILT = DEFAULT_CONFIG.servo.suppress_tilt_deg

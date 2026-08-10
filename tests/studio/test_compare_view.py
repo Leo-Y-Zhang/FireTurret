@@ -2,8 +2,8 @@
 """P3: run comparison overlay (data layer)."""
 from __future__ import annotations
 
-from triton.analysis import TelemetrySample
-from triton.studio.views.compare_view import RunCompareView
+from fireturret.analysis import TelemetrySample
+from fireturret.studio.views.compare_view import RunCompareView
 
 
 def _samples(base: float, n: int = 5):

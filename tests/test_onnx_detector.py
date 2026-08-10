@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from triton.config import DEFAULT_CONFIG
-from triton.vision.onnx_detector import OnnxFireDetector, select_providers
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.vision.onnx_detector import OnnxFireDetector, select_providers
 
 
 class _FakeSession:

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from triton.ballistics import exit_velocity, range_of
-from triton.studio.session import Session
-from triton.studio.views.calibration_panel import CalibrationPanel
+from fireturret.ballistics import exit_velocity, range_of
+from fireturret.studio.session import Session
+from fireturret.studio.views.calibration_panel import CalibrationPanel
 
 
 def _shots_from(jet):

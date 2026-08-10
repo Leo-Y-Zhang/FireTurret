@@ -23,9 +23,9 @@ from pathlib import Path
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG, config_from_dict, config_to_dict
-from triton.rig.interface import RigCommand, RigTelemetry
-from triton.rig.protocol import encode_command, parse_telemetry
+from fireturret.config import DEFAULT_CONFIG, config_from_dict, config_to_dict
+from fireturret.rig.interface import RigCommand, RigTelemetry
+from fireturret.rig.protocol import encode_command, parse_telemetry
 
 FIRMWARE = Path(__file__).resolve().parents[1] / "firmware" / "turret_firmware" / "turret_firmware.ino"
 
@@ -53,7 +53,7 @@ def test_explicit_h_is_still_honoured() -> None:
 def test_null_rig_declares_itself_homed() -> None:
     """NullRig echoes commands for dry runs over recorded video; it has no pan
     axis to home, so it must say so explicitly rather than inherit a default."""
-    from triton.rig.interface import NullRig
+    from fireturret.rig.interface import NullRig
 
     assert NullRig().telemetry().homed is True
 
@@ -180,7 +180,7 @@ def test_a_future_schema_version_warns() -> None:
 # ------------------------------------------------------------------ web bind
 
 def test_web_server_defaults_to_loopback() -> None:
-    from triton.ui.webserver import make_server
+    from fireturret.ui.webserver import make_server
 
     assert inspect.signature(make_server).parameters["host"].default == "127.0.0.1"
 
@@ -188,14 +188,14 @@ def test_web_server_defaults_to_loopback() -> None:
 def test_non_loopback_bind_requires_acknowledgement() -> None:
     """Binding the unauthenticated console to a routable address exposes a
     remote E-stop. It must be a deliberate, explicit act."""
-    from triton.ui.webserver import WebState, make_server
+    from fireturret.ui.webserver import WebState, make_server
 
     with pytest.raises(ValueError, match="acknowledge"):
         make_server(WebState(), host="0.0.0.0", port=0)
 
 
 def test_non_loopback_bind_is_allowed_when_acknowledged() -> None:
-    from triton.ui.webserver import WebState, make_server
+    from fireturret.ui.webserver import WebState, make_server
 
     srv = make_server(WebState(), host="127.0.0.1", port=0, acknowledge_exposure=True)
     srv.server_close()
@@ -204,7 +204,7 @@ def test_non_loopback_bind_is_allowed_when_acknowledged() -> None:
 def test_serve_also_defaults_to_loopback() -> None:
     """`make_server` is the chokepoint, but `serve` is what the CLI calls — a
     routable default there would reach the network before the guard ran."""
-    from triton.ui.webserver import serve
+    from fireturret.ui.webserver import serve
 
     assert inspect.signature(serve).parameters["host"].default == "127.0.0.1"
 
@@ -213,7 +213,7 @@ def test_serve_also_defaults_to_loopback() -> None:
 
 def _parse(argv: list[str]):
     """Parse argv against the real CLI surface without dispatching a command."""
-    from triton.__main__ import build_parser
+    from fireturret.__main__ import build_parser
 
     return build_parser().parse_args(argv)
 
@@ -245,7 +245,7 @@ def test_every_hardware_path_shares_one_rig_factory_and_one_arm_gate() -> None:
     """Three commands can actuate a real turret. If any of them builds its own
     SerialRig or inlines its own arming prompt, the gates drift apart — which is
     how `selftest` ended up with a bare --water flag in the first place."""
-    import triton.__main__ as cli
+    import fireturret.__main__ as cli
 
     for name in ("_cmd_run", "_cmd_web", "_cmd_selftest"):
         src = inspect.getsource(getattr(cli, name))
@@ -259,7 +259,7 @@ def test_every_hardware_path_shares_one_rig_factory_and_one_arm_gate() -> None:
 def test_arm_gate_denies_without_the_flag(monkeypatch, capsys) -> None:
     import argparse
 
-    import triton.__main__ as cli
+    import fireturret.__main__ as cli
 
     monkeypatch.setattr("builtins.input", lambda *_: "ARM")
     assert cli._arm_water(argparse.Namespace(arm_water=False)) is False
@@ -269,7 +269,7 @@ def test_arm_gate_denies_without_the_flag(monkeypatch, capsys) -> None:
 def test_arm_gate_denies_without_the_typed_word(monkeypatch) -> None:
     import argparse
 
-    import triton.__main__ as cli
+    import fireturret.__main__ as cli
 
     monkeypatch.setattr("builtins.input", lambda *_: "yes")
     assert cli._arm_water(argparse.Namespace(arm_water=True)) is False
@@ -278,7 +278,7 @@ def test_arm_gate_denies_without_the_typed_word(monkeypatch) -> None:
 def test_arm_gate_allows_flag_plus_typed_word(monkeypatch) -> None:
     import argparse
 
-    import triton.__main__ as cli
+    import fireturret.__main__ as cli
 
     monkeypatch.setattr("builtins.input", lambda *_: "ARM")
     assert cli._arm_water(argparse.Namespace(arm_water=True)) is True
@@ -292,9 +292,9 @@ def test_selftest_never_aims_into_the_keepout() -> None:
     to the machine, so nothing here may point into the protected sector."""
     from dataclasses import replace as dc_replace
 
-    from triton.control.mission import pan_touches_keepout
-    from triton.rig.interface import NullRig
-    from triton.selftest import run_selftest
+    from fireturret.control.mission import pan_touches_keepout
+    from fireturret.rig.interface import NullRig
+    from fireturret.selftest import run_selftest
 
     cfg = dc_replace(DEFAULT_CONFIG, turret=dc_replace(
         DEFAULT_CONFIG.turret, pan_keepout_deg=(-8.0, 8.0)))
@@ -318,8 +318,8 @@ def test_selftest_aborts_when_the_keepout_leaves_nowhere_safe() -> None:
     actuate is the only honest response — picking the least-bad angle is not."""
     from dataclasses import replace as dc_replace
 
-    from triton.rig.interface import NullRig
-    from triton.selftest import run_selftest
+    from fireturret.rig.interface import NullRig
+    from fireturret.selftest import run_selftest
 
     cfg = dc_replace(DEFAULT_CONFIG, turret=dc_replace(
         DEFAULT_CONFIG.turret, pan_keepout_deg=(-170.0, 170.0)))
@@ -331,8 +331,8 @@ def test_selftest_aborts_when_the_keepout_leaves_nowhere_safe() -> None:
 
 def test_selftest_without_a_keepout_is_unchanged() -> None:
     """The geofencing must be inert when no sector is configured — the default."""
-    from triton.rig.interface import NullRig
-    from triton.selftest import run_selftest
+    from fireturret.rig.interface import NullRig
+    from fireturret.selftest import run_selftest
 
     report = run_selftest(NullRig(), DEFAULT_CONFIG, water=True, dwell=0.0,
                           sleep=lambda _s: None)

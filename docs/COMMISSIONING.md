@@ -23,13 +23,13 @@ notes in the [`README`](../README.md).
 - **Connection verification** — `SerialRig` refuses to run unless the board is
   actually sending telemetry (a port that opens but is the wrong device/baud, or
   has no firmware, raises a clear error instead of looking "connected").
-- **Dry-aim by default** — `triton run --port …` tracks the fire with pan/tilt but
+- **Dry-aim by default** — `fireturret run --port …` tracks the fire with pan/tilt but
   keeps pump/valve OFF (both in the control layer and as a per-command backstop).
   Water is only enabled with `--arm-water`, after you type `ARM` at the prompt.
 - **Homing gate (firmware)** — the pan angle is dead-reckoned, so the firmware
   keeps water locked until the pan axis is **homed** against its limit switch; an
   un-homed turret cannot spray.
-- **Self-test** — `triton selftest --port …` exercises each actuator and verifies
+- **Self-test** — `fireturret selftest --port …` exercises each actuator and verifies
   the link before any autonomous run. Its pump pulse goes through the **same**
   arming gate as a mission (`--arm-water` plus a typed `ARM`), and it will not aim
   into a configured keep-out sector — it drives the rig directly, so it does not
@@ -48,12 +48,12 @@ clear before moving on.
 Flash `firmware/turret_firmware/turret_firmware.ino`, set the pin map and
 mechanical limits (`PAN_MIN/MAX`, `TILT_MIN/MAX`, `PAN_STEPS_PER_DEG`). Power the
 logic only (not the pump/motor 12 V rail yet).
-- **Pass:** `triton selftest --port COM3` reports `telemetry link: PASS`.
+- **Pass:** `fireturret selftest --port COM3` reports `telemetry link: PASS`.
 - **Gate:** if there's no telemetry, fix baud (115200) / wiring / firmware before anything moves.
 
 ### 2. Dry actuator test — motors powered, water line disconnected
 Physically disconnect or empty the water line. Power the actuators.
-- Run `triton selftest --port COM3` (water stays OFF).
+- Run `fireturret selftest --port COM3` (water stays OFF).
 - **Pass:** pan nudges ±5°, tilt sweeps, the warn indicator lights — and you
   **watch** each happen and confirm direction.
 - **Gate:** if pan moves the wrong way or the wrong amount, fix `PAN_DIR_PIN` /
@@ -74,16 +74,16 @@ Follow [`BUILD_GUIDE.md` §5](BUILD_GUIDE.md): camera field-of-view, mount
 height/pitch, turret limits, and the jet model. Fire a dozen test shots at known
 pump % / tilt, record where they land, and fit:
 ```bash
-python -m triton fit shots.csv
+python -m fireturret fit shots.csv
 ```
 Put the values in a config file (or use Studio's calibration panel and
 export the config), then load it with `--config turret.json`.
-- **Gate:** re-run `python -m triton sim --config turret.json` and confirm the
+- **Gate:** re-run `python -m fireturret sim --config turret.json` and confirm the
   simulated mission still behaves sensibly with your numbers.
 
 ### 5. Dry-aim over the real camera — still no water
 ```bash
-python -m triton run --source 0 --config turret.json --port COM3
+python -m fireturret run --source 0 --config turret.json --port COM3
 ```
 Water is OFF by default. Present a **safe test flame** (a candle at a safe distance).
 - **Pass:** the turret detects the flame, tracks it, and the overlay shows a
@@ -93,7 +93,7 @@ Water is OFF by default. Present a **safe test flame** (a candle at a safe dista
 ### 6. First armed live test — supervised
 Outdoors or over a tray, extinguisher in hand, finger on the E-stop:
 ```bash
-python -m triton run --source 0 --config turret.json --port COM3 --arm-water
+python -m fireturret run --source 0 --config turret.json --port COM3 --arm-water
 ```
 Type `ARM` to enable water. Use a **small, controlled** flame.
 - **Pass:** it drives the splash onto the flame and puts it out.

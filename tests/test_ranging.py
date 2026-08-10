@@ -14,17 +14,17 @@ import time
 
 import pytest
 
-from triton.ballistics import exit_velocity, plan_suppression, range_of
-from triton.config import DEFAULT_CONFIG
-from triton.control.ranging import (
+from fireturret.ballistics import exit_velocity, plan_suppression, range_of
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.ranging import (
     RangeEstimator,
     RangeTable,
     SpeedRangeTable,
     target_ground_px,
 )
-from triton.geometry import CameraModel
-from triton.vision.firedetect import FireBlob
-from triton.vision.tracker import Track
+from fireturret.geometry import CameraModel
+from fireturret.vision.firedetect import FireBlob
+from fireturret.vision.tracker import Track
 
 CFG = DEFAULT_CONFIG
 JET = CFG.jet

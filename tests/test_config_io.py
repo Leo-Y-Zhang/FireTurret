@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
-"""Load/save a calibrated TritonConfig from a file (calibration as data, not
+"""Load/save a calibrated FireTurretConfig from a file (calibration as data, not
 hardcoded source). Interchangeable with Studio session files."""
 from __future__ import annotations
 
@@ -8,9 +8,9 @@ from dataclasses import replace
 
 import pytest
 
-from triton.config import (
+from fireturret.config import (
     DEFAULT_CONFIG,
-    TritonConfig,
+    FireTurretConfig,
     TurretConfig,
     config_from_dict,
     config_to_dict,
@@ -34,13 +34,13 @@ def test_save_load_file(tmp_path):
 
 def test_load_accepts_session_file(tmp_path):
     # a Studio session file has {"config": {...}, "scenario": {...}} — load the config out
-    path = tmp_path / "session.triton.json"
+    path = tmp_path / "session.fireturret.json"
     path.write_text(json.dumps({"config": config_to_dict(DEFAULT_CONFIG), "scenario": {}}))
     assert load_config(path) == DEFAULT_CONFIG
 
 
 def test_validation_on_load():
-    d = config_to_dict(TritonConfig())
+    d = config_to_dict(FireTurretConfig())
     d["jet"]["max_pressure_psi"] = -5.0
     with pytest.raises(ValueError):
         config_from_dict(d)

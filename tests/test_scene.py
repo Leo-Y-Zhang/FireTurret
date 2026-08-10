@@ -16,10 +16,10 @@ import itertools
 import numpy as np
 import pytest
 
-from triton.config import DEFAULT_CONFIG
-from triton.control.gate import GateContext, WaterGate, standard_gate
-from triton.rig.interface import RigCommand, RigTelemetry
-from triton.scene import (
+from fireturret.config import DEFAULT_CONFIG
+from fireturret.control.gate import GateContext, WaterGate, standard_gate
+from fireturret.rig.interface import RigCommand, RigTelemetry
+from fireturret.scene import (
     HazardAssessment,
     LocalSceneProvider,
     NullSceneProvider,
@@ -197,8 +197,8 @@ def test_the_default_build_makes_NO_network_call(monkeypatch) -> None:
     monkeypatch.setattr(socket, "socket", forbidden)
     monkeypatch.setattr(socket, "create_connection", forbidden)
 
-    from triton.app import Pipeline
-    from triton.rig.sim_rig import SimRig, SimScenario
+    from fireturret.app import Pipeline
+    from fireturret.rig.sim_rig import SimRig, SimScenario
 
     rig = SimRig(DEFAULT_CONFIG, SimScenario(), seed=7)
     pipe = Pipeline(DEFAULT_CONFIG)

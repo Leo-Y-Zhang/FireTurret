@@ -21,12 +21,12 @@ from dataclasses import replace
 
 import pytest
 
-from triton.config import DEFAULT_CONFIG, TurretConfig
-from triton.control.mission import MissionController
-from triton.geometry import CameraModel
-from triton.spray.envelope import LEGACY_ENVELOPE, SprayEnvelope, fan_envelope
-from triton.spray.keepout import check_deposition, wetted_interval_deg
-from triton.vision.impact import ImpactObservation
+from fireturret.config import DEFAULT_CONFIG, TurretConfig
+from fireturret.control.mission import MissionController
+from fireturret.geometry import CameraModel
+from fireturret.spray.envelope import LEGACY_ENVELOPE, SprayEnvelope, fan_envelope
+from fireturret.spray.keepout import check_deposition, wetted_interval_deg
+from fireturret.vision.impact import ImpactObservation
 
 CFG = DEFAULT_CONFIG
 SECTOR = (-12.0, 12.0)
@@ -164,7 +164,7 @@ def _mission(envelope, keepout=SECTOR) -> MissionController:
 
 
 def test_the_mission_withholds_water_on_a_predicted_violation() -> None:
-    from triton.rig.interface import RigCommand
+    from fireturret.rig.interface import RigCommand
 
     mission = _mission(FAN)
     wet = RigCommand(pan_deg=SECTOR[1] + 3.0, tilt_deg=22.0, pump_pct=55.0, valve=True)
@@ -176,7 +176,7 @@ def test_the_mission_withholds_water_on_a_predicted_violation() -> None:
 
 def test_the_default_envelope_leaves_the_command_untouched() -> None:
     """The property that keeps every fixture still."""
-    from triton.rig.interface import RigCommand
+    from fireturret.rig.interface import RigCommand
 
     mission = _mission(LEGACY_ENVELOPE)
     wet = RigCommand(pan_deg=SECTOR[1] + 3.0, tilt_deg=22.0, pump_pct=55.0, valve=True)
@@ -184,7 +184,7 @@ def test_the_default_envelope_leaves_the_command_untouched() -> None:
 
 
 def test_a_dry_command_is_not_affected() -> None:
-    from triton.rig.interface import RigCommand
+    from fireturret.rig.interface import RigCommand
 
     mission = _mission(FAN)
     dry = RigCommand(pan_deg=SECTOR[1] + 3.0, tilt_deg=22.0, pump_pct=0.0, valve=False)
@@ -209,7 +209,7 @@ def test_base_y_is_below_the_centroid_for_a_real_splash() -> None:
     nothing to detect the assertion being wrong."""
     import numpy as np
 
-    from triton.vision.impact import SplashDetector
+    from fireturret.vision.impact import SplashDetector
 
     det = SplashDetector(min_area_px=10)
     base = np.zeros((200, 300, 3), dtype=np.uint8)

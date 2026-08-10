@@ -37,7 +37,7 @@ Each layer is independent. None of them relies on another being correct.
 6. **The deadline watchdog** (`runner.py`) — ⚠ **BUILT BUT NOT WIRED: this layer
    is NOT active in any running path.** `TickWatchdog` is referenced nowhere in
    `src/` outside its own module, and the only importer in the repository is
-   `tests/test_runner.py`. Neither `triton run` nor `triton web` measures tick
+   `tests/test_runner.py`. Neither `fireturret run` nor `fireturret web` measures tick
    time, and neither passes its command through `gate()`, so nothing sheds work
    and nothing cuts water. **Treat this as a recorded gap, not a mitigation**,
    until a wiring assertion exists (see the note at the top of `runner.py` for
@@ -62,7 +62,7 @@ dry, never toward wet.
 
 ## The unauthenticated console
 
-`triton web` binds to **loopback** by default. The console has no authentication
+`fireturret web` binds to **loopback** by default. The console has no authentication
 and its `POST /estop` latches the mission into SAFE with no rearm path from the
 browser — so on a routable address, anyone who can reach the network can
 irreversibly disable a fire-suppression device, and watch the camera. Reaching it
