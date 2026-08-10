@@ -32,12 +32,12 @@ jobs:
       matrix:
         python: ["3.13"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # verify.py audits the whole author history for non-noreply identities,
           # so it needs the full history rather than a shallow clone.
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
       # libgl1/libglib2.0-0 are OpenCV's. The rest are Qt's: even under
