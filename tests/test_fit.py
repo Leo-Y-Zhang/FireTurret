@@ -27,3 +27,27 @@ def test_fit_jet_empty_shots_raises_valueerror():
     ZeroDivisionError from the rmse average (0.0 / 0)."""
     with pytest.raises(ValueError, match="no shots to fit"):
         fit_jet([], DEFAULT_CONFIG.jet)
+
+
+def test_fit_jet_refuses_a_single_operating_point():
+    """Two parameters cannot be identified from one (pump, elevation) setting.
+
+    Repeating the same shot satisfies the callers' "at least 3 shots" guard while
+    leaving velocity_coeff and drag_k on a flat ridge: every pair that reproduces
+    that one range fits it equally well, so the grid search returns whichever
+    corner it happened to visit first, with an RMSE near zero to vouch for it.
+    That is the failure the rest of this codebase names explicitly -- fitting
+    unidentifiable parameters produces confident nonsense, not a weak estimate --
+    so the fit has to decline rather than answer.
+    """
+    with pytest.raises(ValueError, match="operating point"):
+        fit_jet([(50.0, 20.0, 7.0)] * 3, DEFAULT_CONFIG.jet)
+
+
+def test_fit_jet_refuses_repeated_settings_however_many_shots():
+    """Repeat measurements are good practice and still not identifiability: a
+    dozen shots at two pump levels but one elevation each is two settings, and a
+    dozen at one setting is still one."""
+    with pytest.raises(ValueError, match="operating point"):
+        fit_jet([(50.0, 20.0, 6.9), (50.0, 20.0, 7.0), (50.0, 20.0, 7.1)] * 4,
+                DEFAULT_CONFIG.jet)

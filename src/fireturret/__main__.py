@@ -238,7 +238,13 @@ def _cmd_fit(args: argparse.Namespace) -> int:
         print("need at least 3 shots (pump_pct,elevation_deg,measured_range_m)")
         return 2
 
-    fit = ballistics.fit_jet(shots, DEFAULT_CONFIG.jet)
+    try:
+        fit = ballistics.fit_jet(shots, DEFAULT_CONFIG.jet)
+    except ValueError as exc:
+        # An unfittable set is bad input, not a crash: report it the same way the
+        # shot-count guard above does.
+        print(exc)
+        return 2
     print(f"fit over {len(shots)} shots: rmse = {fit.rmse_m:.2f} m")
     print("update src/fireturret/config.py JetConfig with:")
     print(f"    velocity_coeff: float = {fit.velocity_coeff:.2f}")

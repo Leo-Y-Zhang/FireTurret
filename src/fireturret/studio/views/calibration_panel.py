@@ -99,7 +99,14 @@ class CalibrationPanel(QWidget):
         if len(shots) < 3:
             self.result_label.setText("need ≥3 valid shots (pump, elevation, measured range)")
             return None
-        result = fit_jet(shots, self.session.config.jet)
+        try:
+            result = fit_jet(shots, self.session.config.jet)
+        except ValueError as exc:
+            # Shots the fit cannot identify parameters from. Reported in the same
+            # place and the same shape as the shot-count refusal above, and the
+            # previous fit stays un-appliable rather than being silently replaced.
+            self.result_label.setText(str(exc))
+            return None
         self._fit_result = result
         self.result_label.setText(
             f"velocity_coeff = {result.velocity_coeff:.3f}   "

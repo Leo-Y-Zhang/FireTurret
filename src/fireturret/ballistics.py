@@ -353,9 +353,26 @@ class FitResult:
 def fit_jet(shots: Sequence[tuple[float, float, float]], base_jet: JetConfig) -> FitResult:
     """Grid-search velocity_coeff and drag_k to minimise RMSE against measured
     shots ``(pump_pct, elevation_deg, measured_range_m)``. Same search as the
-    ``fireturret fit`` CLI, reused by the Studio calibration panel."""
+    ``fireturret fit`` CLI, reused by the Studio calibration panel.
+
+    Refuses shots that cannot identify both parameters. Repeat measurements at
+    one (pump, elevation) setting are ordinary practice and satisfy the callers'
+    "at least 3 shots" count, but they leave velocity_coeff and drag_k on a flat
+    ridge: every pair that reproduces that one range fits it equally well, so the
+    search returns whichever grid corner it reached first and an RMSE near zero
+    vouches for it. Declining is the honest answer -- this is the same failure
+    ``adapt/rls.py`` and ``adapt/ballistics_learner.py`` are built around, that
+    fitting unidentifiable parameters yields confident nonsense rather than a
+    weak estimate.
+    """
     if not shots:
         raise ValueError("no shots to fit")
+    if len({(pump, elev) for pump, elev, _ in shots}) < 2:
+        raise ValueError(
+            "shots span only one (pump, elevation) operating point, which cannot "
+            "identify both velocity_coeff and drag_k; fire at several pump levels "
+            "and tilts"
+        )
     best: tuple[float, float, float] | None = None
     for cv in (x / 100.0 for x in range(60, 101, 2)):
         for k in (x / 1000.0 for x in range(20, 401, 10)):
