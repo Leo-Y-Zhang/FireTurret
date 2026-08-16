@@ -315,9 +315,10 @@ between what `SAFETY.md` describes and what executes.
 **Whether the HOG person detector should be removed outright** now that OpenCV 5
 has deleted `cv2.HOGDescriptor`, leaving ONNX as the only path.
 
-**Whether `[project] name = "fireturret"` in `pyproject.toml` should change.** It
-collides with a widely-installed PyPI distribution of the same name, so a user
-who installs both into one environment gets whichever was installed last.
+*No longer a gap: `[project] name` was `triton`, which collided with a
+widely-installed PyPI distribution of that name, so a user who installed both
+into one environment got whichever landed last. The 2026-08-11 package rename to
+`fireturret` ended it.*
 
 ## The Qt crash: found, and what it actually was
 

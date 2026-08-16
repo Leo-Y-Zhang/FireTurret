@@ -389,71 +389,30 @@ refuses to construct without an explicit data-flow acknowledgement.)
 
 ## A note on the name
 
-This repository was called **FireTurret** until August 2026 and is now
-**FireTurret**, which says what it is rather than what it was named
-after. The rename stopped at the documentation on purpose. Still carrying the old
-name, and staying that way:
+This project was called **Triton** until August 2026. The repository was renamed
+first and the code was deliberately left alone, on the argument that a package
+name is an interface rather than a label: renaming it breaks every import in the
+tree, every plugin entry point, and every saved artefact. That argument did not
+hold for long. On 11 August the rename was carried through the rest of the tree —
+the distribution name, `src/triton/` to `src/fireturret/`, the `TritonConfig`
+dataclass, the `*.triton.json` saved-session extension, the ROS 2 frame ids and
+the workbench window title — so the compatibility break was taken rather than
+avoided. Nothing in the tree answers to the old name now; the dated design record
+under `docs/specs/` still carries it in its filename.
 
-- the Python package and CLI — `src/fireturret/`, `python -m fireturret`, `fireturret[desktop]`
-- the config dataclass `FireTurretConfig` and the saved-session extension `*.fireturret.json`
-- the ROS 2 frame ids (`fireturret/world`, `fireturret/pan`, …) and joint names
-- the desktop workbench's application name and window title, "FireTurret Studio"
-  (the docs call it simply *Studio*)
-
-Each of those is an interface, not a label. Renaming the package breaks every
-import in the tree and every third-party plugin entry point; renaming the file
-extension or the frame ids breaks saved calibrations and anything already
-subscribing to the TF tree. A cosmetic rename is not worth a compatibility break,
-so the old name survives where it is load-bearing and is gone everywhere it was
-only decoration.
-
-### The cost of keeping it: a name collision on PyPI
-
-That decision has a price, and it is not paid by this repository — it is paid by
-whoever installs it. **`fireturret` is also the name of a widely-installed package on
-PyPI**: the GPU kernel compiler, which PyTorch declares as a dependency and which
-therefore turns up in a very large number of Python environments without anyone
-choosing it.
-
-This project's `pyproject.toml` declares `name = "fireturret"` and ships a top-level
-`fireturret` package, so the two are not merely similar — they are the same
-distribution name and the same import name. In one environment:
-
-- pip treats them as the same distribution. Installing either one **uninstalls
-  the other**; there is no error and no warning, because from pip's point of view
-  this is an ordinary upgrade or downgrade of `fireturret`.
-- `import fireturret` afterwards resolves to whichever survived. Code expecting the
-  other gets an `ImportError` on a submodule, or worse, an attribute that exists
-  in both and means different things.
-- `pip install torch` can therefore quietly replace this package, and
-  `pip install -e .` here can quietly break a PyTorch install that was working.
-
-The workaround is the ordinary one, and it is not optional: **install this
-project into its own virtual environment.**
-
-```bash
-python -m venv .venv
-.venv/Scripts/python -m pip install -e .[dev]     # Windows
-# .venv/bin/python -m pip install -e '.[dev]'     # Linux/macOS
-```
-
-Two mitigating facts, offered because overstating a problem is as unhelpful as
-hiding one. The collision only bites in a *shared* environment — the per-repo
-`.venv` workflow this project already documents never meets it. And it is a
-**Linux problem specifically**: checked against the PyPI JSON API on 2026-08-03,
-`fireturret` is at 3.7.1 across 21 releases and has never published a single Windows
-or macOS wheel — the current release is manylinux `x86_64` and `aarch64` only.
-So a Windows or macOS PyTorch install does not drag it in, and the development
-machine this repo is built on cannot hit the collision at all. A Linux
-deployment — a Jetson or a Pi with a PyTorch-based detector alongside — can.
-
-This is not being fixed, for exactly the reason the package name was kept in the
-first place: renaming the distribution renames the import path, and that breaks
-every import in the tree, every plugin entry point, and every saved artefact
-listed above. Nothing is ever published to PyPI from here — the licence forbids
-redistribution — so the collision can never reach a public index from this side.
-It is recorded rather than repaired, and it is also in
-[`CHANGELOG.md`](CHANGELOG.md) under *Known issue*.
+The rename also dissolved a real packaging problem rather than documenting it
+forever. While the distribution was named `triton` it shared both its
+distribution name and its import name with the GPU kernel compiler of that name
+on PyPI — the one PyTorch declares as a dependency, so it turns up in a very
+large number of environments without anyone choosing it. pip treated the two as
+one distribution: installing either **uninstalled the other**, with no error and
+no warning, because from pip's point of view that is an ordinary upgrade of
+`triton`. `pip install torch` could quietly replace this package, and
+`pip install -e .` here could quietly break a working PyTorch install.
+`fireturret` is not taken on PyPI, so none of that applies to it. Installing into
+a per-project virtual environment, as *Run it* above does, remains the right
+habit — it is just no longer the only thing standing between you and a broken
+PyTorch install.
 
 ## Licence
 
