@@ -22,7 +22,18 @@ what the maintainer runs.
     spdx          per-file licence identifiers
     identity      no real-name or non-noreply author in the git history
     boundaries    architectural import contracts (part of the test suite)
-    build         the package builds and its metadata is valid
+    installed import  the distribution is installed and imports by name
+
+The last one used to be called "build metadata", which claimed more than it
+checked. It does not build a wheel and does not validate any metadata: nothing
+here is ever distributed, so there is no artefact to check and no consumer to
+protect. What it does prove is narrow and worth having — that `pip install -e .`
+put an importable distribution on the path under the name the rest of the tree
+imports, from outside `src/`. That is the guard against the `triton` name
+collision documented in the README, where installing an unrelated package could
+silently take the import over. The build backend itself is exercised on every CI
+run by the `pip install -e .` step in ci.yml, so duplicating it here would buy
+nothing.
 
 `--fast` skips the slow tier, and says so in the summary rather than quietly
 reporting a pass that covered less.
@@ -177,7 +188,10 @@ def main() -> int:
             "pytest (slow)",
             [PY, "-m", "pytest", "-m", "slow", "-q", "-p", "no:cacheprovider"],
         ))
-    results.append(run("build metadata", [PY, "-c", "import fireturret; print(fireturret.__name__)"]))
+    # Named for what it proves, not for what a packaging check would prove: run
+    # from ROOT, `import fireturret` resolves only if the distribution is
+    # installed, because the package lives under src/. See the module docstring.
+    results.append(run("installed import", [PY, "-c", "import fireturret; print(fireturret.__name__)"]))
 
     print()
     for r in results:

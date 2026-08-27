@@ -263,8 +263,11 @@ exists because that is the one action with no undo.
 `python scripts/verify.py` is **the** gate, and the GitHub Actions workflow is a
 thin wrapper that calls it, deliberately, so "green locally" and "green in CI"
 are the same assertion by construction rather than by discipline. It runs `ruff`,
-fast pytest, slow pytest (`-m slow`), SPDX headers, git-history identity, and
-build metadata.
+fast pytest, slow pytest (`-m slow`), SPDX headers, git-history identity, and an
+installed-import check. That last one is named for what it proves and no more: it
+imports the distribution by name from outside `src/`, which fails unless
+`pip install -e .` actually put it on the path. It is not a packaging check and
+does not pretend to be one — nothing here is distributed.
 
 **Positive.** `tests/test_end_to_end.py` extinguishes a fire whose true discharge
 coefficient, drag and boresight differ from the model. It passes only because the

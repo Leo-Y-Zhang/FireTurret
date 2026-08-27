@@ -51,9 +51,17 @@ and that includes model weights.
 ## The gate
 
 ```bash
+pip install -e ".[dev,analysis,desktop]"   # test extras — quoted for zsh
 python scripts/verify.py          # everything
 python scripts/verify.py --fast   # skips the ~25 minute slow tier
 ```
+
+That install line is the same one `.github/workflows/ci.yml` runs, and all three
+extras are needed for a full local gate: `[dev]` for pytest, pytest-qt and a Qt
+binding, `[desktop]` for pyqtgraph (imported by `tests/studio/conftest.py`), and
+`[analysis]` only so the two matplotlib tests run rather than skip. On
+Debian/Ubuntu, install the OpenCV and Qt system libraries first — see *Run it* in
+the README.
 
 `scripts/verify.py` is **authoritative**. CI wraps it rather than defining its
 own checks, because two definitions of "green" drift apart until a CI-only

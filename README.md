@@ -159,6 +159,13 @@ target. See [`docs/GPU_DETECTOR.md`](docs/GPU_DETECTOR.md).
 
 ## Run it
 
+**Prerequisites: Python 3.11 or newer, and nothing else on Windows or macOS.** On
+Debian/Ubuntu the OpenCV and Qt wheels dlopen system libraries that are not in the
+wheels: `sudo apt-get install -y libgl1 libglib2.0-0 libegl1 libxkbcommon0
+libdbus-1-3`. Without `libegl1` even a headless `QT_QPA_PLATFORM=offscreen` run
+dies with `ImportError: libEGL.so.1: cannot open shared object file`, which does
+not read like a missing-package error.
+
 ```bash
 python -m venv .venv && . .venv/Scripts/activate   # Windows; use bin/activate on *nix
 pip install -e .
@@ -316,15 +323,23 @@ Design rationale is in [`docs/STUDIO.md`](docs/STUDIO.md) and
 ## Testing
 
 ```bash
+pip install -e ".[dev,analysis,desktop]"   # test extras — quoted for zsh
 pytest                    # 821 fast tests by default (of 869; run the slow tier with -m slow)
-python scripts/verify.py  # THE gate: ruff, both pytest tiers, SPDX, git identity, build
+python scripts/verify.py  # THE gate: ruff, both pytest tiers, SPDX, git identity, installed import
 ```
+
+`pip install -e .` on its own is not enough to test: `[dev]` carries pytest,
+pytest-qt and a Qt binding, and `[desktop]` carries pyqtgraph, which
+`tests/studio/conftest.py` imports in a session fixture. `[analysis]` is the one
+genuinely optional part — the two tests that need matplotlib `importorskip` it
+and otherwise skip — but it is included above because that exact line is what
+`.github/workflows/ci.yml` installs, so it is the parity command.
 
 `scripts/verify.py` is authoritative and the GitHub Actions workflow is a thin
 wrapper around it, so "green locally" and "green in CI" are the same assertion by
 construction. A clean full run is **6/6 PASS** — measured 2026-08-03 on Windows
 11 / Python 3.13: ruff 0.2s · spdx 0.1s · identity 0.0s · pytest fast 120.1s ·
-pytest slow 947.4s · build metadata 0.1s.
+pytest slow 947.4s · installed import 0.1s.
 
 The native crash that made the fast tier unreliable through 2026-08-03 was found
 and fixed on 2026-08-03: a finished run's `QThread` was released while it was
