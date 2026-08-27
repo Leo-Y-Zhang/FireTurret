@@ -19,6 +19,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Least privilege: these jobs only ever read the checkout. Declared
+# explicitly so the workflow keeps its own floor even if the repository
+# default token permission is widened later.
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
