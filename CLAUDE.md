@@ -27,7 +27,7 @@ fire-safety product (see the README's "Read this first" banner).
 ## Install
 
 ```
-python3.12 -m venv .venv
+python3.12 -m venv .venv          # any Python >= 3.11 works; the hook picks 3.13, 3.12 or python3
 .venv/bin/pip install -e '.[dev,analysis,desktop]'
 ```
 
@@ -86,7 +86,7 @@ that the editable install is importable by name from outside `src/`. Run
 - `[ml]` (onnxruntime) and `[ros]` (rclpy, not on PyPI) extras are optional;
   their tests self-skip when the dependency is absent.
 - Test suite has grown slightly since the README/badges were last updated
-  (823 fast tests collected vs. 821 documented, 869 vs. 871 total) — all
+  (871 tests: 823 fast + 48 slow, matching the README after its 2026-09-14 correction) — all
   passing, not a regression.
 
 ## CI / conventions
