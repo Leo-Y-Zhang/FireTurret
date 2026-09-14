@@ -11,7 +11,8 @@ cd "$CLAUDE_PROJECT_DIR"
 # Create the venv only if it doesn't already exist (idempotent, and lets the
 # container cache the result across a session).
 if [ ! -x ".venv/bin/python" ]; then
-  python3.12 -m venv .venv
+  PY=$(command -v python3.13 || command -v python3.12 || command -v python3)
+  "$PY" -m venv .venv
 fi
 
 # desktop is required (not optional) even headlessly: pytest-qt (from dev)
