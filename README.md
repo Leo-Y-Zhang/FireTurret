@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Leo-Y-Zhang/FireTurret/actions/workflows/ci.yml/badge.svg)](https://github.com/Leo-Y-Zhang/FireTurret/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.11%2B-blue)
-![tests](https://img.shields.io/badge/tests-869-brightgreen)
+![tests](https://img.shields.io/badge/tests-871-brightgreen)
 
 > ## Read this first
 >
@@ -61,7 +61,7 @@ single annotated frame during suppression.*
 - **A desktop engineering workbench** — *Studio* (PySide6/pyqtgraph):
   live plots, a scenario editor, batch parameter sweeps on a thread pool,
   and a calibration tool — with the simulation run off the GUI thread.
-- **Test rigor** — 869 tests (821 fast + 48 slow); the engine's exact behaviour is
+- **Test rigor** — 871 tests (823 fast + 48 slow); the engine's exact behaviour is
   pinned by *golden regression fixtures*, and the desktop app is tested headless at
   the data layer.
 - **Hardware-honest** — the software genuinely interfaces the firmware over
@@ -324,7 +324,7 @@ Design rationale is in [`docs/STUDIO.md`](docs/STUDIO.md) and
 
 ```bash
 pip install -e ".[dev,analysis,desktop]"   # test extras — quoted for zsh
-pytest                    # 821 fast tests by default (of 869; run the slow tier with -m slow)
+pytest                    # 823 fast tests by default (of 871; run the slow tier with -m slow)
 python scripts/verify.py  # THE gate: ruff, both pytest tiers, SPDX, git identity, installed import
 ```
 
