@@ -59,6 +59,22 @@ def test_an_unexcited_filter_does_not_become_infinitely_credulous() -> None:
     assert np.linalg.norm(rls.theta - before) < 50.0, "one bad datum swung the model"
 
 
+def test_forgetting_leaves_an_unexcited_direction_at_its_prior() -> None:
+    """Guard 2, directional forgetting. Data that only ever informs the constant
+    term says nothing about the range term, so forgetting must not inflate the
+    range term's variance: that discards knowledge no datum replaces, and is how
+    a parameter nobody has excited drifts away from its prior. The excited
+    direction is still forgotten, exactly as uniform forgetting would."""
+    rls = RecursiveLeastSquares(n_terms=2)
+    reference = RecursiveLeastSquares(n_terms=1)
+    for _ in range(300):
+        rls.update(np.array([1.0, 0.0]), 1.0)
+        reference.update(np.array([1.0]), 1.0)
+    assert rls.P[1, 1] == pytest.approx(rls.initial_variance)
+    assert rls.P[0, 0] == pytest.approx(reference.P[0, 0])
+    assert rls.theta[0] == pytest.approx(reference.theta[0])
+
+
 def test_the_huber_gate_caps_a_single_outlier() -> None:
     """Squared error weights an outlier quadratically, so one reflection or
     detector glitch moves theta more than a hundred good observations."""

@@ -106,12 +106,22 @@ class RecursiveLeastSquares:
             self.rejected += 1
 
         # --- directional forgetting: only where this datum carries information.
-        information = float(phi @ phi)
-        lam = self.forgetting if information > 1e-9 else 1.0
+        # Dividing all of P by the forgetting factor would also inflate it in
+        # directions this datum says nothing about. Inflate it only along P @ phi,
+        # the direction the datum informs:
+        #     P_bar = P + (1/lambda - 1) (P phi)(P phi)^T / (phi^T P phi)
+        # Along phi that is exactly the 1/lambda of uniform forgetting, so the gain
+        # on this datum is unchanged; every direction P-orthogonal to it keeps its
+        # variance. A zero regressor carries no information and forgets nothing.
+        p_phi = self.P @ phi
+        informed = float(phi @ p_phi)
+        P_bar = self.P
+        if informed > 1e-12:
+            P_bar = self.P + (1.0 / self.forgetting - 1.0) * np.outer(p_phi, p_phi) / informed
 
-        gain = (self.P @ phi) / (lam + denom - 1.0 + 1e-12)
+        gain = (P_bar @ phi) / (1.0 + float(phi @ P_bar @ phi))
         self.theta = self.theta + weight * gain * residual
-        self.P = (self.P - np.outer(gain, phi @ self.P)) / lam
+        self.P = P_bar - np.outer(gain, phi @ P_bar)
         self.P = 0.5 * (self.P + self.P.T)  # keep it symmetric against drift
 
         self._bound_trace()
