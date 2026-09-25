@@ -13,7 +13,7 @@ not an acceptable way to acquire that.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import pytest
 
@@ -23,6 +23,7 @@ from fireturret.config import (
     config_from_dict,
     config_to_dict,
     plugin_config,
+    replace_groups,
 )
 
 
@@ -84,6 +85,28 @@ def test_an_unregistered_group_is_still_preserved_verbatim() -> None:
     d = config_to_dict(DEFAULT_CONFIG)
     d["not_installed"] = {"anything": [1, 2, 3]}
     assert config_to_dict(config_from_dict(d))["not_installed"] == {"anything": [1, 2, 3]}
+
+
+def test_replacing_a_builtin_group_keeps_the_plugin_groups() -> None:
+    """Editing one built-in group must not cost a plugin its settings.
+
+    `dataclasses.replace` rebuilds the config through its constructor, which
+    knows nothing about the groups `config_from_dict` carried beside the built-in
+    ones, so a bare replace drops them and the next save destroys them: the loss
+    the passthrough exists to prevent, reintroduced by the first edit.
+    """
+    configschema.register_subconfig("demo", DemoPluginConfig)
+    d = config_to_dict(DEFAULT_CONFIG)
+    d["demo"] = {"threshold": 0.5, "label": "calibrated"}
+    d["not_installed"] = {"anything": [1, 2, 3]}
+    cfg = config_from_dict(d)
+
+    edited = replace_groups(cfg, jet=replace(cfg.jet, drag_k=0.2))
+
+    assert edited.jet.drag_k == 0.2
+    assert plugin_config(edited, "demo") == DemoPluginConfig(0.5, "calibrated")
+    assert config_to_dict(edited)["not_installed"] == {"anything": [1, 2, 3]}
+    assert cfg.jet.drag_k == DEFAULT_CONFIG.jet.drag_k  # the original is untouched
 
 
 # --------------------------------------------------------------- unshadowable

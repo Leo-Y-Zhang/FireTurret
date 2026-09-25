@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pytest
 
+from fireturret.config import DEFAULT_CONFIG, config_from_dict, config_to_dict
 from fireturret.studio.session import Session
 
 
@@ -33,6 +34,18 @@ def test_undo_redo_roundtrip(qapp):
     assert s.config.servo.pan_gain == orig
     s.redo()
     assert s.config.servo.pan_gain == 0.9
+
+
+def test_an_edit_keeps_plugin_config_groups(qapp):
+    """A session opened with a plugin's config group must still carry it after an
+    edit (and after undoing it), or saving the session destroys those settings."""
+    d = config_to_dict(DEFAULT_CONFIG)
+    d["some_plugin"] = {"threshold": 0.25}
+    s = Session(config_from_dict(d))
+    s.set_field("jet", "drag_k", 0.2)
+    assert config_to_dict(s.config)["some_plugin"] == {"threshold": 0.25}
+    s.undo()
+    assert config_to_dict(s.config)["some_plugin"] == {"threshold": 0.25}
 
 
 def test_scenario_field_edit(qapp):

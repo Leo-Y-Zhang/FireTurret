@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import json
 import warnings
-from dataclasses import asdict, dataclass, field, fields, is_dataclass
+from dataclasses import asdict, dataclass, field, fields, is_dataclass, replace
 from pathlib import Path
 
 from . import configschema
@@ -241,6 +241,22 @@ def plugin_config(cfg: FireTurretConfig, name: str):
     their groups live alongside it and are reached through here.
     """
     return getattr(cfg, _EXTRA_GROUPS_ATTR, {}).get(name)
+
+
+def replace_groups(cfg: FireTurretConfig, **groups) -> FireTurretConfig:
+    """`dataclasses.replace` for built-in groups that keeps the plugin groups.
+
+    A bare `replace` rebuilds the config through its constructor, which knows
+    nothing about the groups `config_from_dict` attached beside the built-in
+    ones, so it silently drops them; the next save then destroys that plugin's
+    settings. Anything that edits a loaded config (the Studio session, a sweep
+    cell) goes through here instead.
+    """
+    new = replace(cfg, **groups)
+    extras = getattr(cfg, _EXTRA_GROUPS_ATTR, None)
+    if extras:
+        object.__setattr__(new, _EXTRA_GROUPS_ATTR, dict(extras))
+    return new
 
 
 def save_config(path, cfg: FireTurretConfig) -> None:
