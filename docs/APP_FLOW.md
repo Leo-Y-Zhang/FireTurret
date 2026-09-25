@@ -36,10 +36,10 @@ it needs no hardware, no configuration and no arguments.
    hardware. It verifies the link, then exercises each actuator. Water stays off:
    the pump pulse is exactly as wet as a mission's, so it is behind the same gate.
    Pass condition, printed: `telemetry link: PASS`.
-4. **`python -m fireturret fit shots.csv`** — enter measured shots
-   (`pump_pct,elevation_deg,measured_range_m`), get fitted `velocity_coeff`,
-   `drag_k` and `max_pressure_psi`. Save them into a config file rather than into
-   source.
+4. **`python -m fireturret fit shots.csv --config turret.json`** — enter measured
+   shots (`pump_pct,elevation_deg,measured_range_m`), get `velocity_coeff` and
+   `drag_k` fitted against that config's `max_pressure_psi` and `nozzle_height_m`.
+   Save them into the config file rather than into source.
 5. **`python -m fireturret run --source 0 --config turret.json --port COM3`** —
    dry-aim on real hardware. Pan and tilt track the fire; the pump and valve stay
    off.

@@ -61,7 +61,8 @@ class TurretConfig:
 
 @dataclass(frozen=True)
 class JetConfig:
-    """Pressure→velocity and drag model. All three are refined by `fireturret fit`."""
+    """Pressure→velocity and drag model. `fireturret fit` refines `velocity_coeff`
+    and `drag_k`, holding the other three at the rig's values."""
 
     max_pressure_psi: float = 60.0
     velocity_coeff: float = 0.90  # nozzle discharge/velocity coefficient

@@ -2,12 +2,14 @@
 """Jet calibration fit (shared by the CLI and the Studio calibration panel)."""
 from __future__ import annotations
 
+import re
 from dataclasses import replace
 
 import pytest
 
+from fireturret.__main__ import main
 from fireturret.ballistics import exit_velocity, fit_jet, range_of
-from fireturret.config import DEFAULT_CONFIG
+from fireturret.config import DEFAULT_CONFIG, save_config
 
 
 def test_fit_jet_recovers_known_params():
@@ -51,3 +53,36 @@ def test_fit_jet_refuses_repeated_settings_however_many_shots():
     with pytest.raises(ValueError, match="operating point"):
         fit_jet([(50.0, 20.0, 6.9), (50.0, 20.0, 7.0), (50.0, 20.0, 7.1)] * 4,
                 DEFAULT_CONFIG.jet)
+
+
+# -------------------------------------------------------------------- the CLI
+
+def _fitted(out: str) -> tuple[float, float]:
+    cv = re.search(r"velocity_coeff\D+([0-9.]+)", out)
+    k = re.search(r"drag_k\D+([0-9.]+)", out)
+    assert cv and k, out
+    return float(cv.group(1)), float(k.group(1))
+
+
+@pytest.mark.parametrize("pressure_psi,nozzle_m", [(45.0, 0.6), (80.0, 0.6), (60.0, 1.2)])
+def test_the_fit_cli_holds_the_rigs_own_jet_fixed(tmp_path, capsys, pressure_psi, nozzle_m):
+    """velocity_coeff only means something beside the max_pressure_psi and the
+    nozzle height it was fitted with, and the fit holds both fixed. A rig
+    configured away from the built-in 60 psi / 0.6 m must be fitted against its
+    own values; fitted against the defaults, the same shots come back 0.78 to
+    0.98 instead of 0.90, each with an RMSE small enough to look trustworthy.
+    """
+    rig = replace(DEFAULT_CONFIG.jet, max_pressure_psi=pressure_psi, nozzle_height_m=nozzle_m)
+    save_config(tmp_path / "turret.json", replace(DEFAULT_CONFIG, jet=rig))
+    rows = ["pump_pct,elevation_deg,measured_range_m"] + [
+        f"{p},{e},{range_of(exit_velocity(p, rig), e, rig):.4f}"
+        for p, e in [(50, 20), (70, 15), (90, 25), (60, 30)]
+    ]
+    (tmp_path / "shots.csv").write_text("\n".join(rows) + "\n")
+
+    rc = main(["fit", str(tmp_path / "shots.csv"), "--config", str(tmp_path / "turret.json")])
+
+    assert rc == 0
+    velocity_coeff, drag_k = _fitted(capsys.readouterr().out)
+    assert velocity_coeff == pytest.approx(0.90, abs=0.011)
+    assert drag_k == pytest.approx(0.16, abs=0.011)

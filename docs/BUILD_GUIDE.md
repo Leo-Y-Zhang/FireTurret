@@ -114,7 +114,10 @@ Firmware pin map (edit at the top of `firmware/turret_firmware/turret_firmware.i
 
 ## 5. Calibration
 
-Values live in `src/fireturret/config.py`. Calibrate in this order:
+The defaults live in `src/fireturret/config.py`. Put your build's values in a
+config file instead (`turret.json`: the same groups and field names, and Studio
+can export one) and pass it to every command with `--config`. Calibrate in this
+order:
 
 1. **Camera FOV** (`CameraConfig.hfov_deg`): point at two marks a known distance
    apart at a known range; compute the horizontal field of view. Set `width`/
@@ -125,11 +128,13 @@ Values live in `src/fireturret/config.py`. Calibrate in this order:
 3. **Turret limits** (`TurretConfig`): the real mechanical pan/tilt range and the
    slew rates your motors achieve. Geofence pan/tilt so the turret can **never**
    point at a person.
-4. **Jet model** (`JetConfig`): fire a dozen test shots at known pump % and tilt,
-   measure where each lands, put them in a CSV (`pump_pct,elevation_deg,measured_range_m`),
-   and run `python -m fireturret fit shots.csv`. Paste the printed `velocity_coeff`
-   and `drag_k` back into `JetConfig`. Also set `max_pressure_psi`, `nozzle_height_m`,
-   and `min_pump_pct` (the lowest pump that still throws a coherent stream).
+4. **Jet model** (`JetConfig`): first set `max_pressure_psi` and `nozzle_height_m`
+   (the fit holds them fixed) and `min_pump_pct` (the lowest pump that still
+   throws a coherent stream) in your config file. Then fire a dozen test shots at
+   known pump % and tilt, measure where each lands, put them in a CSV
+   (`pump_pct,elevation_deg,measured_range_m`), and run
+   `python -m fireturret fit shots.csv --config turret.json`. Put the printed
+   `velocity_coeff` and `drag_k` in the same file's `jet` group.
 5. **Boresight** (`boresight_offset_deg`): optional. The suppression loop learns
    and cancels the camera-to-nozzle offset from the splash, so a rough value is
    fine; set it only to speed up the first shot.

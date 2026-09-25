@@ -72,12 +72,14 @@ These protect everything after, so prove them physically:
 ### 4. Calibrate
 Follow [`BUILD_GUIDE.md` §5](BUILD_GUIDE.md): camera field-of-view, mount
 height/pitch, turret limits, and the jet model. Fire a dozen test shots at known
-pump % / tilt, record where they land, and fit:
+pump % / tilt, record where they land, and fit against your config file, which
+must already hold the rig's measured `max_pressure_psi` and `nozzle_height_m`
+(the fit holds them fixed):
 ```bash
-python -m fireturret fit shots.csv
+python -m fireturret fit shots.csv --config turret.json
 ```
-Put the values in a config file (or use Studio's calibration panel and
-export the config), then load it with `--config turret.json`.
+Put the printed values in that file's `jet` group (or use Studio's calibration
+panel and export the config), then load it with `--config turret.json`.
 - **Gate:** re-run `python -m fireturret sim --config turret.json` and confirm the
   simulated mission still behaves sensibly with your numbers.
 
