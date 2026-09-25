@@ -140,7 +140,7 @@ stateDiagram-v2
     SUPPRESS --> CONFIRM : target no longer tracked
     CONFIRM --> SUPPRESS : it flared back up
     CONFIRM --> SEARCH : clear for confirm_clear_s (next fire)
-    HOLD --> RANGE : exponential backoff, retry
+    HOLD --> RANGE : retry after a dwell that grows per failure
     HOLD --> SEARCH : target lost
     SEARCH --> SAFE : E-stop or telemetry loss
     ACQUIRE --> SAFE : E-stop or telemetry loss

@@ -87,8 +87,9 @@ unreachable targets and `SAFE` overriding everything on fault. Pan uses a
 **move → settle → observe** discipline (commanding an absolute azimuth and only
 re-measuring once settled), because servoing every frame off a moving-camera
 detection oscillates. A pump that stays saturated-and-short for several cycles
-means the target is out of reach; the mission drops to `HOLD` with exponential
-backoff instead of wasting water, and raises an operator advisory.
+means the target is out of reach; the mission drops to `HOLD`, retrying after a
+dwell of `hold_retry_s` per consecutive failure (capped at 45 s), instead of
+wasting water, and raises an operator advisory.
 
 ## 6. Why the closed loop works: the model-vs-true gap
 
