@@ -152,7 +152,7 @@ stored.
 | `camera` | `width`, `height`, `hfov_deg`, `mount_height_m`, `mount_pitch_deg`, `boresight_offset_deg` | positive dimensions; `0 < hfov_deg < 180`; positive mount height |
 | `turret` | pan/tilt limits, slew rates, `pan_keepout_deg: tuple \| None` | `pan_min < pan_max`; `0 <= tilt_min < tilt_max <= 90`; positive rates; **keep-out must be an ascending sub-range of the pan limits** |
 | `jet` | `max_pressure_psi`, `velocity_coeff`, `drag_k`, `nozzle_height_m`, `min_pump_pct` | positive `max_pressure_psi` and `velocity_coeff`; `0 < min_pump_pct < 100`; non-negative `drag_k` and `nozzle_height_m` (`fireturret fit` refines `velocity_coeff` and `drag_k`, holding the rest fixed) |
-| `detector` | colour/flicker thresholds, tracker association distance | — |
+| `detector` | colour/flicker thresholds, tracker persistence (`confirm_hits`, `max_misses`) | — |
 | `servo` | `suppress_tilt_deg`, pan gain/deadband, `range_gain_pct_per_px`, `range_deadband_px`, `pump_step_pct`, `settle_frames` | — |
 | `mission` | timeouts, `max_spray_s`, `soak_s`, `heartbeat_timeout_s`, `default_range_m`, `unreachable_cycles`, `hold_retry_s` | — |
 
