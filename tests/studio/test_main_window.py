@@ -8,6 +8,8 @@ import pytest
 from PySide6.QtCore import QSettings, QThread
 
 from fireturret.config import FireTurretConfig
+from fireturret.rig.sim_rig import SimScenario
+from fireturret.studio import io
 from fireturret.studio.main_window import MainWindow
 from fireturret.studio.sweep import SweepAxis, SweepSpec
 
@@ -251,5 +253,27 @@ def test_save_last_run_writes_files(qapp, qtbot, tmp_path):
     assert json_path is not None
     assert Path(json_path).exists()
     assert (tmp_path / "myrun.csv").exists()
+    win.close()
+    qtbot.wait(50)
+
+
+def test_saved_run_records_the_model_it_ran_with_not_a_later_edit(qapp, qtbot, tmp_path):
+    """The sidecar is the run's provenance: config and scenario must be the ones
+    the telemetry came from, even if the model was edited (or another session
+    opened) between the run finishing and the save."""
+    win = MainWindow(max_frames=60, settings=_temp_settings(tmp_path))
+    ran_with = win.session.config.jet.drag_k
+    with qtbot.waitSignal(win.run_finished, timeout=30000):
+        win.run()
+    win.set_param("jet", "drag_k", 0.4)
+    win.set_param("scenario", "fire_range_m", 9.0)
+    meta = io.load_run_meta(win.save_last_run_path(tmp_path, "edited"))
+    assert meta["config"]["jet"]["drag_k"] == ran_with
+    assert meta["scenario"]["fire_range_m"] == SimScenario().fire_range_m
+
+    win.new_session()
+    win.set_param("jet", "drag_k", 0.3)
+    meta = io.load_run_meta(win.save_last_run_path(tmp_path, "swapped"))
+    assert meta["config"]["jet"]["drag_k"] == ran_with
     win.close()
     qtbot.wait(50)

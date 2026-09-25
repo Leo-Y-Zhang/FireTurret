@@ -68,6 +68,10 @@ class MainWindow(QMainWindow):
         self._first_batch = True
         self._last_error: str | None = None
         self._last_report = None
+        # (config, scenario) the in-flight run and the last finished run used: the
+        # session may be edited after Run, and a saved run must name its own model
+        self._run_inputs = None
+        self._last_run_inputs = None
         self._run_counter = 0
         self._session_path: str | None = None
         self._sweep_runner: SweepRunner | None = None
@@ -352,8 +356,8 @@ class MainWindow(QMainWindow):
     def save_last_run_path(self, dir_path, name: str = "run") -> str | None:
         if self._last_report is None:
             return None
-        return io.save_run(dir_path, name, self.session.config, self.session.scenario,
-                           7, self._last_report)
+        config, scenario = self._last_run_inputs
+        return io.save_run(dir_path, name, config, scenario, 7, self._last_report)
 
     def _rebind_session(self, new_session: Session) -> None:
         try:
@@ -460,6 +464,7 @@ class MainWindow(QMainWindow):
         self.camera.clear()
         self._first_batch = True
 
+        self._run_inputs = (cfg, self.session.scenario)
         worker = SimWorker(cfg, self.session.scenario, seed=7,
                            max_frames=self._max_frames, record_telemetry=True)
         thread = QThread()
@@ -560,6 +565,7 @@ class MainWindow(QMainWindow):
         self._state_label.setText("extinguished" if report.extinguished else "stopped")
         self._progress.setValue(100)
         self._last_report = report
+        self._last_run_inputs = self._run_inputs
         self._run_counter += 1
         self.runs_model.add_run(
             RunRow.from_report(f"run {self._run_counter}", report, seed=7,
