@@ -97,15 +97,14 @@ class CalibrationPanel(QWidget):
     def fit(self):
         shots = self._shots()
         if len(shots) < 3:
-            self.result_label.setText("need ≥3 valid shots (pump, elevation, measured range)")
+            self._refuse("need ≥3 valid shots (pump, elevation, measured range)")
             return None
         try:
             result = fit_jet(shots, self.session.config.jet)
         except ValueError as exc:
             # Shots the fit cannot identify parameters from. Reported in the same
-            # place and the same shape as the shot-count refusal above, and the
-            # previous fit stays un-appliable rather than being silently replaced.
-            self.result_label.setText(str(exc))
+            # place and the same shape as the shot-count refusal above.
+            self._refuse(str(exc))
             return None
         self._fit_result = result
         self.result_label.setText(
@@ -121,6 +120,14 @@ class CalibrationPanel(QWidget):
         lim = max(measured + predicted + [1.0])
         self._refline.setData([0.0, lim], [0.0, lim])  # y = x reference
         return result
+
+    def _refuse(self, reason: str) -> None:
+        """Say why there is no fit, and drop any earlier one: it came from shots
+        that are no longer in the table, so Apply must not write it into the model."""
+        self.result_label.setText(reason)
+        self._fit_result = None
+        self._apply_btn.setEnabled(False)
+        self._scatter.setData([], [])
 
     def apply_fit(self) -> None:
         if self._fit_result is None:
