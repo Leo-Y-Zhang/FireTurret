@@ -200,7 +200,8 @@ stay **off** unless you add `--arm-water` and confirm, so first bring-up is alwa
 dry-aim. That same gate covers the self-test's pump pulse: `fireturret selftest` is
 dry unless you pass `--arm-water` and type ARM. It exercises each actuator and
 checks the link first;
-`fireturret fit shots.csv` calibrates the ballistic model; `--config turret.json`
+`fireturret fit shots.csv --config turret.json` calibrates the ballistic model
+against that rig's pump pressure and nozzle height; `--config turret.json`
 loads a saved calibration (Studio can export one). The safe, gated
 bring-up procedure is in [`docs/COMMISSIONING.md`](docs/COMMISSIONING.md).
 

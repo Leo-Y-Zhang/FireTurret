@@ -16,7 +16,7 @@ is where that transition can happen and what stops it happening by accident.
 | Live / hardware | `python -m fireturret run --source 0 [--port COM3]` | a shell on the host |
 | Browser console | `python -m fireturret web --source 0\|sim` | a URL, loopback by default |
 | Hardware self-test | `python -m fireturret selftest --port COM3` | commissioning step 2 |
-| Calibration fit | `python -m fireturret fit shots.csv` | commissioning step 4 |
+| Calibration fit | `python -m fireturret fit shots.csv [--config turret.json]` | commissioning step 4 |
 | Desktop workbench | `python -m fireturret studio` | needs the `[desktop]` extra |
 
 There is no login, no onboarding and no first-run wizard. `sim` is the front door:
