@@ -61,6 +61,9 @@ ALLOWED_EMAIL_SUFFIX = "@users.noreply.github.com"
 # it is present in the history the checkout hands us, so without this the gate
 # could never pass on a pull request even though main is clean.
 GITHUB_MERGE_IDENTITY = "noreply@github.com"
+# The owner accepts commits written by Claude Code (decision of 2026-09-27).
+# Matched exactly, name and address, so no other identity slips through.
+CLAUDE_IDENTITY = "Claude <noreply@anthropic.com>"
 
 
 # A failing check's output has to be clipped -- a full pytest log is thousands of
@@ -162,6 +165,7 @@ def check_identity() -> Result:
         if line.strip()
         and ALLOWED_EMAIL_SUFFIX not in line
         and GITHUB_MERGE_IDENTITY not in line
+        and line.strip() != CLAUDE_IDENTITY
     })
     elapsed = time.perf_counter() - start
     if offenders:
