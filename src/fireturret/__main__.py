@@ -21,9 +21,10 @@
       latches SAFE with no rearm from the browser, so reaching it from another
       machine needs --host <addr> --expose. --source sim needs no hardware.
 
-  fireturret fit shots.csv
+  fireturret fit shots.csv [--config turret.json]
       Calibrate velocity_coeff and drag_k from measured test shots
-      (CSV rows: pump_pct,elevation_deg,measured_range_m).
+      (CSV rows: pump_pct,elevation_deg,measured_range_m), holding the rest of
+      the jet at the rig's config.
 
   fireturret studio
       Launch FireTurret Studio, the desktop engineering workbench
@@ -222,10 +223,16 @@ def _cmd_web(args: argparse.Namespace) -> int:
 
 def _cmd_fit(args: argparse.Namespace) -> int:
     """Grid-search least-squares fit of velocity_coeff and drag_k against
-    measured shots. Prints the best pair as a config snippet."""
-    from . import ballistics
-    from .config import DEFAULT_CONFIG
+    measured shots. Prints the best pair as a config snippet.
 
+    The fit holds the rest of the jet fixed, so it must be the rig's jet: a
+    velocity_coeff only means something beside the max_pressure_psi (and
+    nozzle height) it was fitted with. `--config` supplies those, exactly as
+    it does for every other subcommand.
+    """
+    from . import ballistics
+
+    cfg = load_config(args.config) if args.config else DEFAULT_CONFIG
     shots: list[tuple[float, float, float]] = []
     with open(args.csv, newline="") as f:
         for row in csv.reader(f):
@@ -239,16 +246,19 @@ def _cmd_fit(args: argparse.Namespace) -> int:
         return 2
 
     try:
-        fit = ballistics.fit_jet(shots, DEFAULT_CONFIG.jet)
+        fit = ballistics.fit_jet(shots, cfg.jet)
     except ValueError as exc:
         # An unfittable set is bad input, not a crash: report it the same way the
         # shot-count guard above does.
         print(exc)
         return 2
-    print(f"fit over {len(shots)} shots: rmse = {fit.rmse_m:.2f} m")
-    print("update src/fireturret/config.py JetConfig with:")
-    print(f"    velocity_coeff: float = {fit.velocity_coeff:.2f}")
-    print(f"    drag_k: float = {fit.drag_k:.3f}")
+    jet = cfg.jet
+    print(f"fit over {len(shots)} shots: rmse = {fit.rmse_m:.2f} m "
+          f"(at max_pressure_psi = {jet.max_pressure_psi:g}, "
+          f"nozzle_height_m = {jet.nozzle_height_m:g})")
+    print('set in the "jet" group of your config file (load it with --config):')
+    print(f'    "velocity_coeff": {fit.velocity_coeff:.2f},')
+    print(f'    "drag_k": {fit.drag_k:.3f}')
     return 0
 
 
@@ -339,6 +349,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_fit = sub.add_parser("fit", help="calibrate jet parameters from test shots")
     p_fit.add_argument("csv", help="CSV of pump_pct,elevation_deg,measured_range_m")
+    p_fit.add_argument("--config", default=None,
+                       help="the rig's FireTurretConfig JSON: the fit holds its max_pressure_psi "
+                            "and nozzle_height_m fixed (default: the built-in values)")
     p_fit.set_defaults(func=_cmd_fit)
 
     p_selftest = sub.add_parser(

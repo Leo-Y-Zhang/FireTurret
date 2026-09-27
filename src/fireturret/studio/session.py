@@ -13,7 +13,7 @@ from dataclasses import replace
 from PySide6.QtCore import QObject, Signal
 from PySide6.QtGui import QUndoCommand, QUndoStack
 
-from ..config import FireTurretConfig
+from ..config import FireTurretConfig, replace_groups
 from ..rig.sim_rig import SimScenario
 
 _CONFIG_GROUPS = ("camera", "turret", "jet", "detector", "servo", "mission")
@@ -100,6 +100,7 @@ class Session(QObject):
             self._scenario = replace(self._scenario, **{name: value})
         else:
             new_sub = replace(getattr(self._config, group), **{name: value})
-            self._config = replace(self._config, **{group: new_sub})
+            # not a bare replace(): that drops plugin groups, and saving then loses them
+            self._config = replace_groups(self._config, **{group: new_sub})
         self._dirty = True
         self.changed.emit()

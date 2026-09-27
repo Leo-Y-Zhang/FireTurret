@@ -27,7 +27,7 @@ Two sigma because the question is where water *can* land, not where it typically
 does.
 
 A predicted violation is routed through the **existing HOLD path** rather than
-getting its own handling, so it inherits invariant 9's exponential backoff for
+getting its own handling, so it inherits invariant 9's retry backoff for
 free — and so there is one place in the codebase that means "stop, this target
 cannot be engaged safely right now".
 

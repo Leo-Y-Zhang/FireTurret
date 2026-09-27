@@ -68,6 +68,11 @@ class Environment:
             value = getattr(self, field_name)
             if isinstance(value, bool) or not isinstance(value, (int, float)):
                 raise TypeError(f"{field_name} must be a number, got {value!r}")
+            # json.loads accepts NaN and Infinity, and every comparison below is
+            # False for NaN, so without this a failed sensor read sails through
+            # and turns air density, and every arc integrated with it, into NaN.
+            if isinstance(value, float) and not math.isfinite(value):
+                raise ValueError(f"{field_name} must be finite, got {value!r}")
         if self.pressure_pa <= 0:
             raise ValueError("pressure must be positive")
         if not 0.0 <= self.relative_humidity <= 1.0:
@@ -183,6 +188,8 @@ class SerialEnvironment:
             line = line.decode("utf-8", errors="replace")
         try:
             raw = json.loads(line)
+            if not isinstance(raw, dict):  # valid JSON, but not a reading
+                return STANDARD
             allowed = {
                 "temperature_c", "pressure_pa", "relative_humidity",
                 "wind_east_ms", "wind_north_ms", "anemometer",

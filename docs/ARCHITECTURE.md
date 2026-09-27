@@ -70,8 +70,8 @@ the fire (observable) the whole way in.
 
 **7. Some fires are simply out of reach.** When the pump saturates and the
 splash stays short for several cycles, the target is beyond the jet's envelope.
-The mission enters HOLD (valve shut) with exponential backoff rather than hosing
-water it can never land.
+The mission enters HOLD (valve shut), retrying after a dwell that grows with each
+consecutive failure, rather than hosing water it can never land.
 
 **8. The turret is fixed, so unreachable fires are the operator's problem.**
 When a fire is out of reach, too close, beyond the pan traverse, or the water

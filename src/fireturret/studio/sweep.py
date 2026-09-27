@@ -13,7 +13,7 @@ from dataclasses import dataclass, replace
 
 from PySide6.QtCore import QObject, QRunnable, QThreadPool, Signal
 
-from ..config import FireTurretConfig
+from ..config import FireTurretConfig, replace_groups
 from ..rig.sim_rig import SimScenario
 from ..simcore import drive
 
@@ -26,7 +26,7 @@ def with_field(config: FireTurretConfig, scenario: SimScenario, group: str, name
         return config, replace(scenario, **{name: value})
     if group in _CONFIG_GROUPS:
         sub = replace(getattr(config, group), **{name: value})
-        return replace(config, **{group: sub}), scenario
+        return replace_groups(config, **{group: sub}), scenario
     raise ValueError(f"unknown group: {group!r}")
 
 

@@ -55,14 +55,23 @@ def detection_to_sector(
     x, _y, w, _h = detection.bbox
     if image_width <= 0:
         raise ValueError("image width must be positive")
+    if not 0.0 < hfov_deg < 180.0:
+        raise ValueError("hfov_deg must be in (0, 180)")
 
-    # Bearing of the box's centre, relative to the camera axis.
-    centre_px = x + w / 2.0
-    fraction = (centre_px - image_width / 2.0) / (image_width / 2.0)
-    bearing_deg = fraction * (hfov_deg / 2.0)
+    # Bearings of the box's two edges, relative to the camera axis, through the
+    # same pinhole model as `geometry.CameraModel`: u = cx + fpx * tan(az). A
+    # linear pixels-to-degrees scale agrees with it only at the centre and the
+    # edges of the frame; in between it narrows a centred box and pulls an
+    # off-axis one toward the axis, which left part of the box outside its own
+    # sector whenever the range term did not widen it.
+    half_width_px = image_width / 2.0
+    fpx = half_width_px / math.tan(math.radians(hfov_deg) / 2.0)
+    left_deg = math.degrees(math.atan((x - half_width_px) / fpx))
+    right_deg = math.degrees(math.atan((x + w - half_width_px) / fpx))
+    bearing_deg = (left_deg + right_deg) / 2.0
 
     # Angular half-width of the box itself.
-    box_half_deg = (w / image_width) * hfov_deg / 2.0
+    box_half_deg = (right_deg - left_deg) / 2.0
 
     if range_m is None:
         # Unknown range: assume the worst rather than guessing a middle value.

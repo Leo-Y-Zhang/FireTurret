@@ -693,8 +693,9 @@ class MissionController:
             self._enter("SEARCH")
             return self._command()
         self._pan_cmd = self.servo.azimuth_step(target.cx, telemetry.pan_deg)
-        # exponential backoff: a target that stays unreachable is rechecked ever
-        # less often, so we stop test-spraying water we cannot land
+        # linear backoff (hold_retry_s per consecutive failure, capped): a target
+        # that stays unreachable is rechecked ever less often, so we stop
+        # test-spraying water we cannot land
         dwell = min(self.cfg.mission.hold_retry_s * self._unreachable_streak, 45.0)
         if self._state_elapsed >= dwell:
             self.debug.note = ""

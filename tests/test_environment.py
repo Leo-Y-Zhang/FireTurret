@@ -95,6 +95,12 @@ def test_saturation_vapour_pressure_matches_known_values() -> None:
     ({"pressure_pa": 0.0}, ValueError),
     ({"relative_humidity": 1.5}, ValueError),
     ({"temperature_c": "hot"}, TypeError),
+    # Python's json module reads NaN and Infinity, and a station that writes its
+    # failed sensor reads as NaN is ordinary; a NaN density poisons every arc.
+    ({"temperature_c": float("nan")}, ValueError),
+    ({"pressure_pa": float("inf")}, ValueError),
+    ({"wind_east_ms": float("nan")}, ValueError),
+    ({"wind_north_ms": float("-inf")}, ValueError),
 ])
 def test_nonsense_conditions_are_rejected_at_construction(kwargs, exc) -> None:
     """At construction, not at first use: these values come from a JSON file a
@@ -125,7 +131,9 @@ def test_the_file_provider_reads_what_a_weather_station_wrote(tmp_path) -> None:
     assert env.anemometer is True
 
 
-@pytest.mark.parametrize("content", ["", "not json", "[1,2,3]", '{"temperature_c": "hot"}'])
+@pytest.mark.parametrize("content", [
+    "", "not json", "[1,2,3]", '{"temperature_c": "hot"}', '{"temperature_c": NaN}',
+])
 def test_a_broken_environment_file_degrades_to_standard(tmp_path, content) -> None:
     """A turret must not fail to run because a weather station rebooted."""
     path = tmp_path / "weather.json"
@@ -161,6 +169,18 @@ def test_the_serial_provider_parses_a_line_of_json() -> None:
     env = provider.read()
     assert env.temperature_c == 19.0
     assert env.wind_north_ms == 2.5
+
+
+@pytest.mark.parametrize("line", [b"[1, 2, 3]", b"null", b"42", b'"text"'])
+def test_the_serial_provider_degrades_on_json_that_is_not_an_object(line) -> None:
+    """Valid JSON is not the same as a reading. The file provider already checks
+    for an object; the serial one must degrade the same way, not raise."""
+    class Pod:
+        def readline(self):
+            return line
+
+    provider = SerialEnvironment("COM9", serial_factory=lambda *a, **k: Pod())
+    assert provider.read() == Environment()
 
 
 # ------------------------------------------------- THE identifiability statement

@@ -21,6 +21,8 @@ NOREPLY = "@users.noreply.github.com"
 # pull_request event as "GitHub <noreply@github.com>" — its own machine
 # identity, not a person's, and never part of the repository itself.
 GITHUB_MERGE_IDENTITY = "noreply@github.com"
+# Claude Code commits, accepted by the owner (2026-09-27); exact match only.
+CLAUDE_IDENTITY = "Claude <noreply@anthropic.com>"
 
 
 # ------------------------------------------------------------------- licence
@@ -171,6 +173,7 @@ def test_every_commit_is_authored_under_an_anonymous_noreply_identity() -> None:
         if line.strip()
         and NOREPLY not in line
         and GITHUB_MERGE_IDENTITY not in line
+        and line.strip() != CLAUDE_IDENTITY
     })
     assert not offenders, f"non-noreply identities in history: {offenders}"
 

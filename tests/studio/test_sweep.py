@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from fireturret.config import FireTurretConfig
+from fireturret.config import FireTurretConfig, config_from_dict, config_to_dict
 from fireturret.rig.sim_rig import SimScenario
 from fireturret.studio.sweep import (
     SweepAxis,
@@ -23,6 +23,14 @@ def test_with_field_config_and_scenario():
     assert scn2 is scn  # scenario untouched
     _cfg3, scn3 = with_field(cfg, scn, "scenario", "fire_range_m", 9.0)
     assert scn3.fire_range_m == 9.0
+
+
+def test_with_field_keeps_plugin_config_groups():
+    """A swept cell runs with the plugin settings of the config it came from."""
+    d = config_to_dict(FireTurretConfig())
+    d["some_plugin"] = {"threshold": 0.25}
+    cfg2, _ = with_field(config_from_dict(d), SimScenario(), "jet", "drag_k", 0.25)
+    assert config_to_dict(cfg2)["some_plugin"] == {"threshold": 0.25}
 
 
 def test_with_field_validates():

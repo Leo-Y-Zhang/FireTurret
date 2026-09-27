@@ -16,6 +16,8 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from fireturret.config import CameraConfig
+from fireturret.geometry import CameraModel
 from fireturret.safety.detectors import (
     Detection,
     HogPersonDetector,
@@ -132,6 +134,33 @@ def test_a_tiny_far_detection_still_gets_a_minimum_sector() -> None:
 def test_a_degenerate_image_width_is_rejected() -> None:
     with pytest.raises(ValueError):
         detection_to_sector(_centre_detection(), 0, HFOV)
+
+
+@pytest.mark.parametrize("hfov", [0.0, 180.0])
+def test_a_degenerate_field_of_view_is_rejected(hfov) -> None:
+    with pytest.raises(ValueError):
+        detection_to_sector(_centre_detection(), WIDTH, hfov)
+
+
+@pytest.mark.parametrize("hfov", [HFOV, 90.0])
+@pytest.mark.parametrize("x,w", [(430, 100), (680, 80), (560, 160), (100, 60)])
+def test_the_sector_covers_the_whole_box_where_the_camera_sees_it(hfov, x, w) -> None:
+    """Whatever else widens it, the sector must contain the detection's own box.
+
+    The box's bearings are those of the pinhole model the rest of the system
+    maps pixels with (`geometry.CameraModel`, u = cx + fpx * tan(az)). A linear
+    pixels-to-degrees scale agrees with it only at the centre and the edges of
+    the frame: it narrows a centred box and pulls an off-axis one toward the
+    axis, so a range estimate that does not widen the sector left part of the
+    detected person outside the sector that exists to protect them.
+    """
+    camera = CameraModel(CameraConfig(width=WIDTH, hfov_deg=hfov))
+    left = camera.px_to_angles(x, camera.cy).azimuth_deg
+    right = camera.px_to_angles(x + w, camera.cy).azimuth_deg
+    detection = Detection(bbox=(x, 200, w, 200), confidence=1.0)
+    for range_m in (5.0, 20.0):
+        lo, hi = detection_to_sector(detection, WIDTH, hfov, range_m=range_m)
+        assert lo <= left + 1e-9 and right - 1e-9 <= hi, (range_m, (lo, hi), (left, right))
 
 
 # ------------------------------------------------------------------ merging
