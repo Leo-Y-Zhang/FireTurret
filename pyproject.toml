@@ -15,14 +15,18 @@ dependencies = [
 # by pytest fails outright without it -- which is exactly how CI failed every run it
 # ever attempted. It appears in [desktop] as well because the studio needs it at
 # runtime; the two are independent reasons to have it.
-dev = ["pytest>=8.0", "ruff>=0.6", "pytest-qt>=4", "PySide6-Essentials>=6.8"]
+# PySide6 6.12.0 (with Python 3.13.17) aborts at interpreter exit after every test has
+# passed ("shared QObject was deleted directly", then "malloc(): unaligned tcache chunk
+# detected"), which fails the gate. 6.11.2 is the last version CI passed with. Lift the
+# cap once a 6.12.x release exits cleanly here.
+dev = ["pytest>=8.0", "ruff>=0.6", "pytest-qt>=4", "PySide6-Essentials>=6.8,<6.12"]
 analysis = ["matplotlib>=3.7"]
 # Learned ONNX fire detector. On an NVIDIA GPU install `onnxruntime-gpu` instead
 # (or NVIDIA's Jetson build) to use the TensorRT/CUDA execution providers.
 ml = ["onnxruntime>=1.17"]
 # Desktop engineering workbench (FireTurret Studio). pyqtgraph OpenGL is disabled at
 # runtime (raster only) so it works on machines without OpenGL; see docs/STUDIO.md.
-desktop = ["PySide6-Essentials>=6.8", "pyqtgraph>=0.13"]
+desktop = ["PySide6-Essentials>=6.8,<6.12", "pyqtgraph>=0.13"]
 # ROS 2 bridge. rclpy is NOT installable from PyPI in the normal way — it comes
 # from a ROS 2 distribution — so this extra is declared for completeness and the
 # tests skip when it is absent, exactly as the [ml] extra's do. SAFETY: a pure-ROS
