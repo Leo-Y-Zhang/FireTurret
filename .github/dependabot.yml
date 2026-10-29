@@ -7,3 +7,19 @@ updates:
     groups:
       actions:
         patterns: ["*"]
+
+  # PySide6-Essentials is capped below 6.12 in pyproject.toml: 6.12.0 aborts at
+  # interpreter exit after the test suite has passed, an upstream teardown bug.
+  # Watching only that package opens a PR raising the cap as soon as a newer
+  # release exists, and CI on that PR shows whether it exits cleanly. 6.12.0
+  # itself is ignored so the known-bad release does not open one.
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    allow:
+      - dependency-name: "PySide6-Essentials"
+    ignore:
+      - dependency-name: "PySide6-Essentials"
+        versions: ["6.12.0"]
+    versioning-strategy: "widen"
