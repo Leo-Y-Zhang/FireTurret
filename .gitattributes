@@ -1,0 +1,4 @@
+# The firmware sketch is Arduino. GitHub counts .ino as C++, so CodeQL's default setup
+# tries to enable C++ and fails: its extractor reads no .ino files. Not detecting the
+# sketch keeps the language list to what can be scanned.
+*.ino linguist-detectable=false
