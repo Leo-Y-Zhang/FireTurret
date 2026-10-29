@@ -17,8 +17,12 @@ dependencies = [
 # runtime; the two are independent reasons to have it.
 # PySide6 6.12.0 (with Python 3.13.17) aborts at interpreter exit after every test has
 # passed ("shared QObject was deleted directly", then "malloc(): unaligned tcache chunk
-# detected"), which fails the gate. 6.11.2 is the last version CI passed with. Lift the
-# cap once a 6.12.x release exits cleanly here.
+# detected"), which fails the gate. CI passes on 6.11.3, the newest below the cap. Other
+# projects hit the same abort with 6.12.0, and closing or deleting the tests' widgets,
+# collecting garbage, or emitting aboutToQuit at session end did not stop it here. The
+# Studio app itself exits cleanly on 6.12.0. Dependabot watches this package
+# (.github/dependabot.yml) and opens a PR raising the cap when a newer release exists;
+# CI on that PR is the test.
 dev = ["pytest>=8.0", "ruff>=0.6", "pytest-qt>=4", "PySide6-Essentials>=6.8,<6.12"]
 analysis = ["matplotlib>=3.7"]
 # Learned ONNX fire detector. On an NVIDIA GPU install `onnxruntime-gpu` instead
